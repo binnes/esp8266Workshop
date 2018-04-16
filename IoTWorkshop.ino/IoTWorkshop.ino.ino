@@ -1,0 +1,213 @@
+#include <FS.h>
+#include <ESP8266WiFi.h>
+#include <Adafruit_NeoPixel.h>
+#include <DHT.h>
+#include <ArduinoJson.h>
+#include <PubSubClient.h>
+
+// --------------------------------------------------------------------------------------------
+//        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
+// --------------------------------------------------------------------------------------------
+
+// Watson IoT connection details
+#define MQTT_HOST "<orgID>.messaging.internetofthings.ibmcloud.com"
+#define MQTT_PORT 8883
+#define MQTT_DEVICEID "d:<orgID>:<type>:<id>"
+#define MQTT_USER "use-token-auth"
+#define MQTT_TOKEN "<token>"
+#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
+#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
+#define MQTT_TOPIC_INTERVAL "iot-2/cmd/interval/fmt/json"
+#define CA_CERT_FILE "/rootCA_certificate.der"
+#define KEY_FILE "/SecuredDev01_key.key"
+#define CERT_FILE "/SecuredDev01_crt.der"
+
+// Add GPIO pins used to connect devices
+#define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
+#define DHT_PIN 4 // GPIO pin the data line of the DHT sensor is connected to
+
+// Specify DHT11 (Blue) or DHT22 (White) sensor
+//#define DHTTYPE DHT22
+#define DHTTYPE DHT11
+#define NEOPIXEL_TYPE NEO_RGB + NEO_KHZ800
+
+// Temperatures to set LED by (assume temp in C)
+#define ALARM_COLD 0.0
+#define ALARM_HOT 30.0
+#define WARN_COLD 10.0
+#define WARN_HOT 25.0
+
+
+// Add WiFi connection information
+char ssid[] = "<SSID>";  // your network SSID (name)
+char pass[] = "<PASSWORD>";  // your network password
+
+
+// --------------------------------------------------------------------------------------------
+//        SHOULD NOT NEED TO CHANGE ANYTHING BELOW THIS LINE
+// --------------------------------------------------------------------------------------------
+Adafruit_NeoPixel pixel = Adafruit_NeoPixel(1, RGB_PIN, NEOPIXEL_TYPE);
+DHT dht(DHT_PIN, DHTTYPE);
+
+// MQTT objects
+void callback(char* topic, byte* payload, unsigned int length);
+WiFiClientSecure wifiClient;
+PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
+
+// variables to hold data
+StaticJsonBuffer<100> jsonBuffer;
+JsonObject& payload = jsonBuffer.createObject();
+JsonObject& status = payload.createNestedObject("d");
+StaticJsonBuffer<100> jsonReceiveBuffer;
+static char msg[50];
+
+float h = 0.0; // humidity
+float t = 0.0; // temperature
+unsigned char r = 0; // LED RED value
+unsigned char g = 0; // LED Green value
+unsigned char b = 0; // LED Blue value
+int32_t ReportingInterval = 10;  // Reporting Interval seconds
+
+
+void callback(char* topic, byte* scopepayload, unsigned int length) {
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
+
+  // handle message arrived
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.println("] ");
+  Serial.println((char *)scopepayload);
+  if (0 == strcmp(topic, "iot-2/cmd/display/fmt/json")) {
+    if (cmdData.success()) {
+      //valid message received
+      r = cmdData.get<unsigned char>("r"); // this form allows you specify the type of the data you want from the JSON object
+      g = cmdData["g"];
+      b = cmdData["b"];
+      Serial.println("Set the NeoPixel");
+      jsonReceiveBuffer.clear();
+      pixel.setPixelColor(0, r, g, b);
+      pixel.show();
+    } else {
+      Serial.print("Received invalid JSON data : ");
+      Serial.println((char *)scopepayload);
+    }
+  } else if (0 == strcmp(topic, "iot-2/cmd/interval/fmt/json")) {
+    if (cmdData.success()) {
+      //valid message received
+      ReportingInterval = cmdData.get<int32_t>("Interval"); // this form allows you specify the type of the data you want from the JSON object
+      Serial.print("Reporting Interval has been changed:");
+      Serial.print(ReportingInterval);
+      Serial.println();
+      jsonReceiveBuffer.clear();
+    } else {
+      Serial.print("Received invalid JSON data : ");
+      Serial.println((char *)scopepayload);
+    }
+  } else {
+    Serial.println("Unknown command received");
+  }
+}
+
+void setup() {
+  // Start serial console
+  Serial.begin(115200);
+  Serial.setTimeout(2000);
+  while (!Serial) { }
+  Serial.println("ESP8266 Sensor Application");
+
+  // Start WiFi connection
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi Connected");
+
+  // Start connected devices
+  dht.begin();
+  pixel.begin();
+
+  // Get certs from file system and load into WiFiSecure client
+  SPIFFS.begin();
+  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  if(!ca) {
+    Serial.println("Couldn't load cert");
+  } else {
+    bool ret = wifiClient.loadCACert(ca);
+    Serial.print("Loading CA cert returned ");
+    Serial.println((ret)? "true" : "false");
+    ca.close();
+  }
+
+  // Connect to MQTT - IBM Watson IoT Platform
+  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+    if (wifiClient.verifyCertChain(MQTT_HOST)) {
+      Serial.println("certificate matches");
+    } else {
+      // ignore for now - but usually don't want to proceed if a valid cert not presented!
+      Serial.println("certificate doesn't match");
+    }
+    Serial.println("MQTT Connected");
+    mqtt.subscribe(MQTT_TOPIC_DISPLAY);
+    mqtt.subscribe(MQTT_TOPIC_INTERVAL);
+
+  } else {
+    Serial.println("MQTT Failed to connect!");
+    ESP.reset();
+  }
+}
+
+
+void loop() {
+  mqtt.loop();
+  while (!mqtt.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Attempt to connect
+    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+      Serial.println("MQTT Connected");
+      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
+      mqtt.subscribe(MQTT_TOPIC_INTERVAL);
+      mqtt.loop();
+    } else {
+      Serial.println("MQTT Failed to connect!");
+      delay(5000);
+    }
+  }
+
+  h = dht.readHumidity();
+  t = dht.readTemperature(); // uncomment this line for centigrade
+  // t = dht.readTemperature(true); // uncomment this line for Fahrenheit
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+  } else {
+    // Set RGB LED Colour based on temp
+    b = (t < ALARM_COLD) ? 255 : ((t < WARN_COLD) ? 150 : 0);
+    r = (t >= ALARM_HOT) ? 255 : ((t > WARN_HOT) ? 150 : 0);
+    g = (t > ALARM_COLD) ? ((t <= WARN_HOT) ? 255 : ((t < ALARM_HOT) ? 150 : 0)) : 0;
+    pixel.setPixelColor(0, r, g, b);
+    pixel.show();
+
+    // Print Message to console in JSON format
+    status["temp"] = t;
+    status["humidity"] = h;
+    payload.printTo(msg, 50);
+    Serial.println(msg);
+    if (!mqtt.publish(MQTT_TOPIC, msg)) {
+      Serial.println("MQTT Publish failed");
+    }
+  }
+
+  // Pause - but keep polling MQTT for incoming messages
+  for (int32_t i = 0; i < ReportingInterval; i++) {
+    mqtt.loop();
+    delay(1000);
+    Serial.print("ReportingInterval :");
+    Serial.print(ReportingInterval);
+    Serial.println();
+  }
+}

@@ -1,0 +1,1282 @@
+[
+    {
+        "id": "537283ab.5ef624",
+        "type": "tab",
+        "label": "Chart Intro",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9fa5ae27.2c6838",
+        "type": "tab",
+        "label": "Dashboard Intro",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2a9f98d3.89463",
+        "type": "tab",
+        "label": "Plot DHT Sensor Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b10840.e8a04fc",
+        "type": "ui_group",
+        "z": "9fa5ae27.2c6838",
+        "name": "Dashboard Controls",
+        "tab": "da01dede.4c6fe8",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ff0ecf5d.bee87",
+        "type": "ui_group",
+        "z": "",
+        "name": "Start / Stop",
+        "tab": "da01dede.4c6fe8",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "da01dede.4c6fe8",
+        "type": "ui_tab",
+        "z": "9fa5ae27.2c6838",
+        "name": "Introduction",
+        "icon": "dashboard",
+        "order": 2
+    },
+    {
+        "id": "a08a610d.d26148",
+        "type": "ui_group",
+        "z": "",
+        "name": "ESP8266 Sensors",
+        "tab": "9acd054e.522e18",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9acd054e.522e18",
+        "type": "ui_tab",
+        "z": "",
+        "name": "ESP8266 Workshop",
+        "icon": "dashboard",
+        "order": 3
+    },
+    {
+        "id": "a6642517.33c128",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "b84d1cfb.bb9d28",
+        "type": "ui_group",
+        "z": "",
+        "name": "Line Chart Examples",
+        "tab": "311c5ab9.1536a6",
+        "disp": true,
+        "width": "8"
+    },
+    {
+        "id": "227c4089.a7b298",
+        "type": "ui_group",
+        "z": "",
+        "name": "Bar Chart Examples",
+        "tab": "311c5ab9.1536a6",
+        "order": 3,
+        "disp": true,
+        "width": "8"
+    },
+    {
+        "id": "e75237e3.b0a2b8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pie Chart Examples",
+        "tab": "311c5ab9.1536a6",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "311c5ab9.1536a6",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Chart Examples",
+        "icon": "fa-area-chart",
+        "order": 1
+    },
+    {
+        "id": "8ca2324a.35e27",
+        "type": "inject",
+        "z": "9fa5ae27.2c6838",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "fc77c46b.45161"
+            ]
+        ]
+    },
+    {
+        "id": "41341309.e28eac",
+        "type": "function",
+        "z": "9fa5ae27.2c6838",
+        "name": "Random #s",
+        "func": "if( msg.payload === false ) {\n    return null;\n}\nmsg.payload = Math.round(Math.random()*100);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 60,
+        "wires": [
+            [
+                "838eb2fe.a65d18"
+            ]
+        ]
+    },
+    {
+        "id": "8b1abada.50c0f",
+        "type": "ui_chart",
+        "z": "9fa5ae27.2c6838",
+        "name": "Chart",
+        "group": "3b10840.e8a04fc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Random #",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Querying Entropy",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e2218e66.f7f2",
+        "type": "ui_gauge",
+        "z": "9fa5ae27.2c6838",
+        "name": "Gauge",
+        "group": "3b10840.e8a04fc",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 350,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a564d49b.423fe",
+        "type": "ui_slider",
+        "z": "9fa5ae27.2c6838",
+        "name": "",
+        "label": "Slider",
+        "group": "3b10840.e8a04fc",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": 0,
+        "max": "100",
+        "step": "",
+        "x": 350,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf9efe9a.9f4958",
+        "type": "ui_text",
+        "z": "9fa5ae27.2c6838",
+        "group": "3b10840.e8a04fc",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 350,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fc77c46b.45161",
+        "type": "ui_switch",
+        "z": "9fa5ae27.2c6838",
+        "name": "",
+        "label": "Switch",
+        "group": "ff0ecf5d.bee87",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "41341309.e28eac"
+            ]
+        ]
+    },
+    {
+        "id": "e85b747e.d72f18",
+        "type": "ui_text",
+        "z": "9fa5ae27.2c6838",
+        "group": "ff0ecf5d.bee87",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 270,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "fb092c51.5c82c8",
+        "type": "inject",
+        "z": "9fa5ae27.2c6838",
+        "name": "Instructions",
+        "topic": "",
+        "payload": "Use the toggle switch to start / stop the generation of random numbers",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "e85b747e.d72f18"
+            ]
+        ]
+    },
+    {
+        "id": "d15fc007.21d758",
+        "type": "ui_toast",
+        "z": "9fa5ae27.2c6838",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "",
+        "x": 790,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "8a148f66.12b8a8",
+        "type": "switch",
+        "z": "9fa5ae27.2c6838",
+        "name": "Warn on High Values",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "90",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "bf2ca4b7.cd3fc8"
+            ]
+        ]
+    },
+    {
+        "id": "bf2ca4b7.cd3fc8",
+        "type": "template",
+        "z": "9fa5ae27.2c6838",
+        "name": "Alert Msg",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Alert : Critical Value Detected {{payload}}",
+        "output": "str",
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "d15fc007.21d758"
+            ]
+        ]
+    },
+    {
+        "id": "838eb2fe.a65d18",
+        "type": "link out",
+        "z": "9fa5ae27.2c6838",
+        "name": "",
+        "links": [
+            "60e988f6.fee118"
+        ],
+        "x": 555,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "60e988f6.fee118",
+        "type": "link in",
+        "z": "9fa5ae27.2c6838",
+        "name": "",
+        "links": [
+            "838eb2fe.a65d18"
+        ],
+        "x": 95,
+        "y": 360,
+        "wires": [
+            [
+                "8b1abada.50c0f",
+                "e2218e66.f7f2",
+                "a564d49b.423fe",
+                "cf9efe9a.9f4958",
+                "8a148f66.12b8a8"
+            ]
+        ]
+    },
+    {
+        "id": "7e2f5111.c2b428",
+        "type": "ibmiot in",
+        "z": "2a9f98d3.89463",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "ESP8266",
+        "eventType": "status",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": false,
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 80,
+        "y": 180,
+        "wires": [
+            [
+                "3faa5036.f9b148",
+                "b88622fa.d6e71",
+                "1cd13f69.00ac09",
+                "def64771.b11f18"
+            ]
+        ]
+    },
+    {
+        "id": "3faa5036.f9b148",
+        "type": "debug",
+        "z": "2a9f98d3.89463",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 270,
+        "y": 110,
+        "wires": []
+    },
+    {
+        "id": "b88622fa.d6e71",
+        "type": "change",
+        "z": "2a9f98d3.89463",
+        "name": "Chart Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.d.temp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "f6d75975.73f14"
+            ]
+        ]
+    },
+    {
+        "id": "1cd13f69.00ac09",
+        "type": "change",
+        "z": "2a9f98d3.89463",
+        "name": "Chart Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.d.humidity",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "6e6b19b7.84278"
+            ]
+        ]
+    },
+    {
+        "id": "def64771.b11f18",
+        "type": "switch",
+        "z": "2a9f98d3.89463",
+        "name": "Warn on High Values",
+        "property": "payload.d.temp",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 300,
+        "y": 250,
+        "wires": [
+            [
+                "fecea96.e1191d8"
+            ]
+        ]
+    },
+    {
+        "id": "fecea96.e1191d8",
+        "type": "template",
+        "z": "2a9f98d3.89463",
+        "name": "Alert Msg",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Alert : Critical Value Detected {{payload.d.temp}}",
+        "output": "str",
+        "x": 490,
+        "y": 250,
+        "wires": [
+            [
+                "c1b9a28b.e4b4f8"
+            ]
+        ]
+    },
+    {
+        "id": "f6d75975.73f14",
+        "type": "ui_chart",
+        "z": "2a9f98d3.89463",
+        "name": "",
+        "group": "a08a610d.d26148",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "DHT Temp",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6e6b19b7.84278",
+        "type": "ui_chart",
+        "z": "2a9f98d3.89463",
+        "name": "",
+        "group": "a08a610d.d26148",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "DHT Humidity",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 490,
+        "y": 200,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c1b9a28b.e4b4f8",
+        "type": "ui_toast",
+        "z": "2a9f98d3.89463",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "",
+        "x": 680,
+        "y": 250,
+        "wires": []
+    },
+    {
+        "id": "3a3ec027.2075b",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "b84d1cfb.bb9d28",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Single Line Plot",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 600,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c4bb6ddb.3475d8",
+        "type": "function",
+        "z": "537283ab.5ef624",
+        "name": "Fill Single Chart Array",
+        "func": "var chart = [{\n    \"series\":[\"A\"],\n    \"data\":[[{\"x\":1504029632890,\"y\":5},\n             {\"x\":1504029633514,\"y\":8},\n             {\"x\":1504029634400,\"y\":3}]],\n    \"labels\":[\"\"]\n}];\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "3a3ec027.2075b",
+                "feec490d.0b42f"
+            ]
+        ]
+    },
+    {
+        "id": "feec490d.0b42f",
+        "type": "debug",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 590,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "27f6c63c.1cd0a2",
+        "type": "comment",
+        "z": "537283ab.5ef624",
+        "name": "Sample Dashboard that plots various Chart types",
+        "info": "",
+        "x": 250,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b1fde22c.c7e378",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "b84d1cfb.bb9d28",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Multiple Line Plots",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 610,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a94eada9.dd7e68",
+        "type": "function",
+        "z": "537283ab.5ef624",
+        "name": "Fill Multiple Line Chart Array",
+        "func": "var chart = [  {\"series\":[\"A\",\"B\",\"C\"],\n                \"data\":[\n                    [{\"x\":1504029632890,\"y\":5},\n                     {\"x\":1504029636001,\"y\":4},\n                     {\"x\":1504029638656,\"y\":2}],\n                    [{\"x\":1504029633514,\"y\":6},\n                     {\"x\":1504029636622,\"y\":7},\n                     {\"x\":1504029639539,\"y\":6}],\n                    [{\"x\":1504029634400,\"y\":7},\n                     {\"x\":1504029637959,\"y\":9},\n                     {\"x\":1504029640317,\"y\":7}]\n                ],\n                \"labels\":[\"\"]}];\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "b1fde22c.c7e378",
+                "e26b76d1.f81a7"
+            ]
+        ]
+    },
+    {
+        "id": "e26b76d1.f81a7",
+        "type": "debug",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "66b41377.89cd64",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "227c4089.a7b298",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Vertical Bar Chart",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2ed762c3.10562e",
+        "type": "inject",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "c4bb6ddb.3475d8"
+            ]
+        ]
+    },
+    {
+        "id": "8353596b.9e8c4",
+        "type": "inject",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "a94eada9.dd7e68"
+            ]
+        ]
+    },
+    {
+        "id": "db058834.1899f",
+        "type": "inject",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "209e7294.5561de"
+            ]
+        ]
+    },
+    {
+        "id": "209e7294.5561de",
+        "type": "function",
+        "z": "537283ab.5ef624",
+        "name": "Fill Bar Chart Array",
+        "func": "var bar={};\nbar.labels = [\"Q1 16\",\"Q2 16\",\"Q3 16\",\"Q4 16\",\"Q1 17\",\"Q2 17\",\"Q3 17\"];\nbar.series = ['Sales A', 'Sales B', 'Sales C', 'Sales D'];\n// An array of 4 arrays of 7 elements\nbar.data = [\n    [65, 59, 80, 81, 56, 55, 40],\n    [28, 48, 40, 19, 86, 27, 90],\n    [38, 28, 20, 49, 45, 60, 20],\n    [58, 18, 40, 29, 15, 30, 60]\n  ];\nreturn {payload:[bar]};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "66b41377.89cd64",
+                "68f3e5e8.580584",
+                "6c6bae93.dcdf38"
+            ]
+        ]
+    },
+    {
+        "id": "68f3e5e8.580584",
+        "type": "debug",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 590,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6c6bae93.dcdf38",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "227c4089.a7b298",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Horizontal Bar Chart",
+        "chartType": "horizontalBar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 619.0908813476562,
+        "y": 580,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "35ac1173.6ea2de",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "e75237e3.b0a2b8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Pie Chart",
+        "chartType": "pie",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1173f80e.157c",
+        "type": "function",
+        "z": "537283ab.5ef624",
+        "name": "Fill Pie Chart Array",
+        "func": "var pie={};\npie.labels = [\"Geo1\",\"Geo2\",\"Geo3\",\"Geo4\",\"Geo5\"];\npie.series = ['Sales A', 'Sales B', 'Sales C', 'Sales D'];\npie.data =   [ [16, 27, 42, 65, 89] ];\n//return {payload:[pie]};\n\nvar pie={ \"labels\" : [\"Geo1\",\"Geo2\",\"Geo3\",\"Geo4\",\"Geo5\"],\n          \"series\" : ['Sales A', 'Sales B', 'Sales C', 'Sales D'],\n          \"data\"   : [ [16, 27, 42, 65, 89] ]\n        };\nmsg.payload = [pie];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "35ac1173.6ea2de",
+                "f2064f40.09968",
+                "f7383d61.954c68",
+                "f99d40ab.ccf22",
+                "636fef81.d10d2"
+            ]
+        ]
+    },
+    {
+        "id": "1ef45f0.dc50021",
+        "type": "inject",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "1173f80e.157c"
+            ]
+        ]
+    },
+    {
+        "id": "f2064f40.09968",
+        "type": "debug",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 590,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "f7383d61.954c68",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "e75237e3.b0a2b8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Polar Area Chart",
+        "chartType": "polar-area",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 610,
+        "y": 400.9090881347656,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "636fef81.d10d2",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "e75237e3.b0a2b8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Radar Chart",
+        "chartType": "radar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f99d40ab.ccf22",
+        "type": "ui_chart",
+        "z": "537283ab.5ef624",
+        "name": "",
+        "group": "e75237e3.b0a2b8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Donut Chart",
+        "chartType": "pie",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "40",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    }
+]

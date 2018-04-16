@@ -1,0 +1,87 @@
+[
+    {
+        "id": "94c09d59.9dec58",
+        "type": "tab",
+        "label": "Store Sensor Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b9c55847.c9b15",
+        "type": "function",
+        "z": "94c09d59.9dec58",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n        time:     new Date().getTime(),\n        temp:     msg.payload.d.temp,\n        humidity: msg.payload.d.humidity\n    } ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "8b252f83.75b5b8",
+                "affeba19.aa9fc8"
+            ]
+        ]
+    },
+    {
+        "id": "8b252f83.75b5b8",
+        "type": "debug",
+        "z": "94c09d59.9dec58",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 510,
+        "y": 70,
+        "wires": []
+    },
+    {
+        "id": "e7126b1c.0bfd08",
+        "type": "ibmiot in",
+        "z": "94c09d59.9dec58",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "ESP8266",
+        "eventType": "status",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": false,
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 70,
+        "y": 100,
+        "wires": [
+            [
+                "b9c55847.c9b15"
+            ]
+        ]
+    },
+    {
+        "id": "affeba19.aa9fc8",
+        "type": "cloudant out",
+        "z": "94c09d59.9dec58",
+        "name": "",
+        "cloudant": "",
+        "database": "historicaldata1",
+        "service": "",
+        "payonly": true,
+        "operation": "insert",
+        "x": 540,
+        "y": 130,
+        "wires": []
+    }
+]

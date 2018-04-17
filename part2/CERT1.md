@@ -119,14 +119,20 @@ To add the root CA certificate to OS:
 
 When a server connects using SSL/TLS it presents its own certificate for verification.  The client uses its local CA certificate store to validate the certificate presented by the server is authentic, by validating that a known CA signed the certificate.
 
+Part of the certificate verification process checks that the certificate is in data (not before the start time of the certificate and not after certificate expiry time), so the ESP8266 needs to know the correct date/time.  The Network Time Protocol can be used to get the correct time from Internet servers.
+
 You have already uploaded the CA certificate to the ESP8266, so now the code needs to be updated to load the certificate from the flash file system and switch to using a SSL/TLS connection.
 
 Make the following code changes:
 
 - Add an include at the top of the file to access the file system : `#include <FS.h>`
+- Add an include after the **ESP8266WiFi.h** include to add time : `#include <time.h>`
 - Change the MQTT_PORT to use the secure port 8883 : `#define MQTT_PORT 8883`
 - Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.der"`
 - Change the wifiClient to use the secure version : `WiFiClientSecure wifiClient;`
+- Add #define to set timezone offset : `#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)`
+- Add #define to set day light saving offset : `#define TZ_DST    60  //Minutes timezone offset for Daylight saving`
+
 - Modify the MQTT connection code in the setup() function to establish a secure connection:
 
 ```C++
@@ -142,20 +148,38 @@ Make the following code changes:
     ca.close();
   }
 
-  // Connect to MQTT - IBM Watson IoT Platform
-  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
-    if (wifiClient.verifyCertChain(MQTT_HOST)) {
-      Serial.println("certificate matches");
-    } else {
-      // ignore for now - but usually don't want to proceed if a valid cert not presented!
-      Serial.println("certificate doesn't match");
-    }
-    Serial.println("MQTT Connected");
-    mqtt.subscribe(MQTT_TOPIC_CMD);
+  // Set time from NTP servers
+  configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
+  Serial.println("\nWaiting for time");
+  unsigned timeout = 5000;
+  unsigned start = millis();
+  while (millis() - start < timeout) {
+      time_t now = time(nullptr);
+      if (now > (2018 - 1970) * 365 * 24 * 3600) {
+          break;
+      }
+      delay(100);
+  }
+  delay(1000); // Wait for time to fully sync
+  Serial.println("Time sync'd");
+  time_t now = time(nullptr);
+  Serial.println(ctime(&now));
 
-  } else {
-    Serial.println("MQTT Failed to connect!");
-    ESP.reset();
+  // Connect to MQTT - IBM Watson IoT Platform
+  while(! mqtt.connected()){
+    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+      if (wifiClient.verifyCertChain(MQTT_HOST)) {
+        Serial.println("certificate matches");
+      } else {
+        // ignore for now - but usually don't want to proceed if a valid cert not presented!
+        Serial.println("certificate doesn't match");
+      }
+      Serial.println("MQTT Connected");
+      mqtt.subscribe(MQTT_TOPIC_CMD);
+    } else {
+      Serial.println("MQTT Failed to connect! ... retrying");
+      delay(500);
+    }
   }
 ```
 
@@ -184,6 +208,7 @@ The finished application should look like this:
 ```C++
 #include <FS.h>
 #include <ESP8266WiFi.h>
+#include <time.h>
 #include <Adafruit_NeoPixel.h>
 #include <DHT.h>
 #include <ArduinoJson.h>
@@ -216,6 +241,10 @@ The finished application should look like this:
 #define ALARM_HOT 30.0
 #define WARN_COLD 10.0
 #define WARN_HOT 25.0
+
+//Timezone info
+#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)
+#define TZ_DST    60  //Minutes timezone offset for Daylight saving
 
 
 // Add WiFi connection information
@@ -288,19 +317,38 @@ void setup() {
     ca.close();
   }
 
+  // Set time from NTP servers
+  configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
+  Serial.println("\nWaiting for time");
+  unsigned timeout = 5000;
+  unsigned start = millis();
+  while (millis() - start < timeout) {
+      time_t now = time(nullptr);
+      if (now > (2018 - 1970) * 365 * 24 * 3600) {
+          break;
+      }
+      delay(100);
+  }
+  delay(1000); // Wait for time to fully sync
+  Serial.println("Time sync'd");
+  time_t now = time(nullptr);
+  Serial.println(ctime(&now));
+
   // Connect to MQTT - IBM Watson IoT Platform
-  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
-    if (wifiClient.verifyCertChain(MQTT_HOST)) {
-      Serial.println("certificate matches");
+   while(! mqtt.connected()){
+    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+      if (wifiClient.verifyCertChain(MQTT_HOST)) {
+        Serial.println("certificate matches");
+      } else {
+        // ignore for now - but usually don't want to proceed if a valid cert not presented!
+        Serial.println("certificate doesn't match");
+      }
+      Serial.println("MQTT Connected");
+      mqtt.subscribe(MQTT_TOPIC_CMD);
     } else {
-      // ignore for now - but usually don't want to proceed if a valid cert not presented!
-      Serial.println("certificate doesn't match");
+      Serial.println("MQTT Failed to connect! ... retrying");
+      delay(500);
     }
-    Serial.println("MQTT Connected");
-    mqtt.subscribe(MQTT_TOPIC_CMD);
-  } else {
-    Serial.println("MQTT Failed to connect!");
-    ESP.reset();
   }
 }
 
@@ -311,6 +359,7 @@ void loop() {
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
+// Should verify the certificates here - like in the startup function
       mqtt.subscribe(MQTT_TOPIC_CMD);
       mqtt.loop();
     } else {

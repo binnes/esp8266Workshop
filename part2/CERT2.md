@@ -108,6 +108,7 @@ The finished application should look like this:
 ```C++
 #include <FS.h>
 #include <ESP8266WiFi.h>
+#include <time.h>
 #include <Adafruit_NeoPixel.h>
 #include <DHT.h>
 #include <ArduinoJson.h>
@@ -232,20 +233,39 @@ void setup() {
     cert.close();
   }
 
+  // Set time from NTP servers
+  configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
+  Serial.println("\nWaiting for time");
+  unsigned timeout = 5000;
+  unsigned start = millis();
+  while (millis() - start < timeout) {
+      time_t now = time(nullptr);
+      if (now > (2018 - 1970) * 365 * 24 * 3600) {
+          break;
+      }
+      delay(100);
+  }
+  delay(1000); // Wait for time to fully sync
+  Serial.println("Time sync'd");
+  time_t now = time(nullptr);
+  Serial.println(ctime(&now));
+
   // Connect to MQTT - IBM Watson IoT Platform
-  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//  if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
-    if (wifiClient.verifyCertChain(MQTT_HOST)) {
-      Serial.println("certificate matches");
+   while(! mqtt.connected()){
+    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+      if (wifiClient.verifyCertChain(MQTT_HOST)) {
+        Serial.println("certificate matches");
+      } else {
+        // ignore for now - but usually don't want to proceed if a valid cert not presented!
+        Serial.println("certificate doesn't match");
+      }
+      Serial.println("MQTT Connected");
+      mqtt.subscribe(MQTT_TOPIC_CMD);
     } else {
-      // ignore for now - but usually don't want to proceed if a valid cert not presented!
-      Serial.println("certificate doesn't match");
+      Serial.println("MQTT Failed to connect! ... retrying");
+      delay(500);
     }
-    Serial.println("MQTT Connected");
-    mqtt.subscribe(MQTT_TOPIC_CMD);
-  } else {
-    Serial.println("MQTT Failed to connect!");
-    ESP.reset();
   }
 }
 
@@ -257,6 +277,7 @@ void loop() {
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
 //    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // No Token Authentication
       Serial.println("MQTT Connected");
+// Should verify the certificates here - like in the startup function
       mqtt.subscribe(MQTT_TOPIC_CMD);
       mqtt.loop();
     } else {

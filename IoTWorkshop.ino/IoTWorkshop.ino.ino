@@ -227,12 +227,14 @@ void loop() {
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
   } else {
+    /* Control of the LED is now handles by the incoming command
     // Set RGB LED Colour based on temp
     b = (t < ALARM_COLD) ? 255 : ((t < WARN_COLD) ? 150 : 0);
     r = (t >= ALARM_HOT) ? 255 : ((t > WARN_HOT) ? 150 : 0);
     g = (t > ALARM_COLD) ? ((t <= WARN_HOT) ? 255 : ((t < ALARM_HOT) ? 150 : 0)) : 0;
     pixel.setPixelColor(0, r, g, b);
     pixel.show();
+    */
 
     // Print Message to console in JSON format
     status["temp"] = t;

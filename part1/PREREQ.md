@@ -16,8 +16,8 @@ To be able to communicate with the ESP8266 module and create applications for th
 
 ### Hardware
 
-- ESP8266 NodeMCU
-- NeoPixel RGB LED - [Adafruit](https://www.adafruit.com/product/1734)
+- ESP8266, search for NodeMCU board
+- NeoPixel RGB LED (or any other chainable RGB/RGBW LED based on ws2812b or sk6812 chips ), such as [this from Adafruit](https://www.adafruit.com/product/1734)
 - DHT11 Temperature / Humidity Sensor
 - Female to Female jumper wires (6)
 - MicroUSB cable

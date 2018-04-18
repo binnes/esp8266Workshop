@@ -65,11 +65,11 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 
  ![Cloudant NoSQL Service Connection](../part3/screenshots/CloudantNoSQLServiceConnection.png)
 
-- Read about the Cloudant Storage service and click on the **Service Credentials** menu item in the left menu bar.
+- Read about the Cloudant Storage service and click on the **Service credentials** menu item in the left menu bar.
 
  ![Cloudant NoSQL Service Instance](../part3/screenshots/CloudantNoSQLServiceInstance.png)
 
-- Click on **New Credential**
+- Click on **New credential**
  ![Cloudant NoSQL Service Instance](screenshots/Cloudant-NewCreds.png)
 
 - Give your credential a name: **Credentials-DSX**
@@ -80,9 +80,14 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 ### Step 5 - Run Jupyter Notebook
 
 - Return to Watson Studio and open the *ESP8266 DHT IoT Sensor Analytics** notebook.
+
  ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
+
 - Make certain you are in **Edit** mode by clicking on the Pencil icon.
-- You will now copy the Cloudant credentials to your **ESP8266 DHT IoT Sensor Analytics** notebook cell 5
+- You will now copy the Cloudant hostname, user and password credentials to your **ESP8266 DHT IoT Sensor Analytics** notebook cell 5
+
+ ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266-creds.png)
+
 - Click on the **Run** button to run each cell.
 
 *Quick links :*

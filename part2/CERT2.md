@@ -135,7 +135,7 @@ The finished application should look like this:
 #define DHT_PIN 4 // GPIO pin the data line of the DHT sensor is connected to
 
 // Specify DHT11 (Blue) or DHT22 (White) sensor
-#define DHTTYPE DHT
+#define DHTTYPE DHT11
 #define NEOPIXEL_TYPE NEO_RGB + NEO_KHZ800
 
 // Temperatures to set LED by (assume temp in C)
@@ -144,6 +144,9 @@ The finished application should look like this:
 #define WARN_COLD 10.0
 #define WARN_HOT 25.0
 
+//Timezone info
+#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)
+#define TZ_DST    60  //Minutes timezone offset for Daylight saving
 
 // Add WiFi connection information
 char ssid[] = "SSID";     //  your network SSID (name)

@@ -14,6 +14,14 @@ This Lab will ensure you have all the resources and software needed to complete 
 
 To be able to communicate with the ESP8266 module and create applications for the ESP8266 module you need to have the following software on your laptop/workstation:
 
+### Hardware
+
+- ESP8266 NodeMCU
+- NeoPixel RGB LED - [Adafruit](https://www.adafruit.com/product/1734)
+- DHT11 Temperature / Humidity Sensor
+- Female to Female jumper wires (6)
+- MicroUSB cable
+
 ### Step 1 - Install the required drivers
 
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :
@@ -79,7 +87,7 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://ibm.biz/BdZaRT) link.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://bluemix.net) link.
 
 ## Applying for a promo code for the IBM Cloud
 

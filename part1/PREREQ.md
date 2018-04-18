@@ -14,6 +14,14 @@ This Lab will ensure you have all the resources and software needed to complete 
 
 To be able to communicate with the ESP8266 module and create applications for the ESP8266 module you need to have the following software on your laptop/workstation:
 
+### Hardware
+
+- ESP8266
+- NeoPixel RGB LED - [Adafruit](https://www.adafruit.com/product/1734)
+- DHT11 Temperature / Humidity Sensor
+- Female to Female jumper wires (6)
+- MicroUSB cable
+
 ### Step 1 - Install the required drivers
 
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :

@@ -61,11 +61,13 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 ### Step 4 - Cloudant Credentials
 
 - Open a new browser tab.
-- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB (1) service connection.
-- Read about the Cloudant Storage service and click on the **Service Credential** menu item in the left menu bar.
+- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection.
+- Read about the Cloudant Storage service and click on the **Service Credentials** menu item in the left menu bar.
  ![Cloudant NoSQL Service Instance](../part3/screenshots/CloudantNoSQLServiceInstance.png)
+
 - Click on **New Credential**
  ![Cloudant NoSQL Service Instance](screenshots/Cloudant-NewCreds.png)
+
 - Give your credential a name: **Credentials-DSX**
 - Click on **Add**
 - Expand the **View credentials** twistie

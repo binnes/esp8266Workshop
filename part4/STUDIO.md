@@ -59,6 +59,7 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 
 ### Step 4 - Cloudant Credentials
 
+- Open a new browser tab.
 - Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB (1) service connection.
 - Read about the Cloudant Storage service and click on the **Service Credential** menu item in the left menu bar.
  ![Cloudant NoSQL Service Instance](../part3/screenshots/CloudantNoSQLServiceInstance.png)
@@ -70,12 +71,11 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 
 ### Step 5 - Run Jupyter Notebook
 
-- Make certain you are Edit mode
-
+- Return to Watson Studio and open the *ESP8266 DHT IoT Sensor Analytics** notebook.
+ ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
+- Make certain you are Edit mode by clicking on the Pencil icon.
 - You will now copy the Cloudant credentials to your **ESP8266 DHT IoT Sensor Analytics** notebook cell 5
-
-
-Proceed to the next section [**Running Jupyter Notebooks**](/part4/JUPYTER.md)
+- Click on the Run button to run each cell.
 
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [Part 3](/part3/README.md) - [**Part 4**](/part4/README.md)

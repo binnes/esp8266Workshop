@@ -1,5 +1,5 @@
 *Quick links :*
-[Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [**Part 3**](/part3/README.md) - [Part 4](/part4/README.md)
+[Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [Part 3](/part3/README.md) - [**Part 4**](/part4/README.md)
 ***
 **Part 4** - [**Watson Studio**](/part4/STUDIO.md) - [Notebooks](/part4/JUPYTER.md)
 ***
@@ -38,7 +38,10 @@ Watson Studio accelerates the machine and deep learning workflows required to in
   - Give the notebook a name: **ESP8266 DHT IoT Sensor Analytics**
   - Import the notebook from this URL
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
+  - Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
   - Click on **Create Notebook**
+![Watson Studio New project screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
+  - Before running this notebook, an additional connector notebook needs to be installed.
 
 ## Step 3 - Create an Apache Bahir Connector Notebook
 This will install the Apache Bahir connector within your Project/Apache Spark service. If you restart the kernel or start a new notebook in the same project you can use Apache Bahir for connecting to the Cloudant/Apache CouchDB service.
@@ -48,9 +51,14 @@ This will install the Apache Bahir connector within your Project/Apache Spark se
   - Give the notebook a name: **Apache Bahir**
   - Import the notebook from this URL
 https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb
+  - Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
   - Click on **Create Notebook**
+  - Once it loads, click on the **> Run** button twice.
+  ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
 
-### Step 4 -
+### Step 4 - Cloudant Credentials
+
+- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB (1) service connection.
 
 Proceed to the next section [**Running Jupyter Notebooks**](/part4/JUPYTER.md)
 

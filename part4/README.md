@@ -4,13 +4,8 @@
 
 # Part 4
 
-## IoT Analytics techniques
-
 ## Introduction to Watson Studio
-
-## Gentle introduction to Python / Jupyter Notebooks
-
-## Introduction to Spark
+- practical [**Watson Studio**](/part4/STUDIO.md)
 
 ## Analytics - Mean / Average / Std Dev
 

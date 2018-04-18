@@ -40,6 +40,7 @@ Watson Studio accelerates the machine and deep learning workflows required to in
   - Import the notebook from this URL
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
   - Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
+![Watson Studio New project screenshot](screenshots/WatsonStudio-NewNotebook.png)
   - Click on **Create Notebook**
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
   - Before running this notebook, an additional connector notebook needs to be installed.

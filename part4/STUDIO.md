@@ -22,6 +22,7 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 ### Step 1 - Watson Studio
 - Visit Watson Studio at http://dataplatform.ibm.com
 - Login with your IBM Cloud account
+
 ![Watson Studio Welcome screenshot](screenshots/WatsonStudio-Welcome.png)
 - Click on **New project**
 - Give your Project a name - **ESP8266**
@@ -59,6 +60,20 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 ### Step 4 - Cloudant Credentials
 
 - Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB (1) service connection.
+- Read about the Cloudant Storage service and click on the **Service Credential** menu item in the left menu bar.
+ ![Cloudant NoSQL Service Instance](../part3/screenshots/CloudantNoSQLServiceInstance.png)
+- Click on **New Credential**
+ ![Cloudant NoSQL Service Instance](screenshots/Cloudant-NewCreds.png)
+- Give your credential a name: **Credentials-DSX**
+- Click on **Add**
+- Expand the **View credentials** twistie
+
+### Step 5 - Run Jupyter Notebook
+
+- Make certain you are Edit mode
+
+- You will now copy the Cloudant credentials to your **ESP8266 DHT IoT Sensor Analytics** notebook cell 5
+
 
 Proceed to the next section [**Running Jupyter Notebooks**](/part4/JUPYTER.md)
 

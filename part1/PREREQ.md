@@ -16,7 +16,7 @@ To be able to communicate with the ESP8266 module and create applications for th
 
 ### Hardware
 
-- ESP8266
+- ESP8266 NodeMCU
 - NeoPixel RGB LED - [Adafruit](https://www.adafruit.com/product/1734)
 - DHT11 Temperature / Humidity Sensor
 - Female to Female jumper wires (6)
@@ -87,7 +87,7 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://ibm.biz/BdZaRT) link.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://bluemix.net) link.
 
 ## Applying for a promo code for the IBM Cloud
 

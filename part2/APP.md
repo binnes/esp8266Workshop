@@ -142,7 +142,7 @@ void loop()
 
 This code is called repeatedly after the **setup()** function returns.  It reads the humidity and temperature for the DHT sensor, validates it received the readings then sets the LED colour to the correct colour based on the temperature and the alert and warning temperatures defined in the constants at the top of the application.  Finally the temperature and humidity values are added to the JSON object, which is then converted to a string buffer and printed to the console.
 
-### Step 3 - Run the code and view output using the Serial Monitor
+### Step 3 - Run the code and view output using the Serial Monitor
 
 Save, compile and upload the sketch.  Once uploaded open up the Serial Monitor and set the baud rate to 115200, to match the rate set in the Serial.begin(115200) message.  You should see the confirmation that the WiFi connection has been made and then you should see the sensor data formatted as a JSON string, repeating every 10 seconds (10000 milliseconds).
 

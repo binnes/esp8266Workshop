@@ -30,10 +30,6 @@ Disconnect the ESP*266 board from your laptop/workstation before connecting the 
 
 The DHT sensors have 4 connecting pins.  When looking at the front of the sensor (mesh case) with the pins at the bottom, the connections are (left to right):
 
-<p align="center">
-<img height="202" width="250" src="https://steve.zazeski.com/wp-content/uploads/2013/11/dht11.jpg">
-</p>
-
 - +'ve voltage
 - Data
 - Not used

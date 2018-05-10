@@ -20,45 +20,59 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 - Learn more from the Experts - [Introducing IBM Watson Studio](https://medium.com/ibm-watson/introducing-ibm-watson-studio-e93638f0bb47)
 
 ### Step 1 - Watson Studio
+- Watch the [video](https://www.youtube.com/watch?v=OiaIg8Y0R9k) which illustrates how to set up Watson Studio or follow the steps below.
 - Visit Watson Studio at http://dataplatform.ibm.com
 - Login with your IBM Cloud account
+- In the **Select Organization and Space** dialog, click on **Continue**
+- Click on **Get Started**
+- Walk through the introductory tutorial to learn about Watson Studio
 
 ![Watson Studio Welcome screenshot](screenshots/WatsonStudio-Welcome.png)
+
+### Step 2 - Create a New Project
+- Projects are your workspace to organize your resources, such as assets like data, collaborators, and analytic tools like notebooks and models
 - Click on **New project**
+- Make sure to enable **Jupyter Notebooks**
+- Press the **OK** button.
+![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
 - Give your Project a name - **ESP8266**
 - Press the **Create** button.
-![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
-- Walk through the introductory tutorial to learn about Watson projects
- - Projects are your workspace to organize your resources, such as assets like data, collaborators, and analytic tools like notebooks and models
- - We will get started with Tools
+- Press the Settings tab.
+- We need to add an Apache Spark service to the project.
+- Make certain that Jupyter Notebooks is checked.
+- Scroll down to the **Associated services** section and click on the **Add Service**
+- Select **Spark** from the dropdown
+- In the **Apache Spark** service panel, select the **Lite** plan and press the **Create** button.  Press the **Confirm** button.
+- Now an Apache Spark service has been added to your Project.
+- We will get started with Tools
 
-### Step 2 - Create a Notebook
+### Step 3 - Create a Notebook
 
 - From the top menu, select **Tools**, and then **Notebook**
+- Give the notebook a name: **ESP8266 DHT IoT Sensor Analytics**
 - Select **from URL**
-  - Give the notebook a name: **ESP8266 DHT IoT Sensor Analytics**
-  - Import the notebook from this URL
+- Import the notebook from this URL
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
-  - Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
+- Scoll down to the **Select runtime** dropdown and choose your **Spark** service
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewNotebook.png)
-  - Click on **Create Notebook**
-![Watson Studio New project screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
-  - Before running this notebook, an additional connector notebook needs to be installed.
+- Click on **Create Notebook**
+![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
+- Before running this notebook, an additional connector notebook needs to be installed.
 
-## Step 3 - Create an Apache Bahir Connector Notebook
+## Step 4 - Create an Apache Bahir Connector Notebook
 This will install the Apache Bahir connector within your Project/Apache Spark service. If you restart the kernel or start a new notebook in the same project you can use Apache Bahir for connecting to the Cloudant/Apache CouchDB service.
 
 - From the top menu, select **Tools**, and then **Notebook**
 - Select **from URL**
-  - Give the notebook a name: **Apache Bahir**
-  - Import the notebook from this URL
+- Give the notebook a name: **Apache Bahir**
+- Import the notebook from this URL
 https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb
-  - Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
-  - Click on **Create Notebook**
-  - Once it loads, click on the **> Run** button twice.
+- Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
+- Click on **Create Notebook**
+- Once it loads, click on the **> Run** button twice.
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
 
-### Step 4 - Cloudant Credentials
+### Step 5 - Cloudant Credentials
 
 - Open a new browser tab.
 - Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1).
@@ -77,7 +91,7 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 - Expand the **View credentials** twistie
 - You will use these credentials in the next Step.
 
-### Step 5 - Run Jupyter Notebook
+### Step 6 - Run Jupyter Notebook
 
 - Return to Watson Studio and open the *ESP8266 DHT IoT Sensor Analytics** notebook.
 

@@ -12,15 +12,31 @@ This Lab will ensure you have all the resources and software needed to complete 
 
 ## ESP8266 development
 
-To be able to communicate with the ESP8266 module and create applications for the ESP8266 module you need to have the following software on your laptop/workstation:
+To be able to complete the workshop you need to purchase the required hardware and install the required software to your laptop or workstation.  You also need an active IBM Cloud account and a suitable WiFi environment:
 
-### Hardware
+### WiFi
 
-- ESP8266, search for NodeMCU board
-- NeoPixel RGB LED (or any other chainable RGB/RGBW LED based on ws2812b or sk6812 chips ), such as [this from Adafruit](https://www.adafruit.com/product/1734)
-- DHT11 Temperature / Humidity Sensor
-- Female to Female jumper wires (6)
-- MicroUSB cable
+The ESP8266 can connect to a 2.4GHz network supporting 802.11 b/g/n.  The ESP8266 will not work with 5GHz frequencies (802.11 ac).  
+
+As there is no ability to launch a browser on the ESP8266, so you cannot work with WiFi networks needing a browser to be able to enter credentials, which is a mechanism often used in public spaces, such as hotels.
+
+The workshop does not support advanced authentication, such as using LDAP or certificates to authenticate to the network.  You should have a network that uses an access token/password, such as WPA/WPA2 - this is what most home WiFi access points provide.
+
+Many corporate networks are difficult to connect IoT devices to, as they can be tightly secured, often requiring certificates to be installed.
+
+If a suitable network is not available then smart Phone hotspots can be used to provide connectivity. The workshop does not require large amounts of data for the ESP8266, so is suitable for using a phone hotspot.
+
+### Purchasing the required Hardware
+
+You need to purchase the following hardware to work through the workshop.  The workshop instructions uses the DHT11 temperature and humidity sensor.  This can be replaced with the DHT22 sensor, which has the same pinout, but offers a more accurate sensor.  DHT11 is accurate within 2C, whilst the DHT22 is accurate to within 0.5C.
+
+- ESP8266, (search for **NodeMCU ESP8266 v3**)
+- NeoPixel RGB LED (or any other chainable RGB/RGBW LED based on ws2812b or sk6812 chips ), such as [this from Adafruit](https://www.adafruit.com/product/1734) (Search for **Neopixel 8mm or 5mm** - often sold in packs of 5)
+- DHT11 Temperature / Humidity Sensor (search for **DHT11 or DHT22**)
+- 6 x Female to Female jumper wires (search for **dupont cable f2f or f-f** - usually sold in packs of 40 cables)
+- MicroUSB cable (Please ensure it is a data cable, not just a power cable)
+
+## Installing the required hardware
 
 ### Step 1 - Install the required drivers
 
@@ -70,7 +86,7 @@ The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for 
 - MacOS - **/Users/< user name >/Documents/Arduino/tools/ESP8266FS**
 - Windows - **C:\Users\< user name >\Documents\Arduino\tools\ESP8266FS**
 
-## SSL utility to work with certificates
+#### Step 5 - SSL utility to work with certificates
 
 During the workshop you will be generating your own self-signed certificates, so need the OpenSSL tooling installed.  Follow the instructions for your OS below:
 
@@ -91,7 +107,7 @@ The workshop will use services hosted on the IBM Cloud, so you need to ensure yo
 
 ## Applying for a promo code for the IBM Cloud
 
-You can increase the standard resources available in the free IBM Cloud Lite account by adding a promo code.  If working through this workshop with an instructor you will be advised of the event name to use, so you can get a promo code from [**here**](http://promocodes.mybluemix.net)
+You can increase the standard resources available in the free IBM Cloud Lite account by adding a promo code.  This option is only available if working through this workshop with an instructor.  Your instructor will be advised of the event name to use, then you can get a promo code from [**here**](http://promocodes.mybluemix.net)
 
 - Enter the event name the instructor advised you to enter
 - Enter your IBM ID - should be an email address (you need to be able to access mail delivered to this address to receive the promo code)

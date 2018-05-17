@@ -113,9 +113,9 @@ The workshop will use services hosted on the IBM Cloud, so you need to ensure yo
 
 ## Applying for a promo code for the IBM Cloud
 
-You can increase the standard resources available in the free IBM Cloud Lite account by adding a promo code.  This option is only available if working through this workshop with an instructor.  Your instructor will be advised of the event name to use, then you can get a promo code from [**here**](http://promocodes.mybluemix.net)
+You can increase the standard resources available in the free IBM Cloud Lite account by adding a promo code.  This option is only available if working through this workshop with an instructor.  Your instructor will provide the event name to use, then you can get a promo code from [**here**](http://promocodes.mybluemix.net)
 
-- Enter the event name the instructor advised you to enter
+- Enter the event name the instructor provided
 - Enter your IBM ID - should be an email address (you need to be able to access mail delivered to this address to receive the promo code)
 - Enter your name as the team name
 

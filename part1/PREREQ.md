@@ -38,7 +38,11 @@ You need to purchase the following hardware to work through the workshop.  The w
 - 6 x Female to Female jumper wires (search for **dupont cable f2f or f-f** - usually sold in packs of 40 cables)
 - MicroUSB cable (Please ensure it is a data cable, not just a power cable)
 
-## Installing the required hardware
+## Installing the required software
+
+The following instructions have been tested against Linux (Ubuntu 18.04LTS and Fedora 27), MacOS (High Sierra) and Windows 10.  If you are using a different OS then you may need to adapt the instructions to match your installed OS.
+
+You may need admin access to your workstation to be able to install the software and drivers.
 
 ### Step 1 - Install the required drivers
 

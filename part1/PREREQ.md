@@ -48,7 +48,7 @@ You may need admin access to your workstation to be able to install the software
 
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :
 
-- [MacOS](http://www.wch.cn/downfile/178)
+- [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)
 - [**Win/Linux**](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers)
 
 Select the appropriate one for your OS, download it, unzip it and install it.

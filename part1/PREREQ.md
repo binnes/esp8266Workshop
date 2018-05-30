@@ -42,6 +42,10 @@ You need to purchase the following hardware to work through the workshop.  The w
 
 The following instructions have been tested against Linux (Ubuntu 18.04LTS and Fedora 27), MacOS (High Sierra) and Windows 10.  If you are using a different OS then you may need to adapt the instructions to match your installed OS.
 
+NOTE: On **MacOS with [homebrew](https://brew.sh)** installed, the software for Steps 1 and 2 can be installed via:
+* __brew cask install silicon-labs-vcp-driver arduino__
+* Then pick up at Step 3
+
 You may need admin access to your workstation to be able to install the software and drivers.
 
 ### Step 1 - Install the required drivers

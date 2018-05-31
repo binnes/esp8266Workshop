@@ -109,17 +109,7 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://bluemix.net) link.
-
-## Applying for a promo code for the IBM Cloud
-
-You can increase the standard resources available in the free IBM Cloud Lite account by adding a promo code.  This option is only available if working through this workshop with an instructor.  Your instructor will provide the event name to use, then you can get a promo code from [**here**](http://promocodes.mybluemix.net)
-
-- Enter the event name the instructor provided
-- Enter your IBM ID - should be an email address (you need to be able to access mail delivered to this address to receive the promo code)
-- Enter your name as the team name
-
-Once you have received the promo code you need to log into your IBM Cloud account.  From the top menu select *Manage* -> *Billing and Usage* -> *Billing*.  On that page select *Apply Code* under the Feature (Promo) code section.  Paste in the code you received via email then hit *Apply* to convert your lite account to a trial account.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://bluemix.net) link.  The workshop can be completed using the free, lite account.
 
 ***
 *Quick links :*

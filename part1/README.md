@@ -22,8 +22,6 @@ Before you can start working on this workshop you need to have some prerequisite
 
 - practical [**RGB LED**](/part1/LED.md)
 
-** Search for and install Adafruit NeoPixel lib 1.1.6
-
 ## DHT Temp - sample app - 15 minutes
 
 - practical [**DHT Sensor**](/part1/DHT.md)

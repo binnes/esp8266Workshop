@@ -16,7 +16,7 @@ Make certain you have assembled the NeoPixel LED and DHT-11 temperature sensor c
 
 - Power your ESP8266 with the provided MicroUSB cable by pulling it into your laptop.
 - Visit [ESP8266 Workshop Master Dashboard](https://esp8266-workshop.mybluemix.net/ui/#/2)
-![ESP8266 Master Dashboard](/compressed/Node-RED-Master-Dashboard.jpg)
+![ESP8266 Master Dashboard](/compressed/Node-RED-Master-Dashboard.png)
 
 ***
 *Quick links :*

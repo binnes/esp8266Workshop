@@ -38,7 +38,7 @@ You need to connect the Data In, +'ve voltage and ground to the ESP8266 board as
 
 The DHT11 or DHT22 sensors add the ability to sense temperature and humidity.  The DHT22 is a more accurate version of the DHT11.
 
-Disconnect the ESP*266 board from your laptop/workstation before connecting the DHT sensor.
+Disconnect the ESP8266 board from your laptop/workstation before connecting the DHT sensor.
 
 The DHT sensors have 4 connecting pins.  When looking at the front of the sensor (mesh case) with the pins at the bottom, the connections are (left to right):
 

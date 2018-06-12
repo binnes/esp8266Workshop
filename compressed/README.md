@@ -16,12 +16,12 @@ Follow the links to access the different sections of the course:
 
 ### [Part 1](/compressed/PART1.md)
 
-Provides an overview to the course, introduces the hardware, and the development tooling. The compressed workshop will not introduce you to ESP8266 device programming.  You have been provided an ESP8266 device that has been pre-configured to connect to the local WiFi network and able to send secure MQTT traffic to the IBM Cloud. You will assemble the LED and Temperature sensor parts and send data to the IBM Cloud.
+Provides an overview to the course, introduces the hardware, and the development tooling. The compressed workshop will not introduce you to ESP8266 device programming.  You have been provided an ESP8266 device that has been pre-configured to connect to the local WiFi network and which sends secure MQTT traffic to the IBM Cloud. You will assemble the LED and Temperature sensor parts and send data to the IBM Cloud.
 Part 1 finishes with an overview of the IBM Cloud, the cloud platform used in this workshop and ensures you have a working cloud account with the required resources.
 
 ### [Part 2](/compressed/PART2.md)
 
-The second part of the workshop looks at the Internet of Things service on the IBM Cloud and how you connect a device to the IBM Cloud using the MQTT protocol.  This section introduces you to security concepts required to connect the device and the Cloud Platform, using SSL/TLS security and certificates.  You will create a Watson IoT
+The second part of the workshop looks at the Internet of Things service on the IBM Cloud and how you connect a device to the IBM Cloud using the MQTT protocol.  This section introduces you to security concepts required to connect the device and the Cloud Platform, using SSL/TLS security and certificates.  You will create a Watson IoT Platform instance and receive your ESP8266 sensor data.
 
 ### [Part 3](/compressed/PART3.md)
 

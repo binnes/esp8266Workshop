@@ -33,9 +33,9 @@ Select **Next** then **Done**
 
 ### Step 3 - Register your ESP8266 board in the IoT platform
 
-You now have the opportunity to register a device.  Stick with the simple flow for now and press **Register Device**.  The ESP8266 device type should be pre-selected.  You now need to enter a unique device ID.  Again you can choose how you want to identify devices.  For the workshop, use the WiFi MAC address assigned to your ESP8266. Inside the workshop kit bag, locate the card with the MAC address, such as **41CDFDC2DDBC**.
+You now have the opportunity to register a device.  Stick with the simple flow for now and press **Register Device**.  The ESP8266 device type should be pre-selected.  You now need to enter a unique device ID.  For the workshop, use the WiFi MAC address assigned to your ESP8266. Inside the workshop kit bag, locate the card with the MAC address, such as **41CDFDC2DDBC**.
 
-Press **Next** button twice then you will be prompted to provide a token.  When developing I recommend choosing a token you can easily remember.  I set all my devices to use the same token when developing, but obviously this is not a good production practice.
+Press **Next** button twice then you will be prompted to provide a token.  When developing I recommend choosing a token you can easily remember. The workshop uses **W0rkSh0p** as the token. I set all my devices to use the same token when developing, but obviously this is not a good production practice.
 
 Each time you connect the device the token will need to be presented to the server and once the device is registered there is no way to recover a token, you will need to delete and reregister the device if the token is lost.
 

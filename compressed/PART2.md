@@ -15,9 +15,10 @@
 ## Receive ESP8266 Sensor Data
 
 - Your ESP8266 board is sending sensor data to the pre-registered account. To re-transmit this sensor data to your Watson Internet of Things instance, you need to provide the instructor with the following information:
- - OrgID - The Watson IoT Platform Organization ID will be in the upper right corner of dashboard.
+ - OrgID - The Watson IoT Platform Organization  (six digits) will be in the upper right corner of dashboard.
  - Device ID (MAC Address)
  - Token - which should be **W0rkSh0p**
+Hint: Write the OrgID on the business card and visit the Instructor.
 
 ***
 *Quick links :*

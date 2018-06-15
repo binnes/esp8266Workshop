@@ -86,7 +86,11 @@ Select *Tools* -> *Board:* -> *Board Manager...* from the menu, then enter ESP i
 
 ### Step 4 - Install the filesystem upload tool for ESP8266
 
-The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/esp8266/arduino-esp8266fs-plugin/releases).  You need to create a tools directory within the sketch directory then extract the content there (*Note: you can find the sketch directory location from the preferences panel of the Arduino IDE*).  The default location of the sketch directory is:
+The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/esp8266/arduino-esp8266fs-plugin/releases).  You need to create a tools directory within the sketch directory then extract the content there.
+
+![tools directory](/images/toolsDirectory.png)
+
+ (*Note: you can find the sketch directory location from the preferences panel of the Arduino IDE*).  The default location of the sketch directory is:
 
 - Linux - **/home/< user name >/Arduino/tools/ESP8266FS**
 - MacOS - **/Users/< user name >/Documents/Arduino/tools/ESP8266FS**

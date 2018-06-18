@@ -220,7 +220,7 @@ void loop() {
   }
 
   h = dht.readHumidity();
-  t = dht.readTemperature(); // uncomment this line for centigrade
+  t = dht.readTemperature(); // uncomment this line for Celsius
   // t = dht.readTemperature(true); // uncomment this line for Fahrenheit
 
   // Check if any reads failed and exit early (to try again).

@@ -22,7 +22,7 @@ In part 1 you looked at a number of example sketches to see how the WiFi, NeoPix
 
 Create a new sketch in the Arduino IDE using *File* -> *New* or the icon in the tool bar.  The save the sketch *File* -> *Save* and name the sketch, suggested name **esp8266Workshop**.
 
-You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for ArduinoJson and install the library.
+You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for ArduinoJson and install the library - Note, do not use beta versions of the library, stick to the released v5.x versions.
 
 ### Step 2 - Input the application code
 

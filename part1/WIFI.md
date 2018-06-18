@@ -40,6 +40,8 @@ You can get documentation about using ESP8266 in Arduino and the libraries that 
 
 The example sketch **WiFiClient** shows how to connect to a WiFi network, providing a SSID and password, which we will use in part 2 of the workshop.  Load the sketch (*File* -> *Examples* -> *ESP8266WiFi* -> *WiFiClient*) and examine the code, take note of how the WiFi network credentials are entered to join a network.
 
+*Note: you don't need to run this example and apply for the sparkfun credentials, simply walk through the code and see how the connection to the WiFi is created.*
+
 ### Step 5 - Understanding the pattern of using the ESP8266 Library
 
 Now you have seen 2 different example sketches using both Serial and WiFi connections.  You may begin to see a pattern on how to use the resources:

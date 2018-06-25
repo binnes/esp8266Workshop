@@ -18,7 +18,7 @@ Development options:
 
 Some additional links:
 
-- [ESP8266 pinout]([pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/))
+- [ESP8266 pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/)
 - <https://en.wikipedia.org/wiki/ESP8266>
 - <https://en.wikipedia.org/wiki/NodeMCU>
 

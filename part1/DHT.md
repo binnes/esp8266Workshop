@@ -18,9 +18,10 @@ In this lab you will learn how to connect the DHT temperature and humidity senso
 
 ### Step 1 - Installing the Library
 
-To access the DHT sensors from the ESP8266 we need to add a library to the sketch, so back in the Arduino IDE access the library manager.  *Sketch* -> *Include Library* -> *Manage Libraries...*.  Once in the Library Manager search for DHT.  The top entry should be the Adafruit **DHT sensor library** which you should install.
+To access the DHT sensors from the ESP8266 we need to add 2 libraries to the sketch, so back in the Arduino IDE access the library manager.  *Sketch* -> *Include Library* -> *Manage Libraries...*.  
 
-Before closing the Library Manager you also need to install another library.  Adafruit have introduced a unified model to many of their sensor libraries, including the DHT library, and to use them you need to install the **Adafruit Unified Sensor** library, so search for it, it will appear at the bottom of the list, then install it.
+- Once in the Library Manager search for DHT.  The top entry should be the Adafruit **DHT sensor library** which you should install.
+- Adafruit have introduced a unified model to many of their sensor libraries, including the DHT library, and to use them you need to install the **Adafruit Unified Sensor** library, so search for it, it will appear at the bottom of the list, then install it.
 
 When both of the libraries have been installed you can close the library manager.
 

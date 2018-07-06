@@ -18,7 +18,7 @@ In this lab you will learn how to deploy a starter application to the IBM Cloud.
 
 Before finishing part 1 you should deploy the starter application that we will be using in Part 2, as this can take a few minutes to deploy and become available.
 
-Before starting these steps it is assumed you have completed the steps in the [prerequisite section](/part1/PREREQ.md) and have an IBM Cloud account and have applied the promo code to it.
+Before starting these steps it is assumed you have completed the steps in the [prerequisite section](/part1/PREREQ.md) and have an active IBM Cloud account.
 
 ### Step 1 - Accessing the cloud and selecting an appropriate space
 
@@ -28,7 +28,7 @@ If you haven't previously used any of the locations you will need to create a **
 
 ### Step 2 - Deploy a boilerplate
 
-Open up the Catalog using the top menu, then select Boilerplates from the left menu under Platform.  Select the Internet of Things Platform Starter.  In the screen presented enter a name for your application - this needs to be a name that is unique to your application, so a good naming convention is to use your initials followed by a name that describes the purpose of the app or the solution name.  This will also form part of the URL for the application.
+Open up the Catalog using the top menu, then select Starter Kits from the left menu, then select the Internet of Things Platform Starter.  In the screen presented enter a name for your application - this needs to be a name that is unique to your application, so a good naming convention is to use your initials followed by a name that describes the purpose of the app or the solution name.  This will also form part of the URL for the application.
 
 Next select the location and space you want to deploy the application into . Leave the Selected plan information at the default values then select the **Create** button.
 

@@ -94,6 +94,14 @@ The commands above generate a new key for the server, creates a certificate requ
 
 Now you have the server certificate you can upload to the IoT platform in the settings section of the console in the Messaging Server Certificates section under Security.  Select to **Add Certificate** then upload the certificate (mqttServer_crt.pem) and private key (mqttServer_key.pem).  You need to also provide the password you provided when creating the key (password123).  Once the certificate is uploaded you enable it by setting the Currently Active Certificate to your key.
 
+Your can test the server certificate by using openssl:
+
+```
+openssl s_client -CAfile <CA certificate pem file> -showcerts -state  -servername <org ID>.messaging.internetofthings.ibmcloud.com -connect <org ID>.messaging.internetofthings.ibmcloud.com:8883
+```
+
+replace <CA certificate pem file> with the name of the CA root certificate and <org ID> with the 6 character org ID for your instance of the IOT Platform.
+
 ### Step 5 - Adding the root CA certificate to the ESP8266
 
 To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The TLS library we are using only supports the binary format, so the rootCA_certificate.der needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.der file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 Sketch Data Upload*

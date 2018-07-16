@@ -301,7 +301,8 @@ void loop() {
 }
 ```
 
-Proceed to the next section [**Securing the MQTT traffic using self-signed certificate**](/part2/CERT1.md)
+***
+**Part 2** - [Device Registration](/part2/DEVICE.md) - [Application](/part2/APP.md) - [**MQTT**](/part2/MQTT.md) - [Server Certificate](/part2/CERT1.md) - [Client Certificate](/part2/CERT2.md)
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [**Part 2**](/part2/README.md) - [Part 3](/part3/README.md) - [Part 4](/part4/README.md)

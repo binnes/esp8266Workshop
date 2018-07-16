@@ -57,8 +57,8 @@ In this step, you will learn how to Import a prebuilt flow from GitHub
 * The new flow will be imported into a new tab in the Node-RED Editor.
 * Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
-
-Proceed to the next section [**Receive Sensor Data**](/part3/DHTDATA.md)
-
+***
+**Part 3** - [**Intro to Node-RED**](/part3/NODERED.md) - [Receive Sensor Data](/part3/DHTDATA.md) - [Plot Data](/part3/DASHBOARD.md) - [Store Data](/part3/CLOUDANT.md) - [Historical Data](/part3/HISTORY.md) - [Control Interval](/part3/INTERVAL.md) - [Control LED](/part3/LED.md)
+***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [**Part 3**](/part3/README.md) - [Part 4](/part4/README.md)

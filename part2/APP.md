@@ -174,7 +174,8 @@ The **printTo()** function converts the JSON object to a string and writes it in
 
 See the library [documentation](https://arduinojson.org/?utm_source=meta&utm_medium=library.properties) for additional functionality.
 
-Proceed to the next section [**Sending data to the Watson IoT platform using MQTT**](/part2/MQTT.md)
+***
+**Part 2** - [Device Registration](/part2/DEVICE.md) - [**Application**](/part2/APP.md) - [MQTT](/part2/MQTT.md) - [Server Certificate](/part2/CERT1.md) - [Client Certificate](/part2/CERT2.md)
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [**Part 2**](/part2/README.md) - [Part 3](/part3/README.md) - [Part 4](/part4/README.md)

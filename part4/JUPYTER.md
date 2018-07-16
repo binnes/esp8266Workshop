@@ -52,5 +52,8 @@ Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter 
 - In the toolbar, click on the **Run** button to run each cell.
 - Spark will calculate the Average, Standard Deviation, Max and Min of your ESP8266 IoT Historical data set.
 
+***
+**Part 4** - [Watson Studio](/part4/STUDIO.md) - [**Notebooks**](/part4/JUPYTER.md)
+***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [Part 3](/part3/README.md) - [**Part 4**](/part4/README.md)

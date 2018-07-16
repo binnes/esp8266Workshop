@@ -73,7 +73,10 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 - Once it loads, click on the **> Run** button twice.
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
 
-You are now ready to analyze the ESP8266 IoT historical dataset using a Jupyter notebook and Spark. Proceed to the [Jupyter notebook lab](/part4/JUPYTER.md).
+You are now ready to analyze the ESP8266 IoT historical dataset using a Jupyter notebook and Spark.
 
+***
+**Part 4** - [**Watson Studio**](/part4/STUDIO.md) - [Notebooks](/part4/JUPYTER.md)
+***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [Part 3](/part3/README.md) - [**Part 4**](/part4/README.md)

@@ -58,7 +58,8 @@ In just a few nodes, Node-RED can receive the data that was transmitted from the
  - Observe the DHT sensor data in the **debug** tab of the Node-RED right sidebar.  You can expand the twisties to expose the JSON object information. Hover over a debug message in the right sidebar and the node that generated the message will be outlined in orange.
   ![Receive DHT Data](screenshots/ESP8266-ReceiveDHTdata-Deploy.png)
 
-Proceed to the next section - [**Plot Sensor Data**](/part3/DASHBOARD.md)
-
+***
+**Part 3** - [Intro to Node-RED](/part3/NODERED.md) - [**Receive Sensor Data**](/part3/DHTDATA.md) - [Plot Data](/part3/DASHBOARD.md) - [Store Data](/part3/CLOUDANT.md) - [Historical Data](/part3/HISTORY.md) - [Control Interval](/part3/INTERVAL.md) - [Control LED](/part3/LED.md)
+***
 *Quick links :*
 [Home](/README.md) - [Part 1](/part1/README.md) - [Part 2](/part2/README.md) - [**Part 3**](/part3/README.md) - [Part 4](/part4/README.md)

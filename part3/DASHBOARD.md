@@ -4,11 +4,11 @@
 **Part 3** - [Intro to Node-RED](/part3/NODERED.md) - [Receive Sensor Data](/part3/DHTDATA.md) - [**Plot Data**](/part3/DASHBOARD.md) - [Store Data](/part3/CLOUDANT.md) - [Historical Data](/part3/HISTORY.md) - [Control Interval](/part3/INTERVAL.md) - [Control LED](/part3/LED.md)
 ***
 
-# Node-RED Dashboard Charts - Plot DHT Sensor Data
+# Node-RED Dashboard Charts - Plot Environmental Sensor Data
 
 ## Lab Objectives
 
-In this lab you will import Node-RED flows which create Dashboard Charts. After learning about Node-RED Dashboard Charts, you will be able to display temperature and humidity graphs of the ESP8266 DHT environmental sensors.  You will learn:
+In this lab you will import Node-RED flows which create Dashboard Charts. After learning about Node-RED Dashboard Charts, you will be able to display temperature and humidity graphs of the Device environmental sensors.  You will learn:
 
 - How to create a Node-RED Dashboard
 - Experiment with Chart types
@@ -16,7 +16,7 @@ In this lab you will import Node-RED flows which create Dashboard Charts. After 
 - Trigger alerts when the real-time sensor data exceeds a threshold value
 
 ### Introduction
-In this section you will learn about Node-RED Dashboard Charts and then create a chart to graph the sensor data arriving from the ESP8266.
+In this section you will learn about Node-RED Dashboard Charts and then create a chart to graph the sensor data arriving from the device.
 
 ### Step 1 - Import the Node-RED Dashboard Chart Flows
 Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button. Finally, click on the red **Deploy** button in the upper right corner.
@@ -49,12 +49,12 @@ The next Node-RED flow - **Dashboard Intro** - uses a variety of UI widgets to d
  ![Node-RED Dashboard Intro dashboard](screenshots/Node-RED-Dashboard-Intro.png)
 
 
-### Step 4 - Plot ESP8266 DHT Environmental Sensor Data
+### Step 4 - Plot Device Environmental Sensor Data
 
 Now that you have learned about Node-RED Dashboard and Chart types, you are ready to plot the real-time ESP8266 DHT environmental sensor data.
 - Turn to the next flow - **Plot DHT Sensor Data**
 - The **IBM IoT** node is already configured to receive *status* Device Events from the ESP8266 Device Type.
-- The **Change** nodes extract the ```msg.payload.d.temp``` and ```msg.payload.d.humidity``` values from the JSON object sent over MQTT from the ESP8266 DHT sensor to Watson IoT Platform.
+- The **Change** nodes extract the ```msg.payload.d.temp``` and ```msg.payload.d.humidity``` values from the JSON object sent over MQTT from the device environmental sensor to Watson IoT Platform.
 - The environmental sensor values are sent to two charts to plot Temperature and Humidity.
  ![NRD ESP8266 DHT chart flow](screenshots/Node-RED-Dashboard-DHT-flow.png)
 - Turn to the Node-RED Dashboard browser tab that you launched in Step 2, click on the tab in the upper left corner, and select the **ESP8266 Workshop** tab.

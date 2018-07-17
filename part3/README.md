@@ -10,13 +10,13 @@ Note:  All but the last section in this part of the workshop can be completed wi
 
 - practical [**Node-RED Setup**](/part3/NODERED.md)
 
-## Receive ESP8266 Environmental Sensor Data in Node-RED -10 min
+## Receive Environmental Sensor Data in Node-RED -10 min
 
-- practical [**ESP8266 Environmental Sensor Data**](/part3/DHTDATA.md)
+- practical [**Environmental Sensor Data**](/part3/DHTDATA.md)
 
 ## Node-RED Dashboard - Real Time Chart - 15 min
 
-- practical [**Plot DHT Sensor Data**](/part3/DASHBOARD.md)
+- practical [**Plot Environment Sensor Data**](/part3/DASHBOARD.md)
 
 ## Store data in Cloudant storage - 10 min
 
@@ -26,7 +26,7 @@ Note:  All but the last section in this part of the workshop can be completed wi
 
 - practical [**Read Cloud Storage and Plot History Chart**](/part3/HISTORY.md)
 
-## Control your ESP8266 reporting interval via a Node-RED Dashboard Form - 20 min
+## Control your Device reporting interval via a Node-RED Dashboard Form - 20 min
 
 - practical [**Change the Sensor Reporting Interval Dynamically**](/part3/INTERVAL.md)
 

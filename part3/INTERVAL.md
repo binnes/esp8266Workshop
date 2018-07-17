@@ -4,7 +4,7 @@
 **Part 3** - [Intro to Node-RED](/part3/NODERED.md) - [Receive Sensor Data](/part3/DHTDATA.md) - [Plot Data](/part3/DASHBOARD.md) - [Store Data](/part3/CLOUDANT.md) - [Historical Data](/part3/HISTORY.md) - [**Control Interval**](/part3/INTERVAL.md) - [Control LED](/part3/LED.md)
 ***
 
-# Control your ESP8266 reporting interval via a Node-RED Dashboard Form
+# Control your Device reporting interval via a Node-RED Dashboard Form
 
 ## Lab Objectives
 

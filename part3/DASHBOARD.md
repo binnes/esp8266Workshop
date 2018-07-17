@@ -51,7 +51,7 @@ The next Node-RED flow - **Dashboard Intro** - uses a variety of UI widgets to d
 
 ### Step 4 - Plot Device Environmental Sensor Data
 
-Now that you have learned about Node-RED Dashboard and Chart types, you are ready to plot the real-time ESP8266 DHT environmental sensor data.
+Now that you have learned about Node-RED Dashboard and Chart types, you are ready to plot the real-time device environmental sensor data.
 - Turn to the next flow - **Plot DHT Sensor Data**
 - The **IBM IoT** node is already configured to receive *status* Device Events from the ESP8266 Device Type.
 - The **Change** nodes extract the ```msg.payload.d.temp``` and ```msg.payload.d.humidity``` values from the JSON object sent over MQTT from the device environmental sensor to Watson IoT Platform.

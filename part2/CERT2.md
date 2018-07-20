@@ -190,6 +190,7 @@ void setup() {
   Serial.begin(115200);
   Serial.setTimeout(2000);
   while (!Serial) { }
+  Serial.println();
   Serial.println("ESP8266 Sensor Application");
 
   // Start WiFi connection

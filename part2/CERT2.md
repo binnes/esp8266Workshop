@@ -49,7 +49,6 @@ then update the code within the setup() function to load the additional key and 
 
 ```C++
 // Get certs from file system and load into WiFiSecure client
-  wifiClient.allowSelfSignedCerts();
   SPIFFS.begin();
   File ca = SPIFFS.open(CA_CERT_FILE, "r");
   if(!ca) {

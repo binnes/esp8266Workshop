@@ -319,6 +319,7 @@ void loop() {
   }
 }
 ```
+
 ***
 **Part 2** - [Device Registration](/part2/DEVICE.md) - [Application](/part2/APP.md) - [MQTT](/part2/MQTT.md) - [Server Certificate](/part2/CERT1.md) - [**Client Certificate**](/part2/CERT2.md)
 ***

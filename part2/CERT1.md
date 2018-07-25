@@ -96,7 +96,7 @@ Now you have the server certificate you can upload to the IoT platform in the se
 
 Your can test the server certificate by using openssl:
 
-```
+``` bash
 openssl s_client -CAfile <CA certificate pem file> -showcerts -state  -servername <org ID>.messaging.internetofthings.ibmcloud.com -connect <org ID>.messaging.internetofthings.ibmcloud.com:8883
 ```
 
@@ -409,6 +409,7 @@ void loop() {
   }
 }
 ```
+
 ***
 **Part 2** - [Device Registration](/part2/DEVICE.md) - [Application](/part2/APP.md) - [MQTT](/part2/MQTT.md) - [**Server Certificate**](/part2/CERT1.md) - [Client Certificate](/part2/CERT2.md)
 ***

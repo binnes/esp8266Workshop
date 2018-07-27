@@ -16,7 +16,7 @@ In this lab you will extend the application by enabling client side certificates
 
 ### Step 1 - Generating the key and certificate for a device
 
-The openssl tool must be used to generate the key and certificate, as in the previous lab.  If you altered the root CA key password, then remember to change the value in the commands shown below:
+The openssl tool must be used to generate the key and certificate, as in the previous lab.  You need to work in the same directory as you did in the previous lab, as the commands below need access to the rootCA_certificate.pem file.  If you altered the root CA key password, then remember to change the value in the commands shown below:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem 2048

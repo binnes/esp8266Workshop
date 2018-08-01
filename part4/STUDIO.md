@@ -31,30 +31,35 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 
 ### Step 2 - Create a New Project
 - Projects are your workspace to organize your resources, such as assets like data, collaborators, and analytic tools like notebooks and models
+#### Create a New Project
 - Click on **New project**
-- Make sure to enable **Jupyter Notebooks**
-- Press the **OK** button.
-![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
-- Give your Project a name - **ESP8266**
+- Select the **Complete** tile and press the **OK** button.
+![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject-Tiles.png)
+- Give your Project a name : **IoT Sensor Analytics**
+- The Cloud Object Storage instance created in Step 1 should be prefilled.
 - Press the **Create** button.
-- Press the Settings tab.
+![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
+
+#### Add an Apache Spark Service
 - We need to add an Apache Spark service to the project.
-- Make certain that Jupyter Notebooks is checked.
-- Scroll down to the **Associated services** section and click on the **Add Service**
+- Press the **Settings** tab.
+![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-ProjectSettings.png)
+- Scroll down to the **Associated services** section and click on the **Add service** dropdown
 - Select **Spark** from the dropdown
+![Watson Studio Project Add Spark Service screenshot](screenshots/WatsonStudio-Project-AddSparkService.png)
 - In the **Apache Spark** service panel, select the **Lite** plan and press the **Create** button.  Press the **Confirm** button.
+![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-Apache-Spark-Service.png)
 - Now an Apache Spark service has been added to your Project.
-- We will get started with Tools
 
 ### Step 3 - Create a Notebook
 
 - From the top menu, select **Tools**, and then **Notebook**
 - Select **From URL**
-- Give the notebook a name: **ESP8266 DHT IoT Sensor Analytics**
+- Give the notebook a name : **IoT Sensor Analytics**
 - Select **From URL**
 - Import the notebook from this URL
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
-- Scoll down to the **Select runtime** dropdown and choose your **Spark** service
+- Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook.png)
 - Click on **Create Notebook**
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
@@ -68,12 +73,13 @@ This will install the Apache Bahir connector within your Project/Apache Spark se
 - Give the notebook a name: **Apache Bahir**
 - Import the notebook from this URL
 https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb
-- Scoll down to the **Select runtime** dropdown and choose **DSX-Spark**
+- Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 - Click on **Create Notebook**
-- Once it loads, click on the **> Run** button twice.
+- Once it loads, click on the **> Run** menu button twice.
+- Once it reloads, click on the **Kernel** menu and select **Restart & Run All** button.
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
 
-You are now ready to analyze the ESP8266 IoT historical dataset using a Jupyter notebook and Spark.
+You are now ready to analyze the IoT sensor historical dataset using a Jupyter notebook and Spark.
 
 ***
 **Part 4** - [**Watson Studio**](/part4/STUDIO.md) - [Notebooks](/part4/JUPYTER.md)

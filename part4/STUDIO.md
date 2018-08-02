@@ -69,8 +69,7 @@ First add an Apache Spark service to the project.
 - From the top menu, select **Tools**, and then **Notebook**
 - Select **From URL**
 - Give the notebook a name : **IoT Sensor Analytics**
-- Select **From URL**
-- Import the notebook from this URL
+- In the **Notebook URL** field, paste the following URL:
 ```
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
 ```
@@ -86,15 +85,17 @@ This will install the Apache Bahir connector within your Project/Apache Spark se
 - From the top menu, select **Tools**, and then **Notebook**
 - Select **From URL**
 - Give the notebook a name: **Apache Bahir**
-- Import the notebook from this URL
+- In the **Notebook URL** field, paste the following URL:
 ```
 https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb
 ```
 - Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 - Click on **Create Notebook**
-- Once it loads, click on the **> Run** menu button twice
-- Click on the **Kernel** menu and select **Restart & Run All** button
+- Once it loads, click on the **Kernel** menu and select **Restart & Run All** button
+- Do this **Restart & Run All** step **twice** to complete the package installs
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
+- The packages are successfully installed when the cell reports "Package already installed" messages 
+  ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir-complete.png)
 
 You are now ready to analyze the IoT sensor historical dataset using a Jupyter notebook and Spark.
 

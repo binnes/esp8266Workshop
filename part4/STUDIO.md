@@ -34,7 +34,7 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 ![Watson Studio Catalog screenshot](screenshots/WatsonStudio-Catalog.png)
 - Click on the **Watson Studio** service tile
 ![Watson Studio Service screenshot](screenshots/WatsonStudio-Service.png)
-- Click on the **Create** button.
+- Click on the **Create** button
 - After the Watson Studio service is created, click on **Get Started** or visit Watson Studio at http://dataplatform.ibm.com
 ![Watson Studio Launch screenshot](screenshots/WatsonStudio-Launch.png)
 - Login with your IBM Cloud account
@@ -46,23 +46,23 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 Projects are your workspace to organize your resources, such as assets like data, collaborators, and analytic tools like notebooks and models
 #### Create a New Project
 - Click on **New project**
-- Select the **Complete** tile and press the **OK** button.
+- Select the **Complete** tile and press the **OK** button
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject-Tiles.png)
 - Give your Project a name : **IoT Sensor Analytics**
-- The Cloud Object Storage instance created in Step 1 should be prefilled.
-- Press the **Create** button.
+- The Cloud Object Storage instance created in Step 1 should be prefilled
+- Press the **Create** button
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
 
 #### Add an Apache Spark Service
-- We need to add an Apache Spark service to the project.
-- Press the **Settings** tab.
+First add an Apache Spark service to the project.
+- Press the **Settings** tab
 ![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-ProjectSettings.png)
 - Scroll down to the **Associated services** section and click on the **Add service** dropdown
 - Select **Spark** from the dropdown
 ![Watson Studio Project Add Spark Service screenshot](screenshots/WatsonStudio-Project-AddSparkService.png)
-- In the **Apache Spark** service panel, select the **Lite** plan and press the **Create** button.  Press the **Confirm** button.
+- In the **Apache Spark** service panel, select the **Lite** plan and press the **Create** button. Press the **Confirm** button.
 ![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-Apache-Spark-Service.png)
-- Now an Apache Spark service has been added to your Project.
+- Now an Apache Spark service has been added to your Project
 
 ### Step 3 - Create a Notebook
 
@@ -71,7 +71,9 @@ Projects are your workspace to organize your resources, such as assets like data
 - Give the notebook a name : **IoT Sensor Analytics**
 - Select **From URL**
 - Import the notebook from this URL
+```
 https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb
+```
 - Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook.png)
 - Click on **Create Notebook**
@@ -85,11 +87,13 @@ This will install the Apache Bahir connector within your Project/Apache Spark se
 - Select **From URL**
 - Give the notebook a name: **Apache Bahir**
 - Import the notebook from this URL
+```
 https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb
+```
 - Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 - Click on **Create Notebook**
-- Once it loads, click on the **> Run** menu button twice.
-- Once it reloads, click on the **Kernel** menu and select **Restart & Run All** button.
+- Once it loads, click on the **> Run** menu button twice
+- Click on the **Kernel** menu and select **Restart & Run All** button
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
 
 You are now ready to analyze the IoT sensor historical dataset using a Jupyter notebook and Spark.

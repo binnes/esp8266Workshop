@@ -91,13 +91,15 @@ https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/b
 ```
 - Scoll down to the **Select runtime** dropdown and choose your **Spark** runtime
 - Click on **Create Notebook**
-- Once it loads, click on the **Kernel** menu and select **Restart & Run All** button
+
+#### Apache Bahir Connector Initialization
+- Once the Apache Bahir notebook loads, click on the **Kernel** menu and select **Restart & Run All** button
 - Do this **Restart & Run All** step **twice** to complete the package installs
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
-- The packages are successfully installed when the cell reports "Package already installed" messages 
+- The packages are successfully installed when the cell reports "Package already installed" messages
   ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir-complete.png)
 
-You are now ready to analyze the IoT sensor historical dataset using a Jupyter notebook and Spark.
+You are now ready to analyze the IoT sensor historical dataset using a Jupyter notebook and Spark.  Proceed to the next [Jupyter Notebook section](/part4/JUPYTER.md).
 
 ***
 **Part 4** - [**Watson Studio**](/part4/STUDIO.md) - [Notebooks](/part4/JUPYTER.md)

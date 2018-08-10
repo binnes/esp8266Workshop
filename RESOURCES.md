@@ -28,6 +28,7 @@ Some additional links:
 - [IBM Cloud Documentation](https://console.bluemix.net/docs/)
 - [Coursera course - A Developer's Guide to IoT](https://www.coursera.org/learn/developer-iot)
 - [Coursera course - A Developer's Guide to Node-RED](https://www.coursera.org/learn/developer-nodered)
+- [Coursera Specialization - Advanced Data Science with IBM](https://www.coursera.org/specializations/advanced-data-science-ibm)
 - [IBM Code IoT content](https://developer.ibm.com/code/technologies/iot/)
 
 ## Additional material

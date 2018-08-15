@@ -1,36 +1,36 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [**Application**](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
 
-# Creating the sensing application for the ESP8266
+# Criando o aplicativo de detecção para o ESP8266
 
-## Lab Objectives
+## Objetivos
 
-In this lab you will pull together all the information from part 1 into a single app.  You will learn:
+Neste laboratório, você reunirá todas as informações da parte 1 em um único aplicativo. Você vai aprender:
 
-- How to create a new sketch and some recommendations for app structure
-- How to combine the WiFi, neopixel and DHT libraries into a single application
-- How to work with JSON data on the ESP8266
+- Como criar um novo esboço e algumas recomendações para a estrutura do aplicativo
+- Como combinar as bibliotecas WiFi, neopixel e DHT em um único aplicativo
+- Como trabalhar com dados JSON no ESP8266
 
-### Introduction
+### Introdução
 
-In part 1 you looked at a number of example sketches to see how the WiFi, NeoPixel LED and DHT sensors work with Arduino.  Now you will create an application combining all the features then as we work through the remainder of this part you will connect the device to the IoT platform and add code to send data to the platform and receive commands from the platform.  Initially you will use unsecured MQTT connections, then at the end of this section you will add SSL/TLS and certificate verification to secure the communication.
+Na parte 1, você examinou vários esboços de exemplo para ver como os sensores WiFi, NeoPixel LED e DHT funcionam com o Arduino. Agora você criará um aplicativo que combina todos os recursos e, enquanto trabalhamos no restante desta parte, você conectará o dispositivo à plataforma IoT e adicionará um código para enviar dados para a plataforma e receber comandos da plataforma. Inicialmente, você usará conexões MQTT não seguras e, no final desta seção, adicionará SSL / TLS e verificação de certificado para proteger a comunicação.
 
-### Step 1 - Create a new sketch
+### Etapa 1 - Criando um novo sketch
 
-Create a new sketch in the Arduino IDE using *File* -> *New* or the icon in the tool bar.  The save the sketch *File* -> *Save* and name the sketch, suggested name **esp8266Workshop**.
+Crie um novo esboço no Arduino IDE usando * File * -> * New * ou o ícone na barra de ferramentas. Salve o sketch * File * -> * Save * e nomeie o sketch, nome sugerido **esp8266Workshop**.
 
-You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for **ArduinoJson** and install the latest v5.x version of the library.
+Você precisa adicionar mais 1 biblioteca ao Arduino IDE para fornecer funções para manipular o formato de dados JSON. Quando começarmos a enviar e receber dados da IoT Platform, o formato de dados JSON será usado, para que possamos começar a usar o JSON agora. No Gerenciador de bibliotecas (* Sketch * -> * Include Library * -> * Manage Libraries ... *) pesquise ** ArduinoJson ** e instale a versão mais recente da biblioteca v5.x.
 
-**Note, do not use beta versions of the ArduinoJson library, stick to the latest released v5.x versions.  You can use the drop down in the library manager to select which version of the library to install.  If you have installed v6 beta, then use the library manager to replace the version with the latest 5.x.x release of the library.  You will get a compile error if you use v6 with the bootcamp code.**
+**Note, não use versões beta da biblioteca ArduinoJson, siga as versões mais recentes da versão v5.x. Você pode usar o menu suspenso no gerenciador de bibliotecas para selecionar a versão da biblioteca a ser instalada. Se você instalou o v6 beta, use o gerenciador de bibliotecas para substituir a versão pelo release 5.x.x mais recente da biblioteca. Você receberá um erro de compilação se usar a v6 com o código do bootcamp.**
 
-### Step 2 - Input the application code
+### Etapa 2 - Insira o código do aplicativo
 
-I've provided the code for the application below.  As you enter it (or cut and paste it) please take time to ensure you understand the application and what each of the library function calls do.
+Eu forneci o código para o aplicativo abaixo. Quando você inseri-lo (ou recortá-lo e colá-lo), reserve um tempo para garantir que você entende o aplicativo e o que cada uma das chamadas de função da biblioteca faz.
 
-Add the code below to the sketch above the **setup()** function:
+Adicione o código abaixo ao esboço acima da função **setup()**:
 
 ```C++
 #include <ESP8266WiFi.h>
@@ -81,9 +81,9 @@ unsigned char b = 0; // LED Blue value
 
 ```
 
-The above code isolates all the configuration that may need to change.  I prefer to put all the config up front in an app, so it is easy to update as needed.  You will need to update the WiFI SSID and password to the WiFi network you want to connect to.  This should be available in the venue you are working in.
+O código acima isola toda a configuração que pode ser alterada. Eu prefiro colocar toda a configuração na frente de um aplicativo, por isso é fácil de atualizar conforme necessário. Você precisará atualizar o SSID ea senha do WiFI para a rede WiFi à qual deseja se conectar. Isso deve estar disponível no local em que você está trabalhando.
 
-Add the following code to the **setup()** function:
+Adicione o seguinte código a função **setup()** :
 
 ```C++
 void setup()
@@ -111,9 +111,9 @@ void setup()
 }
 ```
 
-This function initialises the Serial port, the WiFi connection, the LED and the DHT sensor.
+Esta função inicializa a porta Serial, a conexão WiFi, o LED e o sensor DHT.
 
-The loop function should contain:
+A função loop deve conter:
 
 ```C++
 void loop()
@@ -143,27 +143,27 @@ void loop()
 }
 ```
 
-This code is called repeatedly after the **setup()** function returns.  It reads the humidity and temperature for the DHT sensor, validates it received the readings then sets the LED colour to the correct colour based on the temperature and the alert and warning temperatures defined in the constants at the top of the application.  Finally the temperature and humidity values are added to the JSON object, which is then converted to a string buffer and printed to the console.
+TEste código é chamado repetidamente após a função **setup()** returns.  Ele lê a umidade e a temperatura do sensor DHT, valida o recebimento das leituras e depois define a cor do LED para a cor correta com base na temperatura e nas temperaturas de alerta e aviso definidas nas constantes na parte superior do aplicativo. Finalmente, os valores de temperatura e umidade são adicionados ao objeto JSON, que é então convertido em um buffer de seqüência de caracteres e impresso no console.
 
-### Step 3 - Run the code and view output using the Serial Monitor
+### Etapa 3 - Execute o código e visualize a saída usando o Monitor Serial
 
-Save, compile and upload the sketch.  Once uploaded open up the Serial Monitor and set the baud rate to 115200, to match the rate set in the Serial.begin(115200) message.  You should see the confirmation that the WiFi connection has been made and then you should see the sensor data formatted as a JSON string, repeating every 10 seconds (10000 milliseconds).
+Salve, compile e envie o esboço. Uma vez carregado, abra o Monitor Serial e defina a taxa de transmissão para 115200, para corresponder à taxa definida na mensagem Serial.begin (115200). Você deverá ver a confirmação de que a conexão WiFi foi feita e, em seguida, deverá ver os dados do sensor formatados como uma string JSON, repetindo a cada 10 segundos (10000 milissegundos).
 
-The LED should also be set to a colour based on the temperature and the WARN and ALARM constants defined at the top of the sketch :
+O LED também deve ser definido para uma cor baseada na temperatura e as constantes WARN e ALARM definidas na parte superior do sketch:
 
-- BLUE (below ALARM_COLD)
-- TURQUOISE (between ALARM_COLD and WARM_COLD)
-- GREEN (between WARN_COLD and WARN_HOT)
-- YELLOW (between WARN_HOT and ALARM_HOT)
-- RED (above ALARM_HOT)
+- AZUL (baixo ALARM_COLD)
+- TURQUESA (entre ALARM_COLD e WARM_COLD)
+- VERDE (entre WARN_COLD e WARN_HOT)
+- AMARELO (between WARN_HOT e ALARM_HOT)
+- VERMELHO (above ALARM_HOT)
 
-### Step 4 - Understanding how to work with JSON data
+### Etapa 4 - Entendendo como trabalhar com dados JSON
 
-JSON format is widely used for APIs and data exchange between systems.  The above sketch uses one of the optimised JSON libraries for small memory devices.  To use the library you need to:
+O formato JSON é amplamente usado para APIs e troca de dados entre sistemas. O esboço acima usa uma das bibliotecas JSON otimizadas para pequenos dispositivos de memória. Para usar a biblioteca, você precisa:
 
-1. Initialise the library and allocate some memory for the library to work with : `StaticJsonBuffer<100> jsonBuffer;`
-2. Create a new, empty JSON object : `JsonObject& payload = jsonBuffer.createObject();`
-3. Add required properties using one of the available functions:
+1. Inicialize a biblioteca e aloque alguma memória para a biblioteca trabalhar com : `StaticJsonBuffer<100> jsonBuffer;`
+2. Crie um novo objeto JSON vazio : `JsonObject& payload = jsonBuffer.createObject();`
+3. Adicione propriedades requeridas usando uma das funções disponíveis:
 
     ```C++
     JsonObject& status = payload.createNestedObject("d");
@@ -171,12 +171,12 @@ JSON format is widely used for APIs and data exchange between systems.  The abov
     status["humidity"] = h;
     ```
 
-The **printTo()** function converts the JSON object to a string and writes it into the provided buffer, so it can be used as a c-string.
+A função **printTo()**  converte o objeto JSON em uma string e o grava no buffer fornecido, para que possa ser usado como uma string c.
 
-See the library [documentation](https://arduinojson.org/?utm_source=meta&utm_medium=library.properties) for additional functionality.
+Veja a biblioteca [documentação](https://arduinojson.org/?utm_source=meta&utm_medium=library.properties) para mais informações
 
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [**Application**](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

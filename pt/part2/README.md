@@ -1,31 +1,31 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
 
-# Part 2
+# Parte 2
 
-## Introduction to Watson IoT Platform - 10 min
+## Introdução ao Watson IoT Platform - 10 min
 
-## Device Type / Device Creation - 15 min
+## Tipo de Dispositivo / Criação de Dispositivo - 15 min
 
-- practical [**Create device type and device**](DEVICE.md)
+- Prática [**Criar tipo de dispositivo e dispositivo**](DEVICE.md)
 
-## Creating the initial application - 15 min
+## Criando o aplicativo inicial - 15 min
 
-- practical [**Create ESP8266 application**](APP.md)
+- Prática [**Criar aplicativo ESP8266**](APP.md)
 
-## Introduction to the MQTT protocol - 15 min
+## Introdução ao protocolo MQTT - 15 min
 
-- practical [**Sending data to the Watson IoT platform using MQTT**](MQTT.md)
+- Prática [**Enviando dados para a plataforma Watson IoT usando o MQTT**](MQTT.md)
 
-## Introduction to IoT Security techniques - 25 min
+## Introdução às técnicas de segurança da IoT - 25 min
 
-- practical [**Securing the MQTT traffic using self-signed certificate**](CERT1.md)
+- Prática [**Protegendo o tráfego do MQTT usando certificado autoassinado**](CERT1.md)
 
 ## Adding client certificates - 10 min
 
-- practical [**Securing the MQTT traffic using a client certificate**](CERT2.md)
+- Prática [**Protegendo o tráfego do MQTT usando um certificado de cliente**](CERT2.md)
 
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

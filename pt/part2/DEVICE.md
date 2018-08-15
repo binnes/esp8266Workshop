@@ -1,50 +1,50 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
-**Part 2** - [**Device Registration**](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
 
-# Registering a new device to the Watson IoT Platform
+# Registrando um novo dispositivo no Watson IoT Platform
 
-## Lab Objectives
+## Objetivos
 
-This Lab will show you how to register your ESP8266 with the IBM Watson Internet of Things Platform.  In the lab you will learn:
+Este laboratório mostrará como registrar seu ESP8266 com a plataforma IBM Watson Internet of Things. No laboratório você aprenderá:
 
-- How to navigate to the IoT Platform console
-- How to define a device type and register a device in the IoT Platform
+- Como navegar para o console da IoT Platform
+- Como definir um tipo de dispositivo e registrar um dispositivo na plataforma IoT
 
-### Introduction
+### Introdução
 
-Before you can connect a device to the Watson IoT Platform you need to define how the device will connect to the platform and also register the device to generate an access token for the device.  This will be used to verify the device identity (we will come back to device authentication later in this part of the workshop).
+Antes de poder conectar um dispositivo ao Watson IoT Platform, você precisa definir como o dispositivo se conectará à plataforma e também registrar o dispositivo para gerar um token de acesso para o dispositivo. Isso será usado para verificar a identidade do dispositivo (voltaremos à autenticação do dispositivo posteriormente nesta parte do workshop).
 
-You need to decide how you want to group devices, by function, by hardware type, etc.  Each device registered on the platform must be registered against a device type.  There are no restrictions about how devices are grouped and the device types, for this workshop we will create a device type representing the ESP8266 devices.
+Você precisa decidir como deseja agrupar dispositivos, por função, por tipo de hardware, etc. Cada dispositivo registrado na plataforma deve ser registrado em um tipo de dispositivo. Não há restrições sobre como os dispositivos são agrupados e os tipos de dispositivos. Para esta oficina, criaremos um tipo de dispositivo representando os dispositivos ESP8266.
 
-### Step 1 - Launch the Watson IoT Platform console
+### Etapa 1 - Iniciar o console do Watson IoT Platform
 
-In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Dashboard*, then select your boilerplate application.  In the overview section of the application select the iotf-service under Connections.  This will take you to the IoT Platform service.  Launch the console.
+No IBM Cloud, navegue até seu painel usando o menu superior * - * -> * Dashboard * e, em seguida, selecione seu aplicativo clichê. Na seção de visão geral do aplicativo, selecione o serviço iotf em Conexões. Isso levará você ao serviço da Plataforma IoT. Inicie o console.
 
-### Step 2 - Add a new device type for ESP8266 devices
+### Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266
 
-Navigate into the Devices section of the console and then select the **Device Types** section.  Press the **+ Add Device Type** button the enter the following:
+Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266 Navegue até a seção Devices do console e selecione a seção ** Device Types **. Pressione o botão ** + Adicionar tipo de dispositivo ** e insira o seguinte:
 
-- Type : Ensure Device is selected (NOT Gateway)
-- Name : Enter **ESP8266**
-- Description : Enter **Esp8266 environment monitor**
+- Tipo : Certifique-se de que o dispositivo esteja selecionado (NÃO gateway)
+- Nome : Escreva **ESP8266**
+- Descrição : Escreva **Esp8266 environment monitor**
 
-Select **Next** then **Done**
+Selecione **Próximo** depois **Finalizar**
 
-### Step 3 - Register your ESP8266 board in the IoT platform
+### Etapa 3 - Registre sua placa ESP8266 na plataforma IoT
 
-You now have the opportunity to register a device.  Stick with the simple flow for now and press **Register Device**.  The ESP8266 device type should be pre-selected.  You now need to enter a unique device ID.  Again you can choose how you want to identify devices.  For the workshop, use a simple format, such as **dev01**.
+Agora você tem a oportunidade de registrar um dispositivo. Continue com o fluxo simples por enquanto e pressione **Register Device**. O tipo de dispositivo ESP8266 deve ser pré-selecionado. Agora você precisa inserir um ID de dispositivo exclusivo. Novamente, você pode escolher como deseja identificar dispositivos. Para o workshop, use um formato simples, como **dev01**.
 
-Press **Next** button twice then you will be prompted to provide a token.  When developing I recommend choosing a token you can easily remember.  I set all my devices to use the same token when developing, but obviously this is not a good production practice.
+Pressione o botão **Próximo** duas vezes e você será solicitado a fornecer um token. Ao desenvolver, recomendo escolher um token que você possa lembrar facilmente. Eu configurei todos os meus dispositivos para usar o mesmo token ao desenvolver, mas obviamente isso não é uma boa prática de produção.
 
-Each time you connect the device the token will need to be presented to the server and once the device is registered there is no way to recover a token, you will need to delete and reregister the device if the token is lost.
+Cada vez que você conectar o dispositivo, o token precisará ser apresentado ao servidor e, assim que o dispositivo for registrado, não há como recuperar um token. Você precisará excluir e registrar novamente o dispositivo se o token for perdido.
 
-Enter a token for your device then press **Next**.  You will see a summary of the device.  Press **Done** to complete the device registration.  You are now shown a device Drilldown page - this is the last chance you get to see the token.  Once you leave this page the token can not be recovered. Write down the Org, Device Type, Device ID and Authentication Token. You might even consider taking a screen shot.
+Digite um token para o seu dispositivo e pressione **Próximo**. Você verá um resumo do dispositivo. Pressione **Concluído** para concluir o registro do dispositivo. Agora você verá uma página de detalhamento do dispositivo - essa é a última chance de ver o token. Depois de sair desta página, o token não pode ser recuperado. Anote a Org, o Tipo de Dispositivo, o ID do Dispositivo e o Token de Autenticação. Você pode até considerar fazer uma captura de tela.
 
 ***
-**Part 2** - [**Device Registration**](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

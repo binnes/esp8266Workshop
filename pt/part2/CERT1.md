@@ -1,42 +1,41 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [**Server Certificate**](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
 
-# Adding secure communication between the device and IoT Platform using SSL/TLS
+# Adicionando comunicação segura entre o dispositivo e a IoT Platform usando SSL / TLS
 
-## Lab Objectives
+## Objetivos
 
-In this Lab you will modify MQTT to use a secure connection.  You will learn:
+Neste laboratório, você modificará o MQTT para usar uma conexão segura. Você vai aprender:
 
-- How to add SSL/TLS capability to the network connection that MQTT uses
-- How to generate certificates to enable secure connections using OpenSSL
-- How to add the certificates to the IBM Watson IoT Platform
-- How to add the certificate to the ESP8266 using part of the flash memory as a file system
-- Basic operations of the SPIFFS file system
+- Como adicionar o recurso SSL / TLS à conexão de rede que o MQTT usa
+- Como gerar certificados para habilitar conexões seguras usando o OpenSSL
+- Como adicionar os certificados ao IBM Watson IoT Platform
+- Como adicionar o certificado ao ESP8266 usando parte da memória flash como um sistema de arquivos
+- Operações básicas do sistema de arquivos SPIFFS
 
-### Introduction
+### Introdução
 
-Having unsecured traffic for an IoT solution is not a good idea, so in this lab you will convert the unsecured MQTT connection into a SSL/TLS connection.
+Ter tráfego não seguro para uma solução IoT não é uma boa ideia, portanto, neste laboratório, você converterá a conexão MQTT não segura em uma conexão SSL / TLS.
 
-When using SSL/TLS you can verify the certificate(s) presented by the server if you have the certificate of the Root Certificate Authority used to sign the server certificate.  Your Laptop will have common root CA certificates installed as part of the OS or browser so web traffic can be secured and the padlock on your browser can be shown.  However, you need to add any certificate to IoT devices if you want to verify server certificates.
+Ao usar SSL / TLS, você pode verificar o (s) certificado (s) apresentado (s) pelo servidor se tiver o certificado da Autoridade de Certificação Raiz usado para assinar o certificado do servidor. Seu laptop terá certificados comuns de CA raiz instalados como parte do sistema operacional ou do navegador, para que o tráfego da Web possa ser protegido e o cadeado no navegador possa ser exibido. No entanto, você precisa adicionar qualquer certificado aos dispositivos IoT se quiser verificar os certificados do servidor.
 
-There is a limitation in the SSL/TLS library provided in the Arduino environment as part of the ESP8266 plugin.  This library will verify a server certificate, but not if the certificate chain contains intermediate certificates.  The Watson IoT Platform certificate is available on [this](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) page, but includes a chain of certificates, which the ESP8266 library cannot verify.
+Existe uma limitação na biblioteca SSL / TLS fornecida no ambiente do Arduino como parte do plugin ESP8266. Essa biblioteca verificará um certificado do servidor, mas não se a cadeia de certificados contiver certificados intermediários. O certificado Watson IoT Platform está disponível em [nesta](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) página, mas inclui uma cadeia de certificados, que a biblioteca ESP8266 não pode verificar.
 
-The Watson IoT platform does allow you to replace the certificates used for MQTT traffic, so in this exercise you will generate your own self-signed certificates, add them to the Watson IoT platform and the ESP8266 code, to enable a SSL/TLS connection with the server certificate verified against the root CA certificate installed on the ESP8266.
+A plataforma Watson IoT permite substituir os certificados usados para o tráfego MQTT, portanto, neste exercício, você gerará seus próprios certificados autoassinados, os adicionará à plataforma Watson IoT e ao código ESP8266, para habilitar uma conexão SSL / TLS com o certificado do servidor verificado em relação ao certificado da CA raiz instalado no ESP8266.
 
 The platform [documentation](https://console.bluemix.net/docs/services/IoT/reference/security/set_up_certificates.html#set_up_certificates) provides information about what information must be contained in certificates to work with the platform.
+Na seção de pré-requisitos, você instalou a ferramenta OpenSSL, que permite trabalhar com certificados. Eu forneci 2 arquivos de configuração nos [certificados](/certificates) pasta deste repositório git. Você precisa baixá-los e tê-los no diretório que você usará para gerar os certificados.  Se você clonou ou baixou o repositório, sugiro que trabalhe no diretório de certificados.
 
-In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files in the [certificates](/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
+### Etapa 1 - Gerando uma chave e um certificado de autoridade de certificação raiz
 
-### Step 1 - Generating a root Certificate Authority Key and Certificate
+Você começará gerando uma chave e um certificado da CA raiz. Isso será usado para assinar um certificado do servidor.
 
-You will start by generating a root CA key and certificate.  This will then be used to sign a server certificate.
+Em uma janela de comando do windows insira os seguintes comandos, você precisa substituir alguns valores, então não apenas copie e cole os comandos como mostrado, ou seus certificados não irão funcionar!
 
-In a command windows enter the following commands, you need to replace some values, so do not just copy and paste the commands as shown, or your certificates will not work!
-
-*Note for Windows users: If you opted for the openssl windows binary install and didn't add the bin directory to your path, then you will need to use the full path to the openssl binary e.g. `c:\OpenSSL-Win64\bin\openssl` in the commands below.  Also you do not have access to the xxd command, so cannot run the xxd commands shown, but the generated header file is not needed for this workshop.*
+*Nota para usuários do Windows: Se você optou pela instalação binária do windows openssl e não adicionou o diretório bin ao seu caminho, então você precisará usar o caminho completo para o binário openssl, por exemplo. `c:/OpenSSL-Win64/bin/openssl` nos comandos abaixo. Além disso, você não tem acesso ao comando xxd, portanto, não pode executar os comandos xxd mostrados, mas o arquivo de cabeçalho gerado não é necessário para este workshop.*
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out rootCA_key.pem 2048
@@ -48,31 +47,31 @@ openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.der
 xxd -i rootCA_certificate.der rootCA_certificate.der.h
 ```
 
-replacing:
+substituindo:
 
-- C=GB : GB is a country code , so use your own country (CA=Canada, US=USA, .....)
-- ST=DOR : DOR is an English county, replace with appropriate state/county/region
-- L=Bournemouth : Bournemouth is an English town, replace with appropriate location
-- O=z53u40 : z53u40 is the Organisation ID for my IoT Platform
-- OU=z53u40 Corporate : z53u40 is the Organisation ID for my IoT Platform
-- CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform
-- pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
+- C=GB : GB é um código de país, então use seu próprio país (CA=Canada, US=USA, .....)
+- ST=DOR : DOR é um condado inglês, substituir com estado/condado/região apropriados
+- L=Bournemouth : Bournemouth é uma cidade inglesa, substitua pela localização apropriada
+- O=z53u40 : z53u40 é o ID da organização da minha plataforma IoT
+- OU=z53u40 Organização : z53u40 é o ID da organização da minha plataforma IoT
+- CN=z53u40 CA Raiz : z53u40 é o ID da organização da minha plataforma IoT
+- pass:password123 : password123 é a senha que protegerá a chave - se você alterar esse valor, não esqueça o que você digitou, pois você precisa usá-la mais tarde.
 
-This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
+Isso gera a chave e a protege com uma senha. Um certificado público é então gerado no formato pem, que é então convertido para o formato der. Finalmente, o comando xxd cria um arquivo de cabeçalho que permite que o certificado seja incorporado ao código - isso pode ser útil para dispositivos que não possuem um sistema de arquivos.
 
-### Step 2 - Uploading the root CA Certificate to the IoT Platform
+### Etapa 2 - Fazendo o upload do certificado da CA raiz para a plataforma IoT
 
-You need to load the root CA certificate into the IoT platform using the console.  In the settings section goto to CA Certificates in the Security section.  Select to **Add certificate** then select the rootCA_certificate.pem file you just generated to upload to the platform, then press **Save**.
+Você precisa carregar o certificado da CA raiz na plataforma IoT usando o console. Na seção de configurações, vá para Certificados de autoridade de certificação na seção Segurança. Selecione para **Adicionar certificado** e selecione o arquivo rootCA_certificate.pem que acabou de gerar para fazer o upload para a plataforma e, em seguida, pressione **Salvar**.
 
-### Step 3 - Generating a Server key and certificate
+### Etapa 3 - Gerando uma Chave e um Certificado do Servidor
 
-Now you have a Root Certificate Authority key and certificate, they can be used to sign other certificates that can be verified using the root CA certificate.
+Agora você tem uma chave e um certificado de autoridade de certificação raiz, eles podem ser usados para assinar outros certificados que podem ser verificados usando o certificado de CA raiz.
 
-You need to edit file [srvext.cfg](/certificates/srvext.cfg), which you should have retrieved from the certificates folder in this git repo.  You need to change the **subjectAltName** entry to match the DNS entry of your instance of the Watson IoT platform, so change the host part of the URL to your Organisation Id:
+Você precisa editar o arquivo [srvext.cfg](/certificates/srvext.cfg), que você deve ter recuperado da pasta de certificados neste repositório git. Você precisa mudar o **subjectAltName** entrada para corresponder à entrada de DNS da sua instância da plataforma Watson IoT, por isso altere a parte do host do URL para o seu ID de organização:
 
 `subjectAltName = DNS:z53u40.messaging.internetofthings.ibmcloud.com`
 
-To generate a certificate for the IoT platform to use run the following commands:
+Para gerar um certificado para a plataforma IoT usar, execute os seguintes comandos:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem 2048
@@ -86,64 +85,64 @@ openssl x509 -outform der -in mqttServer_crt.pem -out mqttServer_crt.der
 xxd -i mqttServer_crt.der mqttServer_crt.der.h
 ```
 
-again substituting values for C=, ST=, L=, O=, OU= and CN=, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by **.messaging.internetofthings.ibmcloud.com**, which should also match the **subjectAltName** field in the [srvext.cfg](/certificates/srvext.cfg) file.
+novamente substituindo valores por C =, ST =, L =, O =, OU = e CN =, mas, desta vez, é importante que o valor CN seja o URL de sua instância da URL de mensagens IoT, que é a ID da organização seguida por ** messaging.internetofthings.ibmcloud.com **, que também deve corresponder ao campo ** subjectAltName ** no arquivo [srvext.cfg](/certificates/srvext.cfg).
 
-The commands above generate a new key for the server, creates a certificate request for the server, issues the certificate and signs it with the root CA key, saving it as a pem file.  The certificate is converted from pem to der format and lastly the xxd command creates a header file to embed the certificate in code.
+Os comandos acima geram uma nova chave para o servidor, cria uma solicitação de certificado para o servidor, emite o certificado e assina-o com a chave da CA raiz, salvando-o como um arquivo pem. O certificado é convertido de pem para der formato e, por último, o comando xxd cria um arquivo de cabeçalho para incorporar o certificado no código.
 
-### Step 4 - Add the server certificate to the IoT Platform
+### Etapa 4 - Adicionar o certificado do servidor à plataforma IoT
 
-Now you have the server certificate you can upload to the IoT platform in the settings section of the console in the Messaging Server Certificates section under Security.  Select to **Add Certificate** then upload the certificate (mqttServer_crt.pem) and private key (mqttServer_key.pem).  You need to also provide the password you provided when creating the key (password123).  Once the certificate is uploaded you enable it by setting the Currently Active Certificate to your key.
+Agora você tem o certificado do servidor que pode carregar na plataforma IoT, na seção de configurações do console, na seção Certificados do Servidor de Mensagens, em Segurança. Selecione para ** Adicionar certificado ** e faça o upload do certificado (mqttServer_crt.pem) e da chave privada (mqttServer_key.pem). Você também precisa fornecer a senha que você forneceu ao criar a chave (senha123). Uma vez que o certificado é carregado, você o habilita definindo o Certificado Ativo Atual para a sua chave.
 
-Your can test the server certificate by using openssl:
+Você pode testar o certificado do servidor usando o openssl:
 
 ``` bash
 openssl s_client -CAfile <CA certificate pem file> -showcerts -state  -servername <org ID>.messaging.internetofthings.ibmcloud.com -connect <org ID>.messaging.internetofthings.ibmcloud.com:8883
 ```
 
-replace <CA certificate pem file> with the name of the CA root certificate and <org ID> with the 6 character org ID for your instance of the IOT Platform.
+substitua <arquivo de certificado pem da CA> pelo nome do certificado raiz da CA e <org ID> pela ID da organização de 6 caracteres da sua instância da Plataforma IOT.
 
-### Step 5 - Adding the root CA certificate to the ESP8266
+### Etapa 5 - Adicionando o certificado da CA raiz ao ESP8266
 
-To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The TLS library we are using only supports the binary format, so the rootCA_certificate.der needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.der file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 Sketch Data Upload*
+Para permitir que o ESP8266 valide o certificado do servidor, você precisa adicionar o certificado da CA raiz ao ESP8266. A biblioteca TLS que estamos usando suporta apenas o formato binário, portanto, o rootCA_certificate.der precisa ser incluído em um diretório chamado data no diretório de rascunho. Você pode descobrir onde o diretório de esboço está usando o * sketch * -> * Show sketch folder * no menu do Arduino. Dentro do diretório de esboço, crie um novo diretório chamado ** data ** e copie o arquivo rootCA_certificate.der para o diretório de dados. Você adicionou a ferramenta de upload de dados ao IDE do Arduino como parte das instruções de configuração de pré-requisito, para que agora você possa executar a ferramenta. Antes de executar a ferramenta de upload de dados, certifique-se de que a janela Serial Monitor esteja fechada, pois ela bloqueará a comunicação entre o dispositivo e a ferramenta de upload. No menu superior, selecione * Ferramentas * -> * ESP8266 Carregamento de dados de esboço *
 
-### Step 6 - Adding the root CA certificate to your OS or browser
+### Etapa 6 - Adicionando o certificado da CA raiz ao seu sistema operacional ou navegador
 
-Finally you need to add the root CA certificate to your OS or browser, as the IoT Platform console uses a secure connection to get data required to populate and update the console in your browser.  If you don't add the root CA Certificate then the console will not show any data.
+Por fim, você precisa adicionar o certificado de CA raiz ao seu sistema operacional ou navegador, pois o console da IoT Platform usa uma conexão segura para obter os dados necessários para preencher e atualizar o console em seu navegador. Se você não adicionar o certificado raiz da CA, o console não mostrará nenhum dado.
 
-If using Firefox you need to import the rootCA_certificate.pem file, by accessing the security section of the preferences.  On some platform there is an Advanced option before you are able to view certificates, then there is an option to import certificates then trust to identify web sites.
+Se estiver usando o Firefox, você precisará importar o arquivo rootCA_certificate.pem, acessando a seção de segurança das preferências. Em algumas plataformas, há uma opção Avançada antes de você poder visualizar os certificados e, em seguida, há uma opção para importar os certificados e depois confiar para identificar os sites.
 
-If using Chrome it depends on the platform.  On some platforms Chrome uses the system certificates, but on others it manages its own certificates and then like Firefox you need to go into the security settings to import the certificate authority certificate and trust it to identify web sites.
+Se estiver usando o Chrome, isso depende da plataforma. Em algumas plataformas, o Chrome usa os certificados do sistema, mas em outros gerencia seus próprios certificados e, assim como o Firefox, você precisa entrar nas configurações de segurança para importar o certificado de autoridade de certificação e confiar nele para identificar sites.
 
-To add the root CA certificate to OS:
+Para adicionar o certificado da CA raiz ao sistema operacional:
 
-- **Linux**: Many browsers on Linux do not use the OS certificates but manage their own certificate store, so check before adding the certificate to the OS store.  If you do need to add the rootCA certificate to the OS ca certificate store, then unfortunately there is not a standard way on Linux to achieve this.  Each distro has a slightly different approach, but many want the certificate to be a .crt file, so use the following command to convert the .pem to .crt: `openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.crt`
-  - Debian: With admin privileges copy the rootCA_certificate.crt file to /usr/share/ca-certificates then run `dpkg-reconfigure ca-certificates`
-  - Fedora: Copy the rootCA_certificate.pem file to **/etc/pki/ca-trust/source/anchors/** (using sudo mv or other root access) then run command `update-ca-trust extract` with admin privileges.
-  - Ubuntu: Copy the rootCA_certificate.crt to **/usr/local/share/ca-certificates** using admin privileges then run `update-ca-certificates`.
-- **MacOS**: Double click the certificate in Finder to open it in the Keychain Access app.  It will automatically show as not trusted.  Double click it to open up the certificate details window and then expand the **Trust** section.  Change the SSL value to **Always Trust**.  Close the certificate window (you will be prompted for your account password to verify the change).
-- **Windows**: Launch the Microsoft Management Console (enter mmc in the start menu), then select *File* ->* Add/Remove Snap-in...*. Highlight Certificates and press **Add**.  Select to manage certificates for **Computer account**, **Local computer** then press **Finish** then **OK**.  Back in the mmc, select the Certificates item in the left column then right-click the **Trusted Root Certificate Authorities** item.  From the popup menu select *All Tasks* -> *Import...* to launch the Certificate Import Wizard.  Select the rootCA_certificate pem or der file (may need to alter filter to show all files) and place it in the **Trusted Root Certificate Authorities** store.
+- **Linux**: Muitos navegadores no Linux não usam os certificados do sistema operacional, mas gerenciam seu próprio armazenamento de certificados, portanto, verifique antes de adicionar o certificado ao armazenamento do sistema operacional. Se você precisar adicionar o certificado rootCA ao armazenamento de certificados do CA, então, infelizmente, não há uma maneira padrão no Linux para conseguir isso. Cada distro tem uma abordagem ligeiramente diferente, mas muitos querem que o certificado seja um arquivo .crt, então use o seguinte comando para converter o arquivo .pem para .crt: `openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.crt`
+  - Debian: Com privilégios de administrador, copie o arquivo rootCA_certificate.crt para / usr / share / ca-certificates e, em seguida, execute`dpkg-reconfigure ca-certificates`
+  - Fedora: Copie o arquivo rootCA_certificate.pem para **/etc/pki/ca-trust/source/anchors/** (usando sudo mv ou outro acesso root) e execute o comando `update-ca-trust extract` com privilégios de administrador.
+  - Ubuntu: Copie o rootCA_certificate.crt para ** / usr / local / share / ca-certificates ** usando privilégios de administrador e execute `update-ca-certificates`.
+- **MacOS**: DBasta clicar no certificado no Finder para abri-lo no aplicativo Acesso às Chaves. Ele será mostrado automaticamente como não confiável. Clique duas vezes para abrir a janela de detalhes do certificado e, em seguida, expanda a seção **Trust**. Altere o valor do SSL para **Sempre Confiável**. Feche a janela do certificado (será solicitada a senha da sua conta para verificar a alteração).
+- **Windows**: Inicie o Microsoft Management Console (digite mmc no menu Iniciar) e selecione *Arquivo* -> *Adicionar / Remover Snap-in ...*. Destaque Certificados e pressione **Adicionar**. Selecione para gerenciar certificados para **Conta de computador**, **Computador local** e pressione **Concluir** e depois **OK**. De volta ao mmc, selecione o item Certificados na coluna da esquerda, clique com o botão direito do mouse no item **Autoridades de certificado raiz confiáveis**. No menu pop-up, selecione *Todas as Tarefas* -> *Importar ...* para iniciar o Assistente de Importação de Certificados. Selecione o arquivo pem ou root do certificado rootCA_ (talvez seja necessário alterar o filtro para mostrar todos os arquivos) e coloque-o na loja **Autoridades de certificado raiz confiáveis**.
 
-**Note** : *If you are adding a certificate to a browser certificate manager, please ensure you are adding a Certificate Authority certificate.  This should allow you to import a .pem or .der file.  If it is asking for a .p12 file then you are trying to import a certificate and key, so are in the wrong section of the certificate manager.  You want to be adding a **Certificate Authority** certificate or certificate chain.*
+**Note** : *Se você estiver adicionando um certificado a um gerenciador de certificados do navegador, certifique-se de adicionar um certificado da Autoridade de Certificação. Isso deve permitir que você importe um arquivo .pem ou .der. Se estiver solicitando um arquivo .p12, você está tentando importar um certificado e uma chave, portanto, estão na seção errada do gerenciador de certificados. Você deseja adicionar um certificado **Certificate Authority** ou uma cadeia de certificados.*
 
-### Step 7 - Updating the ESP8266 code to use the certificate to establish a secure connection
+### Etapa 7 - Atualizando o Código ESP8266 para Usar o Certificado para Estabelecer uma Conexão Segura
 
-When a server connects using SSL/TLS it presents its own certificate for verification.  The client uses its local CA certificate store to validate the certificate presented by the server is authentic, by validating that a known CA signed the certificate.
+Quando um servidor se conecta usando SSL / TLS, ele apresenta seu próprio certificado para verificação. O cliente usa seu repositório de certificados de autoridade de certificação local para validar se o certificado apresentado pelo servidor é autêntico, validando se uma autoridade de certificação conhecida assinou o certificado.
 
-Part of the certificate verification process checks that the certificate is in data (not before the start time of the certificate and not after certificate expiry time), so the ESP8266 needs to know the correct date/time.  The Network Time Protocol can be used to get the correct time from Internet servers.
+Parte do processo de verificação de certificado verifica se o certificado está em dados (não antes do horário de início do certificado e não após o tempo de expiração do certificado), portanto, o ESP8266 precisa saber a data / hora corretas. O Network Time Protocol pode ser usado para obter o horário correto dos servidores da Internet.
 
-You have already uploaded the CA certificate to the ESP8266, so now the code needs to be updated to load the certificate from the flash file system and switch to using a SSL/TLS connection.
+Você já fez o upload do certificado de CA para o ESP8266, portanto, agora o código precisa ser atualizado para carregar o certificado do sistema de arquivos flash e alternar para o uso de uma conexão SSL / TLS.
 
-Make the following code changes:
+Faça as seguintes alterações no código:
 
-- Add an include at the top of the file to access the file system : `#include <FS.h>`
-- Add an include after the **ESP8266WiFi.h** include to add time : `#include <time.h>`
-- Change the MQTT_PORT to use the secure port 8883 : `#define MQTT_PORT 8883`
-- Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.der"`
-- Change the wifiClient to use the secure version : `WiFiClientSecure wifiClient;`
-- Add #define to set timezone offset : `#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)`
-- Add #define to set day light saving offset : `#define TZ_DST    60  //Minutes timezone offset for Daylight saving`
+- Adicione uma inclusão na parte superior do arquivo para acessar o sistema de arquivos: `#include <FS.h>`
+- Adicione uma linha após o **ESP8266WiFi.h**, para adicionar tempo : `#include <time.h>`
+- Altere o MQTT_PORT para usar a porta segura 8883: `#define MQTT_PORT 8883`
+- Adicione um novo #define para nomear o certificado de CA : `#define CA_CERT_FILE "/rootCA_certificate.der"`
+- Mude o wifiClient para usar a versão segura : `WiFiClientSecure wifiClient;`
+- Adicione #define para definir o timezone : `#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)`
+- Adicione #define para definir horário de verão : `#define TZ_DST    60  //Minutes timezone offset for Daylight saving`
 
-- Modify the MQTT connection code in the setup() function to establish a secure connection:
+- Modifique o código de conexão do MQTT na função setup()  para estabelecer uma conexão segura:
 
 ```C++
   // Get certs from file system and load into WiFiSecure client
@@ -193,27 +192,27 @@ Make the following code changes:
   }
 ```
 
-Save, compile and upload the code and now you should have a secure connection.  If you look at the IoT Platform console, in the devices section you should now see the connection state, in the Identity section when selecting the device, is connected with **SecureToken**.  Previous the status would have shown **Insecure**.
+Salve, compile e faça o upload do código e agora você deve ter uma conexão segura. Se você observar o console da IoT Platform, na seção de dispositivos, você deverá ver o estado da conexão, na seção Identidade ao selecionar o dispositivo, conectado com  **SecureToken**.  Anterior o status teria mostrado **Insecure**.
 
-You should now go into the IoT Platform settings section and update the connection security policy from **TLS Optional** to **TLS with Token Authentication** then **Save** the change.
+Agora você deve entrar na seção de configurações da IoT Platform e atualizar a política de segurança de conexão de **TLS Opcional** para **TLS com Autenticação Token** e depois **Salve** a mudança.
 
-### Step 8 - How the SPIFFS file system works
+### Etapa 8 - Como funciona o sistema de arquivos SPIFFS
 
-The ESP8266 allows some of the on board or connected flash memory to be used as a file system.  The Arduino IDE plugin allows you to customise the size of the filesystem (*Tools* -> *Flash Size* allows you to specify 1MB or 3MB for the file system when a NodeMCU board is the target device).  The SPIFFS filesystem is a very simple file system, which does not support directories.  It is a flat list of files, however, the filenames can include the '/' character to give a sense of directory structure.  Filenames should not be more than 31 characters.
+O ESP8266 permite que parte da memória flash interna ou conectada seja usada como um sistema de arquivos. O plugin do Arduino IDE permite que você personalize o tamanho do sistema de arquivos (* Ferramentas * -> * Tamanho do Flash * permite que você especifique 1MB ou 3MB para o sistema de arquivos quando uma placa NodeMCU é o dispositivo de destino). O sistema de arquivos SPIFFS é um sistema de arquivos muito simples, que não suporta diretórios. É uma lista simples de arquivos, no entanto, os nomes de arquivos podem incluir o caractere '/' para dar uma noção da estrutura do diretório. Nomes de arquivos não devem ter mais de 31 caracteres.
 
-The data upload tool allows the content data directory in the sketch folder to be converted to a SPIFFS filesystem and uploaded to the device, where the content can then be access from the application.
+A ferramenta de upload de dados permite que o diretório de dados de conteúdo na pasta de esboço seja convertido em um sistema de arquivos SPIFFS e carregado no dispositivo, onde o conteúdo pode ser acessado a partir do aplicativo.
 
-The SPIFFS filesystem is included in a sketch by including the appropriate header: `#include <FS.h>` then it is initialised with a **SPIFFS.begin()** function call.
+O sistema de arquivos SPIFFS está incluído em um esboço incluindo o cabeçalho apropriado: `#include <FS.h>`, então é inicializado com uma chamada a função **SPIFFS.begin()**.
 
-The application code opens up the certificate files using the **open()** function and specifying to only allow read operations.  The **WiFiClientSecure** can load the certificates from the open File handles using the **load()** functions.
+O código do aplicativo abre os arquivos de certificado usando a função **open()**  e especificando para permitir somente operações de leitura.  O **WiFiClientSecure** pode carregar os certificados das alças abertas do arquivo usando as funções **load()**.
 
-When you have finished with a file it can be closed with the **close()** function.
+Quando você terminar com um arquivo, ele pode ser fechado com a função **close()**.
 
-Further details and the full API can be seen in the [documentation](https://arduino-esp8266.readthedocs.io/en/2.4.1/filesystem.html)
+Mais detalhes e a API completa podem ser vistos no [documentação](https://arduino-esp8266.readthedocs.io/en/2.4.1/filesystem.html)
 
-### Solution code
+### Código da solução
 
-The finished application should look like this:
+A aplicação finalizada deve ficar assim:
 
 ```C++
 #include <FS.h>
@@ -411,7 +410,7 @@ void loop() {
 ```
 
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [**Server Certificate**](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

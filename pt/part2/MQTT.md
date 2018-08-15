@@ -1,37 +1,37 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [**MQTT**](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
 
 # Connecting Device to the Watson IoT Platform using MQTT
 
-## Lab Objectives
+## Objetivos
 
-In this lab you will learn how to add MQTT messaging to an application.  You will learn:
+In this lab you will learn how to add MQTT messaging to an application. You will learn:
 
 - How to connect to a MQTT broker using unsecured connection
 - How to use MQTT to connect to the Watson IoT platform
 
-### Introduction
+### Introdução
 
-In the previous lab you built the stand alone sensor application.  Now we want to make it an Internet of Things application by adding in MQTT to send the data to the IoT Platform.
+No laboratório anterior, você construiu o aplicativo de sensor autônomo. Agora, queremos torná-lo um aplicativo do Internet of Things, adicionando o MQTT para enviar os dados para a plataforma IoT.
 
-We will start by using an unsecured MQTT connection, then in the next section we will secure the connection.  However, the Watson IoT platform is configured to block all unsecured connections by default, so you need to configure your Watson IoT instance to allow unsecured connection.
+Começaremos usando uma conexão MQTT não segura e, na próxima seção, protegeremos a conexão. No entanto, a plataforma Watson IoT é configurada para bloquear todas as conexões não seguras por padrão, portanto, é necessário configurar sua instância do Watson IoT para permitir a conexão não segura.
 
-### Step 1 - Configure the Watson IoT platform to allow unsecured connections
+### Etapa 1 - Configurar a plataforma Watson IoT para permitir conexões não seguras
 
-Open up the IoT platform console for the instance connected to your Boilerplate application.  From the dashboard (*≡* -> *Dashboard*) select the application then in the overview section select the IoT platform in the connections panel).
+Abra o console da plataforma IoT para a instância conectada ao seu aplicativo Boilerplate. No painel (* ≡ * -> * Dashboard *), selecione o aplicativo e, na seção de visão geral, selecione a plataforma IoT no painel de conexões).
 
-Launch the IoT platform console, then switch to the Settings section.  Under Security select Connection Security then press the button **Open Connection Security Policy**.  Change the Default Security Level to **TLS Optional**, accept the Warning message by pressing the Ok button, then **Save** the change.  Your IoT platform instance will now accept unsecured MQTT connections.  Leave the browser window showing the IoT Platform console open, as you'll need to get some information when adding the MQTT code to the ESP8266 application.
+Inicie o console da plataforma IoT e, em seguida, alterne para a seção Configurações. Em Segurança, selecione Segurança da conexão e, em seguida, pressione o botão **Política de segurança de conexão aberta**. Altere o Nível de segurança padrão para **TLS Opcional**, aceite a mensagem de aviso pressionando o botão Ok e, em seguida, **Salvar** a alteração. Sua instância da plataforma IoT agora aceitará conexões MQTT não seguras. Deixe a janela do navegador mostrando o console da IoT Platform aberto, pois você precisará obter algumas informações ao adicionar o código MQTT ao aplicativo ESP8266.
 
-### Step 2 - Enhancing the application to send data to the IoT platform
+### Etapa 2 - Aprimorando o aplicativo para enviar dados para a plataforma IoT
 
-In the Arduino IDE you need to add the MQTT code, but before adding the MQTT code you need to install the library.  In the library manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for and install the PubSubClient.  Then add the include to the top of the application, below the existing include files
+No Arduino IDE, você precisa adicionar o código MQTT, mas antes de adicionar o código MQTT, é necessário instalar a biblioteca. No gerenciador da biblioteca (* Sketch * -> * Include Library * -> * Manage Libraries ... *) procure e instale o PubSubClient. Em seguida, adicione a inclusão à parte superior do aplicativo, abaixo dos arquivos de inclusão existentes
 
 `#include <PubSubClient.h>`
 
-Now add some #define statements to contain that the MQTT code will use.  Add these under the comment **UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT**:
+Agora adicione algumas instruções #define para conter o código MQTT. Adicione estes sob o comentário **UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT**:
 
 ```C++
 // --------------------------------------------------------------------------------------------
@@ -48,14 +48,15 @@ Now add some #define statements to contain that the MQTT code will use.  Add the
 #define MQTT_TOPIC_CMD "iot-2/cmd/display/fmt/json"
 ```
 
-You need to change the values to match your configuration:
+Você precisa alterar os valores para corresponder à sua configuração:
 
-- XXXXXX should be the 6 character Organisation ID for your platform.  If you look in the settings section of the IoT Platform console, under identity you will see the value you need to use.
-- YYYY is the device type you used to for the ESP8266 device.  This should be ESP8266, but you can verify by looking in the devices section.  All registered devices are listed here, and you can see the Device Type and Device ID.
-- ZZZZ is the device ID for your ESP8266, in the lab it was suggested to use dev01
-- PPPPP is the token you used when registering the device (hopefully you haven't forgot what you used, if so you need to delete the device and reregister it)
+- XXXXXX deve ser o ID da organização com 6 caracteres para sua plataforma. Se você olhar na seção de configurações do console da IoT Platform, em identidade, você verá o valor que precisa usar.
+- AAAA é o tipo de dispositivo que você usou para o dispositivo ESP8266. Isso deve ser ESP8266, mas você pode verificar procurando na seção de dispositivos. Todos os dispositivos registrados estão listados aqui e você pode ver o tipo de dispositivo e o ID do dispositivo.
 
-After the configuration block and under the pixel and dht variable declarations you need to add the the following:
+- ZZZZ é o ID do dispositivo para o seu ESP8266, no laboratório foi sugerido para usar dev01
+- PPPPP é o token que você usou quando registrou o dispositivo (espero que você não tenha esquecido o que você usou, então se você precisar apagar o dispositivo e registrá-lo novamente)
+
+Após o bloco de configuração e sob as declarações de variáveis pixel e dht, você precisa adicionar o seguinte:
 
 ```C++
 // MQTT objects
@@ -64,7 +65,7 @@ WiFiClient wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 ```
 
-Above the setup() function add the implementation of the callback function.  This is called whenever a MQTT message is sent to the device.  For now it just prints a message to the serial console:
+Acima da função setup (), adicione a implementação da função de retorno de chamada. Isso é chamado sempre que uma mensagem MQTT é enviada ao dispositivo. Por enquanto, apenas imprime uma mensagem para o console serial:
 
 ```C++
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -75,7 +76,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 ```
 
-at the end of the setup() function add the following code to connect the MQTT client to the IoT Platform:
+no final da função setup (), inclua o seguinte código para conectar o cliente MQTT à Plataforma IoT:
 
 ```C++
   // Connect to MQTT - IBM Watson IoT Platform
@@ -89,7 +90,7 @@ at the end of the setup() function add the following code to connect the MQTT cl
   }
 ```
 
-at the top of the loop() function add the following code to verify the mqtt connection is still valid and call the mqtt.loop() function to process any outstanding messages:
+no topo da função loop () adicione o seguinte código para verificar se a conexão mqtt ainda é válida e chame a função mqtt.loop () para processar qualquer mensagem pendente:
 
 ```C++
   mqtt.loop();
@@ -106,8 +107,7 @@ at the top of the loop() function add the following code to verify the mqtt conn
     }
   }
 ```
-
-Lastly add the code to send the data to the IoT Platform.  We already have the data formatted as a JSON string, so we can now add the following code after it is printed to the console in the **loop()** function:
+Por fim, adicione o código para enviar os dados para a plataforma IoT. Nós já temos os dados formatados como uma string JSON, para que possamos agora adicionar o seguinte código depois que ele for impresso no console na função ** loop () **:
 
 ```C++
     Serial.println(msg);
@@ -116,7 +116,7 @@ Lastly add the code to send the data to the IoT Platform.  We already have the d
     }
 ```
 
-Finally, replace the 10 second ```delay(10000)``` to call the mqtt **loop()** function, so the program processes incoming messages:
+Finalmente, substitua o segundo `` `delay (10000)` `` para chamar a função mqtt ** loop () **, assim o programa processa as mensagens recebidas:
 
 ```C++
   // Pause - but keep polling MQTT for incoming messages
@@ -126,29 +126,32 @@ Finally, replace the 10 second ```delay(10000)``` to call the mqtt **loop()** fu
   }
 ```
 
-### Step 3 - Run the application
+### Etapa 3 - Execute o aplicativo
 
-Compile and upload the code to your ESP8266 and you should see the ```WiFi Connected```, followed by ```Attempting MQTT connection...MQTT Connected```. Every 10 second interval you see the DHT sensor data printed on the console.  The ESP8266 should also be publishing MQTT messages to the Watson IoT Platform.  To verify this, switch to your browser window showing the IoT Platform console, switch to the Devices section.  Click on the esp8266 device to expand it then click **Recent Events**.  You should see the status event messages with the live data appearing every 10 seconds.
+Compile e envie o código para o seu ESP8266 e você deverá ver o  ```WiFi Connected```, Seguido por ```Attempting MQTT connection...MQTT Connected```. A cada intervalo de 10 segundos você vê os dados do sensor DHT impressos no console. O ESP8266 também deve publicar mensagens MQTT para o Watson IoT Platform. Para verificar isso, alterne para a janela do navegador que mostra o console da IoT Platform, alterne para a seção Dispositivos. Clique no dispositivo esp8266 para expandi-lo e clique em **Eventos Recentes**. Você deve ver as mensagens do evento de status com os dados ativos aparecendo a cada 10 segundos.
 
-### Step 4 - How it works
+### Passo 4 - Como funciona
 
-When connecting to the Watson IoT platform there are some requirements on some parameters used when connecting.  The [platform documentation](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) provides full details:
+Ao conectar-se à plataforma Watson IoT, há alguns requisitos em alguns parâmetros usados durante a conexão.
+A [documentação da plataforma](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) oferece mais detalhes:
 
-1. The #define statements construct the required parameters:
+1. As instruções #define constroem os parâmetros requeridos:
    - host : < **org id** >.messaging.internetofthings.ibmcloud.com
-   - device ID : d:< **org id** >:< **device type** >:< **device id** >
-   - topic to publish data : iot-2/evt/< **event id** >/fmt/<  **format string** >
-   - topic to receive commands : iot-2/cmd/< **command id** >/fmt/< **format string** >
-2. When you initialise the PubSubClient you need to pass in the hostname, the port (1883 for unsecured connections), a callback function and a network connection.  The callback function is called whenever incoming messages are received.
-3. Call **connect()** to connect with the platform, passing in the device ID, a user, which is always the value *use-token-auth* and the token you chose when registering the device.
-4. The **subscribe()** function registers the connection to receive messages published on the given topic.
-5. The **loop()** method must be regularly called to keep the connection alive and get incoming messages.
-6. The **publish()** function sends data on the provided topic - *Note*: On some MQTT Clients this function only queues the message for sending, it is actually sent in the **loop()** function.
-7. You can verify the connection status with the **connected()** function.
+   - ID do dispositivo : d:< **org id** >:< **device type** >:< **device id** >
+   - topico para publicar dados : iot-2/evt/< **event id** >/fmt/<  **format string** >
+   - topico para receber comandos : iot-2/cmd/< **command id** >/fmt/< **format string** >
+2. Quando você inicializa o PubSubClient, você precisa passar o nome do host, a porta (1883 para conexões não seguras), uma função de retorno de chamada e uma conexão de rede. A função de retorno de chamada é chamada sempre que mensagens recebidas são recebidas.
 
-### Solution code
+3. Ligue para **connect()** para conectar-se à plataforma, passando o ID do dispositivo, um usuário, que é sempre o valor * use-token-auth * e o token escolhido ao registrar o dispositivo.
 
-The complete ESP8266 application is shown below (you will need to change the configuration section to match your environment):
+4. A função **subscribe()** registra a conexão para receber mensagens publicadas no tópico em questão.
+5. O método **loop()** deve ser chamado regularmente para manter a conexão ativa e receber mensagens recebidas.
+6. A função **publish()** envia dados sobre o tópico fornecido - *Nota*: Em alguns MQTT Clients, esta função somente enfileira a mensagem para envio. Na verdade, ela é enviada na função **loop()**.
+7. Você pode verificar o status da conexão com a função **connected()**.
+
+### Código da solução
+
+ A aplicação completa do ESP8266 é mostrada abaixo (você precisará alterar a seção de configuração para corresponder ao seu ambiente):
 
 ```C++
 #include <ESP8266WiFi.h>
@@ -303,7 +306,7 @@ void loop() {
 ```
 
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [**MQTT**](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

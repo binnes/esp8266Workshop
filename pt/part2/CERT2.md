@@ -1,22 +1,22 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [MQTT](/MQTT.md) - [Server Certificate](CERT1.md) - [**Client Certificate**](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
 
-# Using a Device Certificate to authenticate to the Watson IoT platform
+# Usando um certificado de dispositivo para autenticar na plataforma Watson IoT
 
-## Lab Objectives
+## Objetivos
 
-In this lab you will extend the application by enabling client side certificates.  You will learn how to:
+Neste laboratório, você estenderá o aplicativo ativando os certificados do lado do cliente. Você vai aprender como:
 
-- Generate client keys and certificates
-- Modify the application to use the client certificates
-- Configure the IoT platform connection policy to require tokens and/or certificates
+- Gere chaves e certificados do clientes
+- Modifique o aplicativo para usar os certificados do cliente
+- Configurar a política de conexão da plataforma IoT para exigir tokens e / ou certificados
 
-### Step 1 - Generating the key and certificate for a device
+### Etapa 1 - Gerando a chave e o certificado para um dispositivo
 
-The openssl tool must be used to generate the key and certificate, as in the previous lab.  You need to work in the same directory as you did in the previous lab, as the commands below need access to the rootCA_certificate.pem file.  If you altered the root CA key password, then remember to change the value in the commands shown below:
+A ferramenta openssl deve ser usada para gerar a chave e o certificado, como no laboratório anterior. Você precisa trabalhar no mesmo diretório que no laboratório anterior, pois os comandos abaixo precisam de acesso ao arquivo rootCA_certificate.pem. Se você alterou a senha da chave da CA raiz, lembre-se de alterar o valor nos comandos mostrados abaixo:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem 2048
@@ -30,22 +30,22 @@ openssl rsa -outform der -in SecuredDev01_key.pem -passin pass:password123 -out 
 openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
 ```
 
-### Step 2 - Upload the certificate and key to the ESP8266 device
+### Passo 2 - Carregar o certificado e chave para o dispositivo ESP8266
 
-You need to add the private key (SecuredDev01_key.key) and the certificate (SecuredDev01_crt.der) to the data folder inside the sketch folder then run the data uploader tool (*Tools* -> *ESP8266 Sketch Data Upload*) to install the certificates on the device filesystem.
+É necessário adicionar a chave privada (SecuredDev01_key.key) e o certificado (SecuredDev01_crt.der) à pasta de dados dentro da pasta de rascunho, em seguida, executar a ferramenta de upload de dados (* Ferramentas * -> * ESP8266 Sketch Data Upload *) para instalar o certificados no sistema de arquivos do dispositivo.
 
-### Step 3 - Modify the application to use the client certificate and key
+### Etapa 3 - Modifique o aplicativo para usar o certificado e a chave do cliente
 
-Now you can modify the code to load the certificates and add them to the connection:
+Agora você pode modificar o código para carregar os certificados e adicioná-los à conexão:
 
-Add two mode #define statements containing the names of the key and certificate:
+Adicione duas instruções #define de modo contendo os nomes da chave e do certificado:
 
 ```C++
 #define KEY_FILE "/SecuredDev01_key.key"
 #define CERT_FILE "/SecuredDev01_crt.der"
 ```
 
-then update the code within the setup() function to load the additional key and certificate:
+em seguida, atualize o código dentro da função setup () para carregar a chave e o certificado adicionais:
 
 ```C++
 // Get certs from file system and load into WiFiSecure client
@@ -79,30 +79,29 @@ then update the code within the setup() function to load the additional key and 
   }
 ```
 
-### Step 4 - Run the application
+### Etapa 4 - Execute o aplicativo
 
-Save, compile and upload the sketch to the device and verify the device connects.
+Salve, compile e envie o esboço para o dispositivo e verifique se o dispositivo está conectado.
 
-### Step 5 - Configure the security policy on the IoT platform
+### Etapa 5 - Configurar a política de segurança na plataforma IoT
 
-You now have client certificates working with the device, so can now choose how you want devices to be verified.  If you open the IoT Platform console and got to the settings section then the Connection Security section and Open Connection Security Policy you see you have a number of options:
+Agora você tem certificados de cliente trabalhando com o dispositivo, e agora pode escolher como deseja que os dispositivos sejam verificados. Se você abrir o console da IoT Platform e acessar a seção de configurações, a seção Segurança de conexão e a Política de segurança de conexão aberta, verá que há várias opções:
 
-- TLS Optional
-- TLS with Token Authentication
-- TLS with Client Certificate Authentication
-- TLS with Client Certificate AND Token Authentication
-- TLS with Client Certificate OR Token Authentication
+- TLS Opcional
+- TLS com autenticação de token
+- TLS com autenticação de certificado de cliente
+- TLS com certificado de cliente e autenticação de token
+- TLS com certificado de cliente ou autenticação de token
 
-You can now decide what policy you want.  If you don't want to use Token Authentication then change the **connect()** function call and omit the user and token information:
+Agora você pode decidir qual política deseja. Se você não quiser usar a autenticação de token, altere a chamada de função **connect()** e omita as informações do usuário e do token:
+- com autenticação por token : `if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {`
+- sem autenticação por token: `if (mqtt.connect(MQTT_DEVICEID)) {`
 
-- with token authentication : `if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {`
-- without token authentication : `if (mqtt.connect(MQTT_DEVICEID)) {`
+Você também verá que pode criar regras personalizadas além da regra padrão. Isso permite que diferentes tipos de dispositivos tenham uma política diferente. Se um tipo de dispositivo não corresponder a uma regra personalizada, a regra padrão será usada.
 
-You will also see that you can create Custom Rules in addition to the Default Rule.  This allows different device types to have a different policy . If a device type doesn't match a custom rule then the default rule is used.
+### Código da solução
 
-### Solution Code
-
-The finished application should look like this:
+A aplicação finalizada deve ficar assim:
 
 ```C++
 #include <FS.h>
@@ -321,7 +320,7 @@ void loop() {
 ```
 
 ***
-**Part 2** - [Device Registration](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [**Client Certificate**](CERT2.md)
+**Parte 2** - [Registro de Dispositivo](DEVICE.md) - [**Aplicação**](APP.md) - [MQTT](MQTT.md) - [Certificado Servidor](CERT1.md) - [Certificado Cliente](CERT2.md)
 ***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](part1/README.md) - [Parte 2](part2/README.md) - [Parte 3](part3/README.md) - [Parte 4](part4/README.md)

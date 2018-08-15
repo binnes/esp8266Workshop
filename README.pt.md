@@ -1,41 +1,39 @@
-*Quick links :*
-[Home](/README.pt.md) - [Part 1](/pt/part1/README.md) - [Part 2](/pt/part2/README.md) - [Part 3](/pt/part3/README.md) - [Part 4](/pt/part4/README.md)
+*Links Rápidos :*
+[Início](/README.pt.md) - [Parte 1](pt/part1/README.md) - [Parte 2](pt/part2/README.md) - [Parte 3](pt/part3/README.md) - [Parte 4](pt/part4/README.md)
 ***
 
-# Welcome to the ESP8266 IoT Workshop
+# Bem-vindo ao Workshop de IoT do ESP8266
 
-IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED
+Oficina IoT baseada no ESP8266, um DHT11 / 22 e NeoPixel LED RGB
 
-Complete this workshop in another language: [English](/README.md), [Português](/README.pt.md)
+# Mundo Real IoT com o ESP8266
 
-# Real World IoT with the ESP8266
+## Transmitir condições ambientais ao Watson IoT e analisar dados do sensor IoT
 
-## Stream Environmental Conditions to Watson IoT and Analyse IoT Sensor data
+Saiba como conectar um ESP8266 ao Watson IoT sobre o MQTT e transmitir dados ambientais dos sensores para o IBM Cloud. Os participantes do workshop aprenderão sobre programação ESP8266, Segurança IoT, MQTT, Watson IoT Platform, Node-RED, armazenamento em nuvem, análise de dados e técnicas de visualização.
 
-Learn how to connect an ESP8266 to Watson IoT over MQTT and stream environmental data from the sensors to the IBM Cloud.  Workshop attendees will learn about ESP8266 programming, IoT Security, MQTT, Watson IoT Platform, Node-RED, cloud storage, data analytics and visualisation techniques.
+Siga os links para acessar as diferentes seções do curso:
 
-Follow the links to access the different sections of the course:
+### [Part 1](pt/part1/README.md)
 
-### [Part 1](/pt/part1/README.md)
+Fornece uma visão geral do curso, apresenta o hardware, as ferramentas de desenvolvimento e, em seguida, faz com que você programe o dispositivo ESP8266 para se conectar à rede Wi-Fi local e controlar o hardware.
+A Parte 1 termina com uma visão geral do IBM Cloud, a plataforma de nuvem usada neste workshop e garante que você tenha uma conta de nuvem em funcionamento com os recursos necessários.
 
-Provides an overview to the course, introduces the hardware, the development tooling and then gets you programming the ESP8266 device to connect to the local WiFi network and be able to control the hardware.
-Part 1 finishes with an overview of the IBM Cloud, the cloud platform used in this workshop and ensures you have a working cloud account with the required resources.
+### [Part 2](pt/part2/README.md)
 
-### [Part 2](/pt/part2/README.md)
+A segunda parte do workshop examina o serviço de Internet das Coisas no IBM Cloud e como você conecta um dispositivo ao IBM Cloud usando o protocolo MQTT. Esta seção também procura garantir que você tenha uma conexão segura entre o dispositivo e o Cloud Platform, usando certificados e segurança SSL / TLS..
 
-The second part of the workshop looks at the Internet of Things service on the IBM Cloud and how you connect a device to the IBM Cloud using the MQTT protocol.  This section also looks at ensuring you have a secure connection between the device and the Cloud Platform, using SSL/TLS security and certificates.
+### [Part 3](pt/part3/README.md)
 
-### [Part 3](/pt/part3/README.md)
+Nesta seção, analisamos o uso de um ambiente de desenvolvimento de baixo código chamado Node-RED no IBM Cloud para implementar a parte do lado do servidor da solução de IoT. Você criará um painel para visualizar os dados da IoT e também fornecerá controles para configurar o dispositivo ESP8266. Seu aplicativo do lado do servidor também controlará o LED conectado ao ESP8266.
 
-In this section we look at using a low-code development environment called Node-RED on the IBM Cloud to implement the server side part of the IoT solution.  You will create a dashboard to visualise the IoT data and also provide controls to configure the ESP8266 device.  Your server side application will also control the LED attached to the ESP8266.
+### [Part 4](pt/part4/README.md)
 
-### [Part 4](/pt/part4/README.md)
+A última parte do workshop analisa como a informação útil pode ser extraída dos dados da IoT usando análises. Você será apresentado aos serviços analíticos disponíveis no IBM Cloud e ao conjunto de ferramentas que os serviços fornecem para ajudá-lo a extrair informações úteis dos dados do sensor.
 
-The last part of the workshop looks at how useful information can be extracted from the IoT data using analytics.  You will be introduced to the Analytic services available on the IBM Cloud and the tooling the services provide to help you extract useful information from sensor data.
+A agenda do dia pode ser encontrada em [**agenda**](/AGENDA.pt.md)
 
-Timing of the day can be found in the [**agenda**](/pt/AGENDA.md)
-
-We've provided all the links used throughout the workshop as well as links to other resources [**here**](/pt/RESOURCES.md) to help you explore a little more about IoT.
+Fornecemos todos os links usados durante o workshop, bem como links para outros recursos [** aqui **] (/ RESOURCES.md) para ajudar você a explorar um pouco mais sobre a IoT.
 ***
-*Quick links :*
-[Home](/README.pt.md) - [Part 1](/pt/part1/README.md) - [Part 2](/pt/part2/README.md) - [Part 3](/pt/part3/README.md) - [Part 4](/pt/part4/README.md)
+*Links Rápidos :*
+[Inicio](/README.pt.md) - [Parte 1](pt/part1/README.md) - [Parte 2](pt/part2/README.md) - [Parte 3](pt/part3/README.md) - [Parte 4](pt/part4/README.md)

@@ -21,7 +21,7 @@ We will start by using an unsecured MQTT connection, then in the next section we
 
 ### Step 1 - Configure the Watson IoT platform to allow unsecured connections
 
-Open up the IoT platform console for the instance connected to your Boilerplate application.  From the dashboard (*≡* -> *Dashboard*) select the application then in the overview section select the IoT platform in the connections panel).
+Open up the IoT platform console for the instance connected to your Starter Kit application.  From the dashboard (*≡* -> *Dashboard*) select the application then in the overview section select the IoT platform in the connections panel).
 
 Launch the IoT platform console, then switch to the Settings section.  Under Security select Connection Security then press the button **Open Connection Security Policy**.  Change the Default Security Level to **TLS Optional**, accept the Warning message by pressing the Ok button, then **Save** the change.  Your IoT platform instance will now accept unsecured MQTT connections.  Leave the browser window showing the IoT Platform console open, as you'll need to get some information when adding the MQTT code to the ESP8266 application.
 

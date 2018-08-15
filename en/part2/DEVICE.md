@@ -21,7 +21,7 @@ You need to decide how you want to group devices, by function, by hardware type,
 
 ### Step 1 - Launch the Watson IoT Platform console
 
-In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Dashboard*, then select your boilerplate application.  In the overview section of the application select the iotf-service under Connections.  This will take you to the IoT Platform service.  Launch the console.
+In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Dashboard*, then select your starter kit application.  In the overview section of the application select the iotf-service under Connections.  This will take you to the IoT Platform service.  Launch the console.
 
 ### Step 2 - Add a new device type for ESP8266 devices
 

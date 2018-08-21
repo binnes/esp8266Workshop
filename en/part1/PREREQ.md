@@ -46,15 +46,31 @@ You may need admin access to your workstation to be able to install the software
 
 ### Step 1 - Install the required drivers
 
+If you are attending an IBM face-to-face workshop, then the boards you will be using are branded LoLin and use the CH340 USB to serial chip.
+
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :
 
 - [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html) (This is the manufacturers web site, in Chinese, for the USB driver chip on the LoLin NodeNCU board - use Google Chrome to translate, or just click the download link to access the macOS driver).  After installing goto System Preferences -> Security and Privacy to allow the driver to be loaded.
+  - Alternatively if you use [homebrew](https://brew.sh) you can install the driver using command
+
+    ```bash
+    brew cask install homebrew/cask-drivers/wch-ch34x-usb-serial-driver
+    ```
+
 - [**Win/Linux**](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers)
 
 Select the appropriate one for your OS, download it, unzip it and install it.
 
 - *Note* : Linux should not need a driver installing, as it should already be installed.
-- *Note* : If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, and the drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+
+If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).   
+
+If you are a Mac user and use [homebrew](https://brew.sh) then the driver can be installed using command:
+
+```bash
+brew cask install homebrew/cask-drivers/silicon-labs-vcp-driver
+```
 
 When the driver is installed and the NodeMCU module is connected you can test if the driver is working:
 

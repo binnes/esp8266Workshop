@@ -96,7 +96,7 @@ First add an Apache Spark service to the project.
 - From the top menu, select **Tools**, and then **Notebook**
 - Select **From URL**
 - Give the notebook a name : **IoT Sensor Analytics**
-- In the **Notebook URL** field, paste the following URL: <https://raw.githubusercontent.com/binnes/esp8266Workshop/master/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb>
+- In the **Notebook URL** field, paste the following URL: <https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb>
 
 - Scroll down to the **Select runtime** dropdown and choose your **Spark** runtime
 

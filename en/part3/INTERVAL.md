@@ -69,7 +69,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the replacement ESP8266 program.
 
 <p align="center">
-  <strong>Get the Code: <a href="../IoTWorkshop.ino/IoTWorkshop.ino.ino">IoT Workshop Arduino Program</strong></a>
+  <strong>Get the Code: <a href="../../IoTWorkshop.ino/IoTWorkshop.ino.ino">IoT Workshop Arduino Program</strong></a>
 </p>
 
 - Return to the Arduino IDE

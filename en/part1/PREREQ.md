@@ -63,8 +63,7 @@ Select the appropriate one for your OS, download it, unzip it and install it.
 
 - *Note* : Linux should not need a driver installing, as it should already be installed.
 
-
-If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).   
+If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).
 
 If you are a Mac user and use [homebrew](https://brew.sh) then the driver can be installed using command:
 

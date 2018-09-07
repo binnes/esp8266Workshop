@@ -6,8 +6,6 @@
 
 IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED
 
-Complete this workshop in another language: [English](/README.md), [Português](/README.pt.md)
-
 # Real World IoT with the ESP8266
 
 ## Stream Environmental Conditions to Watson IoT and Analyse IoT Sensor data

@@ -38,6 +38,10 @@ The DHT sensors have 4 connecting pins.  When looking at the front of the sensor
 
 ![ModeMCU DHT Wiring](../images/NodeMCU_DHT.jpg)
 
+If you have a DHT mounted on a module then you need to check the pinout, usually indicated on the board, with **+** (to 3V pin), **-** (to G pin) and **out** or **data** (to D2 pin):
+
+![DHT module](../images/DHTmodule.png)
+
 ### Step 3 - Load an example sketch showing how to use the DHT sensor
 
 To see how to use the DHT sensor there is an example sketch.  *File* -> *Examples* -> *DHT Sensor Library* -> *DHTtester*.  You need to make a couple of changes before you can run the sketch:

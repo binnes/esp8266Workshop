@@ -18,9 +18,9 @@ Neste laboratório, você aprenderá como conectar o sensor de temperatura e umi
 
 ### Etapa 1 - Instalando a Biblioteca
 
-Para acessar os sensores DHT do ESP8266, precisamos adicionar 2 bibliotecas ao esboço, então, novamente no IDE do Arduino, acesse o gerenciador da biblioteca. * Esboço * -> * Incluir biblioteca * -> * Gerenciar bibliotecas ... *.
+Para acessar os sensores DHT do ESP8266, precisamos adicionar 2 bibliotecas ao esboço, então, novamente no IDE do Arduino, acesse o gerenciador da biblioteca. *Sketch* -> *Incluir biblioteca* -> *Gerenciar bibliotecas ...*.
 
-- Uma vez no Gerenciador de bibliotecas, procure por DHT. A entrada superior deve ser a biblioteca de sensores Adafruit ** DHT ** que você deve instalar.
+- Uma vez no Gerenciador de bibliotecas, procure por DHT. A entrada superior deve ser a biblioteca de sensores Adafruit **DHT** que você deve instalar.
 - A Adafruit introduziu um modelo unificado em muitas de suas bibliotecas de sensores, incluindo a biblioteca DHT, e para usá-los você precisa instalar a biblioteca ** Adafruit Unified Sensor **, então procure por ela, ela aparecerá na parte inferior da lista e, em seguida, instale-o.
 
 Quando ambas as bibliotecas tiverem sido instaladas, você poderá fechar o gerenciador de bibliotecas.

@@ -27,7 +27,7 @@ Quando ambas as bibliotecas tiverem sido instaladas, você poderá fechar o gere
 
 ### Passo 2 - Conecte o sensor DHT à sua placa ESP8266
 
-Desconecte a placa ESP * 266 do seu laptop / estação de trabalho antes de conectar o sensor DHT.
+Desconecte a placa ESP 8266 do seu laptop / estação de trabalho antes de conectar o sensor DHT.
 
 Os sensores de DHT possuem 4 pinos de conexão. Ao olhar para a frente do sensor (caixa de malha) com os pinos na parte inferior, as conexões são (da esquerda para a direita):
 

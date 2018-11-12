@@ -40,7 +40,7 @@ Os sensores de DHT possuem 4 pinos de conexão. Ao olhar para a frente do sensor
 
 ### Etapa 3 - Carregue um exemplo de esboço mostrando como usar o sensor DHT
 
-Para ver como usar o sensor DHT, há um exemplo de esboço. * Arquivo * -> * Exemplos * -> * Biblioteca de Sensores DHT * -> * DHTtester *. Você precisa fazer algumas alterações antes de poder executar o esboço:
+Para ver como usar o sensor DHT, há um exemplo de esboço.  *Arquivo* -> *Exemplos* -> *Biblioteca de Sensores DHT* -> *DHTtester*. Você precisa fazer algumas alterações antes de poder executar o esboço:
 
 1. Atualize o pino para o pino GPIO correto no ESP8266 correspondente a D2 na placa NodeMCU.  O [pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/) diagrama mostrará que você precisa do GPIO 4.
 2. Defina o tipo DHT. Você está usando sensores DHT11, descomente a linha DHT11 e comente a linha DHT22.

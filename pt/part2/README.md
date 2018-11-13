@@ -22,7 +22,7 @@
 
 - Prática [**Protegendo o tráfego do MQTT usando certificado autoassinado**](CERT1.md)
 
-## Adding client certificates - 10 min
+## Adicionando o certificado de clíente - 10 min
 
 - Prática [**Protegendo o tráfego do MQTT usando um certificado de cliente**](CERT2.md)
 

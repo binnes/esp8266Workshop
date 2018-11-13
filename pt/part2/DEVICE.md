@@ -21,11 +21,11 @@ Você precisa decidir como deseja agrupar dispositivos, por função, por tipo d
 
 ### Etapa 1 - Iniciar o console do Watson IoT Platform
 
-No IBM Cloud, navegue até seu painel usando o menu superior * - * -> * Dashboard * e, em seguida, selecione seu aplicativo clichê. Na seção de visão geral do aplicativo, selecione o serviço iotf em Conexões. Isso levará você ao serviço da Plataforma IoT. Inicie o console.
+No IBM Cloud, navegue até seu painel usando o menu superior *-* -> *Dashboard* e, em seguida, selecione seu aplicativo clichê. Na seção de visão geral do aplicativo, selecione o serviço iotf em Conexões. Isso levará você ao serviço da Plataforma IoT. Inicie o console.
 
-### Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266
+### Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266
 
-Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266 Navegue até a seção Devices do console e selecione a seção ** Device Types **. Pressione o botão ** + Adicionar tipo de dispositivo ** e insira o seguinte:
+Etapa 2 - Adicionar um novo tipo de dispositivo para dispositivos ESP8266 Navegue até a seção Devices do console e selecione a seção **Device Types**. Pressione o botão **+ Adicionar tipo de dispositivo** e insira o seguinte:
 
 - Tipo : Certifique-se de que o dispositivo esteja selecionado (NÃO gateway)
 - Nome : Escreva **ESP8266**

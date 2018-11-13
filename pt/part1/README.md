@@ -24,13 +24,13 @@ Antes de começar a trabalhar neste workshop, você precisa ter algum software d
 
 ## DHT Temp - aplicativo de amostra - 15 minutos
 
-- Prática [**Sensor DHT **](DHT.md)
+- Prática [**Sensor DHT**](DHT.md)
 
 ## Introdução ao IBM Cloud - 10 minutos
 
 ## Implante o boilerplate do IBM Cloud Internet of Things - 10 minutos
 
-- Prática [**Instalando IoT Boilerplate **](IOTCLOUD.md)
+- Prática [**Instalando IoT Boilerplate**](IOTCLOUD.md)
 
 ***
 *Links Rápidos :*

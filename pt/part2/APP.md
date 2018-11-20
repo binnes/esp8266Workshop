@@ -20,9 +20,9 @@ Na parte 1, você examinou vários esboços de exemplo para ver como os sensores
 
 ### Etapa 1 - Criando um novo sketch
 
-Crie um novo esboço no Arduino IDE usando * File * -> * New * ou o ícone na barra de ferramentas. Salve o sketch * File * -> * Save * e nomeie o sketch, nome sugerido **esp8266Workshop**.
+Crie um novo esboço no Arduino IDE usando *Arquivo* -> *Novo* ou o ícone na barra de ferramentas. Salve o sketch *Arquivo* -> *Salvar* e nomeie o sketch, nome sugerido **esp8266Workshop**.
 
-Você precisa adicionar mais 1 biblioteca ao Arduino IDE para fornecer funções para manipular o formato de dados JSON. Quando começarmos a enviar e receber dados da IoT Platform, o formato de dados JSON será usado, para que possamos começar a usar o JSON agora. No Gerenciador de bibliotecas (* Sketch * -> * Include Library * -> * Manage Libraries ... *) pesquise ** ArduinoJson ** e instale a versão mais recente da biblioteca v5.x.
+Você precisa adicionar mais 1 biblioteca ao Arduino IDE para fornecer funções para manipular o formato de dados JSON. Quando começarmos a enviar e receber dados da IoT Platform, o formato de dados JSON será usado, para que possamos começar a usar o JSON agora. No Gerenciador de bibliotecas (*Sketch* -> *Gereciador de Bibliotecas* -> *Gerenciar Bibliotecas ...*) pesquise **ArduinoJson** e instale a versão mais recente da biblioteca v5.x.
 
 **Note, não use versões beta da biblioteca ArduinoJson, siga as versões mais recentes da versão v5.x. Você pode usar o menu suspenso no gerenciador de bibliotecas para selecionar a versão da biblioteca a ser instalada. Se você instalou o v6 beta, use o gerenciador de bibliotecas para substituir a versão pelo release 5.x.x mais recente da biblioteca. Você receberá um erro de compilação se usar a v6 com o código do bootcamp.**
 

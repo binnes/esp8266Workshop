@@ -16,7 +16,7 @@ This Lab will show you how to connection your ESP8266 to a local WiFi network.  
 
 ### Introduction
 
-In the Blinky practical you verified you had a working development environment and uploaded your first application to the ESP8266.  Now we will start exploring some of the more advanced functionality of the ESP8266, starting with the on board WiFi interface.
+In the First App practical you verified you had a working development environment and uploaded your first application to the ESP8266.  Now we will start exploring some of the more advanced functionality of the ESP8266, starting with the on board WiFi interface.
 
 The ESP8266 has a built in WiFi interface that supports 802.11 b/g/n 2.4 GHz networking.  5GHz frequencies are not supported.  The ESP8266 can be setup to be an access point or to join an existing Wireless LAN.  We are going to join a LAN in the workshop.
 

@@ -81,7 +81,7 @@ When the driver is installed and the NodeMCU module is connected you can test if
 
 The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software).  Select the version for your OS then download and install it:
 
-- Linux : unarchive it, then run `./install.sh` in the folder where the download was unarchived. (may need to run twice if get errors).  You may need to add your user to the tty and dialout groups to be able to use the connection to the device.  You can do this using command `sudo usermod -a -G tty,dialout $USER` you will have to log out and log in again to get the added permissions
+- Linux : unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh` - *Note: you may need to change the version number if you downloaded a version newer than 1.8.7*.  You some Linux distros you may need to add your user to the tty and dialout groups to be able to use the connection to the device.  You can do this using command `sudo usermod -a -G tty,dialout $USER` you will have to log out and log in again to get the added permissions
 - MacOS : simply drag Arduino app into Applications folder after unzipping)
 - Windows : run the downloaded installer application
 

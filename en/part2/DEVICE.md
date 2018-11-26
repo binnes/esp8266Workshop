@@ -25,19 +25,16 @@ In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Dashboa
 
 ### Step 2 - Add a new device type for ESP8266 devices
 
-Navigate into the Devices section of the console and then select the **Device Types** section.  Press the **+ Add Device Type** button the enter the following:
+Navigate into the Devices section of the console and ensure you are in the **Browse** section.  Press the **+ Add Device** button the enter the following:
 
-- Type : Ensure Device is selected (NOT Gateway)
-- Name : Enter **ESP8266**
-- Description : Enter **Esp8266 environment monitor**
+- Device Type : Enter **ESP8266**
+- Device ID : Enter **dev01**
 
-Select **Next** then **Done**
+Select **Next** then **Next** to skip over the device information input screen
 
-### Step 3 - Register your ESP8266 board in the IoT platform
+### Step 3 - Specify a token for the device
 
-You now have the opportunity to register a device.  Stick with the simple flow for now and press **Register Device**.  The ESP8266 device type should be pre-selected.  You now need to enter a unique device ID.  Again you can choose how you want to identify devices.  For the workshop, use a simple format, such as **dev01**.
-
-Press **Next** button twice then you will be prompted to provide a token.  When developing I recommend choosing a token you can easily remember.  I set all my devices to use the same token when developing, but obviously this is not a good production practice.
+You are now being prompted to provide a token.  When developing I recommend choosing a token you can easily remember.  I set all my devices to use the same token when developing, but obviously this is not a good production practice.
 
 Each time you connect the device the token will need to be presented to the server and once the device is registered there is no way to recover a token, you will need to delete and reregister the device if the token is lost.
 

@@ -22,17 +22,7 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 
 ### Step 1 - Watson Studio Setup
 
-#### Create **Cloud Object Storage**
-
-- Create a Cloud Object Storage instance by visiting the [IBM Cloud Catalog](https://console.bluemix.net/catalog/?search=object)
-- Search on **Object** in the IBM Cloud Catalog
-- Click on the **Object Storage** service tile
-
-![Cloud Object Storage Catalog screenshot](screenshots/CloudObjectStorage-Catalog.png)
-
-- Click on the **Create** button
-
-![Cloud Object Storage Catalog screenshot](screenshots/CloudObjectStorage-Service.png)
+Watson Studio needs a data store to enable it to work and it uses the Cloud Object Storage service, so you need an instance of that service available.  On a lite account you can only have a single instance of this service deployed, so if you already have an Object Storage service deployed then you will need to use that, otherwise you can deploy one when you create your notebook.
 
 #### Create a Watson Studio service instance
 
@@ -46,12 +36,11 @@ Watson Studio accelerates the machine and deep learning workflows required to in
 ![Watson Studio Service screenshot](screenshots/WatsonStudio-Service.png)
 
 - Click on the **Create** button
-- After the Watson Studio service is created, click on **Get Started** or visit Watson Studio at <http://dataplatform.ibm.com>
+- After the Watson Studio service is created, click on **Get Started**
 
 ![Watson Studio Launch screenshot](screenshots/WatsonStudio-Launch.png)
 
-- Login with your IBM Cloud account
-- Walk through the introductory tutorial to learn about Watson Studio
+- Optionally, walk through the introductory tutorial to learn about Watson Studio
 
 ![Watson Studio Welcome screenshot](screenshots/WatsonStudio-Welcome.png)
 
@@ -61,74 +50,34 @@ Projects are your workspace to organize your resources, such as assets like data
 
 #### Create a New Project
 
-- Click on **New project**
-- Select the **Complete** tile and press the **OK** button
+- Click on **Create a project**
+- Select the **Standard** tile and press the **Create Project** button
 
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject-Tiles.png)
 
 - Give your Project a name : **IoT Sensor Analytics**
-- The Cloud Object Storage instance created in Step 1 should be prefilled
-- Press the **Create** button
-
+- If you already have a Cloud Object Storage instance then it should be selected
+  
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
 
-#### Add an Apache Spark Service
+- if you don't have a Cloud Object Storage instance, then press the **Add** button to create one.  Ensure the Lite plan is selected then select **Create** then **Confirm** to create the instance.  Press the **Refresh** button to get the Cloud Storage instance to show up as the selected storage for your new Watson Studio project.
 
-First add an Apache Spark service to the project.
+![Watson Studio New project screenshot](screenshots/WatsonStudio-AddStorage.png)
 
-- Press the **Settings** tab
-
-![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-ProjectSettings.png)
-
-- Scroll down to the **Associated services** section and click on the **Add service** dropdown
-- Select **Spark** from the dropdown
-
-![Watson Studio Project Add Spark Service screenshot](screenshots/WatsonStudio-Project-AddSparkService.png)
-
-- In the **Apache Spark** service panel, select the **Lite** plan and press the **Create** button. Press the **Confirm** button.
-
-![Watson Studio Project Settings screenshot](screenshots/WatsonStudio-Apache-Spark-Service.png)
-
-- Now an Apache Spark service has been added to your Project
+- Press the **Create** button to create the New Watson Studio project
 
 ### Step 3 - Create a Notebook
 
-- From the top menu, select **Tools**, and then **Notebook**
-- Select **From URL**
+- From the top menu, select **Add to project**, and then **Notebook**
+- Select **Blank**
 - Give the notebook a name : **IoT Sensor Analytics**
-- In the **Notebook URL** field, paste the following URL: <https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/ESP8266-DHT-IoT-Sensor-Analytics.ipynb>
-
-- Scroll down to the **Select runtime** dropdown and choose your **Spark** runtime
+- Scroll down to the **Select runtime** dropdown and choose **Default Spark Python 3.5 XS (Driver with 1 vCPU and 4 GB RAM, 2 executors with 1 vCPU and 4 GB RAM each** runtime
 
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook.png)
 
 - Click on **Create Notebook**
 
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook-install.png)
-
-- Before running this notebook, an additional connector notebook needs to be installed.
-
-## Step 4 - Create an Apache Bahir Connector Notebook
-
-This will install the Apache Bahir connector within your Project/Apache Spark service. If you restart the kernel or start a new notebook in the same project you can use Apache Bahir for connecting to the Cloudant/Apache CouchDB service.
-
-- From the top menu, select **Tools**, and then **Notebook**
-- Select **From URL**
-- Give the notebook a name: **Apache Bahir**
-- In the **Notebook URL** field, paste the following URL: <https://raw.githubusercontent.com/romeokienzler/developerWorks/master/coursera/bahir_setup.ipynb>
-- Scroll down to the **Select runtime** dropdown and choose your **Spark** runtime
-- Click on **Create Notebook**
-
-#### Apache Bahir Connector Initialization
-
-- Once the Apache Bahir notebook loads, click on the **Kernel** menu and select **Restart & Run All** button
-- Do this **Restart & Run All** step **twice** to complete the package installs
-
-  ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir.png)
-
-- The packages are successfully installed when the cell reports "Package already installed" messages
-
-  ![Watson Studio Apache Bahir notebook run screenshot](screenshots/WatsonStudio-Notebook-ApacheBahir-complete.png)
 
 You are now ready to analyse the IoT sensor historical dataset using a Jupyter notebook and Spark.  Proceed to the next [Jupyter Notebook section](JUPYTER.md).
 

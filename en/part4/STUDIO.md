@@ -1,7 +1,7 @@
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
 ***
-**Part 4** - [**Watson Studio**](STUDIO.md) - [Notebooks](JUPYTER.md)
+**Part 4** - [**Watson Studio**](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***
 
 # Watson Studio Set up and Configuration in IBM Cloud
@@ -82,7 +82,7 @@ Projects are your workspace to organize your resources, such as assets like data
 You are now ready to analyse the IoT sensor historical dataset using a Jupyter notebook and Spark.  Proceed to the next [Jupyter Notebook section](JUPYTER.md).
 
 ***
-**Part 4** - [**Watson Studio**](STUDIO.md) - [Notebooks](JUPYTER.md)
+**Part 4** - [**Watson Studio**](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

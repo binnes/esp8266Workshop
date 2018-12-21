@@ -1,7 +1,7 @@
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
 ***
-**Part 4** - [Watson Studio](STUDIO.md) - [**Notebooks**](JUPYTER.md)
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***
 
 # Run a Jupyter Notebook in Watson Studio
@@ -57,7 +57,7 @@ Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter 
 - Spark will calculate the Average, Standard Deviation, Max and Min of your ESP8266 IoT Historical data set.
 
 ***
-**Part 4** - [Watson Studio](STUDIO.md) - [**Notebooks**](JUPYTER.md)
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

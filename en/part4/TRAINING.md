@@ -6,6 +6,8 @@
 
 # Create training data
 
+In this section we will create the training data needed to train a model.  
+
 ***
 **Part 4** - [Watson Studio](STUDIO.md) - [**Training Data**](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***

@@ -12,15 +12,17 @@ In this lab you will read IoT data into a Watson Studio Project Jupyter Notebook
 
 - Jupyter Notebooks
 - Read data from a Cloudant DB into Spark
-- Calculate the Average, Standard Deviation, and Find the Min/Max
+- How to create a model to be able to classify the IoT data to determine what is happening.
 
 ### Introduction
 
 Jupyter Notebook is a web-based interactive computational environment for interactive data science and scientific computing. A Jupyter Notebook document is a JSON document, following a versioned schema, and containing an ordered list of input/output cells which can contain code, text (using Markdown), mathematics, plots and rich media, usually ending with the ".ipynb" extension. A Jupyter kernel is a program responsible for handling various types of request (code execution, code completions, inspection), and providing a reply.
 
+The steps below will build up the Jupyter notebook, there is a solution notebook at the end to use if you need assistance to complete any step.
+
 ### Step 1 - Cloudant Credentials
 
-Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials to the Cloudant database created in the [Part 3 - Store Data in Cloud Storage](../part3/CLOUDANT.md) section.
+Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database created in the [Part 3 - Store Data in Cloud Storage](../part3/CLOUDANT.md) section.
 
 - Open a new browser tab.
 - Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1).

@@ -45,7 +45,7 @@ Now add some #define statements to contain that the MQTT code will use.  Add the
 #define MQTT_USER "use-token-auth"
 #define MQTT_TOKEN "PPPPP"
 #define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_CMD "iot-2/cmd/display/fmt/json"
+#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
 ```
 
 You need to change the values to match your configuration:
@@ -71,7 +71,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
-  Serial.println("] ");
+  Serial.print("] : ");
+  
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)scopepayload);
 }
 ```
 
@@ -81,7 +84,7 @@ at the end of the setup() function add the following code to connect the MQTT cl
   // Connect to MQTT - IBM Watson IoT Platform
   if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
-    mqtt.subscribe(MQTT_TOPIC_CMD);
+    mqtt.subscribe(MQTT_TOPIC_DISPLAY);
 
   } else {
     Serial.println("MQTT Failed to connect!");
@@ -98,7 +101,7 @@ at the top of the loop() function add the following code to verify the mqtt conn
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
-      mqtt.subscribe(MQTT_TOPIC_CMD);
+      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
       Serial.println("MQTT Failed to connect!");
@@ -168,7 +171,7 @@ The complete ESP8266 application is shown below (you will need to change the con
 #define MQTT_USER "use-token-auth"
 #define MQTT_TOKEN "password"
 #define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_CMD "iot-2/cmd/display/fmt/json"
+#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
@@ -219,7 +222,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
-  Serial.println("] ");
+  Serial.print("] : ");
+  
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)scopepayload);
 }
 
 void setup() {
@@ -247,7 +253,7 @@ void setup() {
   // Connect to MQTT - IBM Watson IoT Platform
   if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
-    mqtt.subscribe(MQTT_TOPIC_CMD);
+    mqtt.subscribe(MQTT_TOPIC_DISPLAY);
 
   } else {
     Serial.println("MQTT Failed to connect!");
@@ -262,7 +268,7 @@ void loop() {
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
-      mqtt.subscribe(MQTT_TOPIC_CMD);
+      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
       Serial.println("MQTT Failed to connect!");

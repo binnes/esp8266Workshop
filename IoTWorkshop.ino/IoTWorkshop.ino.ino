@@ -81,7 +81,7 @@ void callback(char* topic, byte* scopepayload, unsigned int length) {
   
   scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
   Serial.println((char *)scopepayload);
-  
+
   JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
   if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
     if (cmdData.success()) {
@@ -89,30 +89,27 @@ void callback(char* topic, byte* scopepayload, unsigned int length) {
       r = cmdData.get<unsigned char>("r"); // this form allows you specify the type of the data you want from the JSON object
       g = cmdData["g"];
       b = cmdData["b"];
-      Serial.println("Set the NeoPixel");
       jsonReceiveBuffer.clear();
       pixel.setPixelColor(0, r, g, b);
       pixel.show();
     } else {
-      Serial.print("Received invalid JSON data : ");
-      Serial.println((char *)scopepayload);
+      Serial.println("Received invalid JSON data");
     }
   } else if (0 == strcmp(topic, MQTT_TOPIC_INTERVAL)) {
     if (cmdData.success()) {
       //valid message received
       ReportingInterval = cmdData.get<int32_t>("Interval"); // this form allows you specify the type of the data you want from the JSON object
       Serial.print("Reporting Interval has been changed:");
-      Serial.print(ReportingInterval);
-      Serial.println();
+      Serial.println(ReportingInterval);
       jsonReceiveBuffer.clear();
     } else {
-      Serial.print("Received invalid JSON data : ");
-      Serial.println((char *)scopepayload);
+      Serial.println("Received invalid JSON data");
     }
   } else {
     Serial.println("Unknown command received");
   }
 }
+
 
 void setup() {
   // Start serial console

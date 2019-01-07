@@ -124,7 +124,7 @@ The finished application should look like this:
 #define MQTT_USER "use-token-auth"
 #define MQTT_TOKEN "password"
 #define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_CMD "iot-2/cmd/display/fmt/json"
+#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
 #define CA_CERT_FILE "/rootCA_certificate.der"
 #define KEY_FILE "/SecuredDev01_key.key"
 #define CERT_FILE "/SecuredDev01_crt.der"
@@ -181,7 +181,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
-  Serial.println("] ");
+  Serial.print("] : ");
+  
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)scopepayload);
 }
 
 void setup() {
@@ -264,7 +267,7 @@ void setup() {
         Serial.println("certificate doesn't match");
       }
       Serial.println("MQTT Connected");
-      mqtt.subscribe(MQTT_TOPIC_CMD);
+      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
@@ -281,7 +284,7 @@ void loop() {
 //    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // No Token Authentication
       Serial.println("MQTT Connected");
 // Should verify the certificates here - like in the startup function
-      mqtt.subscribe(MQTT_TOPIC_CMD);
+      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
       Serial.println("MQTT Failed to connect!");

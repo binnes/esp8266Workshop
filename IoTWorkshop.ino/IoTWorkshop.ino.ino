@@ -74,15 +74,16 @@ int32_t ReportingInterval = 10;  // Reporting Interval seconds
 
 
 void callback(char* topic, byte* scopepayload, unsigned int length) {
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
-
-  // handle message arrived
+   // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
-  Serial.println("] ");
+  Serial.print("] : ");
+  
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
   Serial.println((char *)scopepayload);
-  if (0 == strcmp(topic, "iot-2/cmd/display/fmt/json")) {
+  
+  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
+  if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
     if (cmdData.success()) {
       //valid message received
       r = cmdData.get<unsigned char>("r"); // this form allows you specify the type of the data you want from the JSON object
@@ -96,7 +97,7 @@ void callback(char* topic, byte* scopepayload, unsigned int length) {
       Serial.print("Received invalid JSON data : ");
       Serial.println((char *)scopepayload);
     }
-  } else if (0 == strcmp(topic, "iot-2/cmd/interval/fmt/json")) {
+  } else if (0 == strcmp(topic, MQTT_TOPIC_INTERVAL)) {
     if (cmdData.success()) {
       //valid message received
       ReportingInterval = cmdData.get<int32_t>("Interval"); // this form allows you specify the type of the data you want from the JSON object

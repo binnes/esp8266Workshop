@@ -58,6 +58,8 @@ replacing:
 - CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform
 - pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
 
+*Note: If you get an error similar to ```Can't load /home/xxx/.rnd into RNG```, you can ignore it.  It just indicates that this is the first time you have used the random number generator.*
+
 This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
 
 ### Step 2 - Uploading the root CA Certificate to the IoT Platform

@@ -21,7 +21,7 @@ The openssl tool must be used to generate the key and certificate, as in the pre
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem 2048
 
-openssl req -new -sha256 -days 3560 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=d:ESP8266:dev01" -passin pass:password123 -key SecuredDev01_key.pem -out SecuredDev01_crt.csr
+openssl req -new -sha256 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=d:ESP8266:dev01" -passin pass:password123 -key SecuredDev01_key.pem -out SecuredDev01_crt.csr
 
 openssl x509 -days 3650 -in SecuredDev01_crt.csr -out SecuredDev01_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -set_serial 131
 

@@ -58,6 +58,8 @@ replacing:
 - CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform
 - pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
 
+*Note: If you get an error similar to ```Can't load /home/xxx/.rnd into RNG```, you can ignore it.  It just indicates that this is the first time you have used the random number generator.*
+
 This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
 
 ### Step 2 - Uploading the root CA Certificate to the IoT Platform
@@ -77,7 +79,7 @@ To generate a certificate for the IoT platform to use run the following commands
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem 2048
 
-openssl req -new -sha256 -days 3560 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40/CN=z53u40.messaging.internetofthings.ibmcloud.com" -passin pass:password123 -key mqttServer_key.pem -out mqttServer_crt.csr
+openssl req -new -sha256 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40/CN=z53u40.messaging.internetofthings.ibmcloud.com" -passin pass:password123 -key mqttServer_key.pem -out mqttServer_crt.csr
 
 openssl x509 -days 3560 -in mqttServer_crt.csr -out mqttServer_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -extensions v3_req -extfile srvext.cfg -set_serial 11
 

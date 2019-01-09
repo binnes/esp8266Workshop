@@ -4,9 +4,15 @@
 **Part 4** - [Watson Studio](STUDIO.md) - [**Training Data**](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md)
 ***
 
-# Create training data
+## Lab Objectives
 
-In this section we will create the training data needed to train a model.
+In this section we will create the training data needed to train a model.  You will learn:
+
+- How to format data into an appropriate format for training
+- How to capture the data required to create the data model
+- How to reset the database if invalid data has been captured
+
+# Create training data
 
 To train the model we need to identify 2 different situations:
 
@@ -43,7 +49,8 @@ To create the flow, open up the Node-RED editor running on the IBM Cloud (as use
 
 You should have a flow that looks like this: ![nodered flow](screenshots/nr-flow.png)
 
-If your flow is not working then you can import the sample flow : 
+If your flow is not working then you can import the sample flow, which is also available in the [flows](flows) folder in part4 of the repo :
+
 ```JSON
 [{"id":"f46b4c67.73cb2","type":"ibmiot in","z":"deb0d57.1c46528","authentication":"boundService","apiKey":"","inputType":"evt","logicalInterface":"","ruleId":"","deviceId":"","applicationId":"","deviceType":"+","eventType":"+","commandType":"","format":"json","name":"IBM IoT","service":"registered","allDevices":true,"allApplications":"","allDeviceTypes":true,"allLogicalInterfaces":"","allEvents":true,"allCommands":"","allFormats":"","qos":0,"x":130,"y":100,"wires":[["e09fb3f3.79f538"]]},{"id":"e09fb3f3.79f538","type":"change","z":"deb0d57.1c46528","name":"","rules":[{"t":"set","p":"payload","pt":"msg","to":"msg.payload.{\"index\" : $millis(), \"temperature\" : d.temp, \"humidity\" : d.humidity} ","tot":"jsonata"},{"t":"set","p":"payload.class","pt":"msg","to":"0","tot":"num"}],"action":"","property":"","from":"","to":"","reg":false,"x":280,"y":100,"wires":[["84be0f97.8f672"]]},{"id":"84be0f97.8f672","type":"debug","z":"deb0d57.1c46528","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":450,"y":140,"wires":[]},{"id":"5a8d3b21.87bb3c","type":"cloudant out","z":"deb0d57.1c46528","name":"","cloudant":"","database":"training","service":"bi-ESP8266WorkshopCourse-cloudantNoSQLDB","payonly":false,"operation":"insert","x":460,"y":100,"wires":[]}]
 ```
@@ -61,7 +68,7 @@ This flow creates the following output, which we will write to the database:
 
 ## Creating the training data
 
-To create the training data you may want to use the interval dashboard to set the interval to something like 5 seconds, to reduce the time needed to gather the required data.
+To create the training data you may want to use the interval dashboard to set the interval to something like 5 seconds, to reduce the time needed to gather the required data.  We are aiming to have a similar number of data points for each class in the training data.
 
 1. Ensure the ESP8266 is working and you can see the debug output as shown above.
 2. As we want to record class 0 data, leave the DHT sensor alone and wait 30 seconds to ensure the data is stable.  Then connect up the **cloudant out** node and deploy the flow: ![flow collecting data](screenshots/nr-flow-collecting.png)
@@ -69,7 +76,7 @@ To create the training data you may want to use the interval dashboard to set th
 4. Edit the **change** node configuration to set the class to 1 : ![change class 1](screenshots/nr-change-class-1.png)
 5. Hold the DHT sensor in your hand, ensuring you don't dislodge any of the connecting cables.  Wait a while to let the readings settle down
 6. Connect the **change** node to the **cloudant out** node and deploy the flow.  Ensure you remain holding onto the DHT sensor
-7. Wait until about 20-30 records have been written then delete the connection to the **cloudant out** node and deploy to stop recording any more data.  You can release the DHT sensor now
+7. Wait until about 20-30 records have been written *(try to get the same number of database records as you created for class 0)* then delete the connection to the **cloudant out** node and deploy to stop recording any more data.  You can release the DHT sensor now
 
 ## Reset the training database
 

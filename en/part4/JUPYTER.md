@@ -12,6 +12,7 @@ In this lab you will read IoT data into a Watson Studio Project Jupyter Notebook
 
 - Jupyter Notebooks
 - Read data from a Cloudant DB into Spark
+- How to manupulate the data within the notebook environment
 - How to create a model to be able to classify the IoT data to determine what is happening.
 
 ## Introduction
@@ -74,6 +75,10 @@ df=readDataFrameFromCloudant('training')
 
 You should see the data from the database.  You can validate that you have the correct data format by checking you have the **class**, **humidity**, **index** and **temperature** columns in the loaded data: ![Load data in to notebook](screenshots/WatsonStudio-cell2.png)
 
+If you want to clear out the data created by previously run steps then you can use the kernel menu option to clear out and restart the notebook, or clearout and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
+
+If you clear output then you can select the first cell and press run, which will run the cell then move to the next cell in the notebook.  Keep pressing run to run each cell in turn, ensure you wait for each cell to complete (At the left side of the cell the indicator **[*]** turns to **[n]**, where n is a number) before running the next step.
+
 ## Step 3 - Work with the training data
 
 Within the notebook you are able to manipulate the data. In this section we will use SQL to create the data frames needed to verify and visualise the training data.  You usually need to examine the training data and maybe clean it up before creating the model.  This section shows some of the techniques available.
@@ -94,7 +99,7 @@ df_class_0.createOrReplaceTempView('df_class_0')
 df_class_1.createOrReplaceTempView('df_class_1')
 ```
 
-For the rest of this section feel free to explore different options available.  Enter each of the code samples in a cell in the notebook then run the cell to see the results.
+For the rest of this section feel free to explore the different options available.  Enter each of the code samples in a cell in the notebook then run the cell to see the results.
 
 - You may want to see what the values the data contains:
 
@@ -132,7 +137,11 @@ display(df_class_0)
 
 ## Step 4 - Creating the binary classifier model
 
-Once you are confident you have the correct training data available you can proceed to creating the model.  
+Once you are confident you have the correct training data available you can proceed to creating the model.
+
+The approach adopted in this exercise is a common approach for machine learning, where a pipeline of operations or algorithms is constructed to implement the required functionality, in our case generating a model to classify data.
+
+- Before we can access the Spark functionality we need to import a number of packages:
 
 ```python
 # Imports for modelling
@@ -146,6 +155,8 @@ from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 ```
 
+- Now we build the pipeline of operations to generate the model.  Here we need to create vectors from our data and pass them through a logistic regression algorithm.  The ```pipeline.fit(...)``` and ```model.transform(...)``` functions run the pipeline:
+
 ```python
 # create binary classifier model
 vectorAssembler = VectorAssembler(inputCols=["humidity","temperature"],
@@ -156,9 +167,7 @@ model = pipeline.fit(df)
 result = model.transform(df)
 ```
 
-```python
-binEval.evaluate(result)
-```
+- Once the model is created we need to extract the coefficients and the intercept values, so we can implement the model on the ESP8266.  You will need these values for the next part of the workshop, so make a note of them now:
 
 ```python
 model.stages[1].coefficients
@@ -170,11 +179,19 @@ model.stages[1].intercept
 
 ## Step 5 - Test the model
 
+Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accurate over over the training data:
+
 ```python
 #evaluate classification accuracy (1.0 = 100% accurate)
 binEval = MulticlassClassificationEvaluator().setMetricName("accuracy").setPredictionCol("prediction").setLabelCol("class")    
 binEval.evaluate(result)
 ```
+
+- You can also apply the model to additional data you may have (needs to be in the same format as the training data, but without the class property).  
+
+    The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property avaialble, so you can see that the prediction should line up with the class.
+    
+    (Optionally) If you want to test your model try recording another set of data without the class property.  Within the dataset have records where the sensor in your hand and records where the sensor is not being held.  See how your model performs.  *Note: remove **class,** from the select statement if you are using data without the class property*:
 
 ```python
 # test the model

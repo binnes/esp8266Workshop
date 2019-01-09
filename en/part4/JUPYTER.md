@@ -1,7 +1,7 @@
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
 ***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md)
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
 ***
 
 # Run a Jupyter Notebook in Watson Studio
@@ -209,7 +209,7 @@ There is a sample solution for this part provided in the [notebooks](notebooks) 
 Alternatively, you can select to import from URL and set the URL to : [https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb)
 
 ***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md)
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

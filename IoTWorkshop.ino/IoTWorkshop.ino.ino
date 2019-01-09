@@ -5,6 +5,7 @@
 #include <DHT.h>
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
+#include <math.h>
 
 // --------------------------------------------------------------------------------------------
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
@@ -46,6 +47,11 @@
 char ssid[] = "<SSID>";  // your network SSID (name)
 char pass[] = "<PASSWORD>";  // your network password
 
+// Model parameters from part4 - to implement the model on the ESP8266
+// Replace these parameters with the model parameters from your Jupyter Notebook
+#define MODEL_INTERCEPT -14.172253183961212
+#define MODEL_TEMP_COEF -3.0625
+#define MODEL_HUM_COEF 1.3247
 
 // --------------------------------------------------------------------------------------------
 //        SHOULD NOT NEED TO CHANGE ANYTHING BELOW THIS LINE
@@ -72,6 +78,12 @@ unsigned char g = 0; // LED Green value
 unsigned char b = 0; // LED Blue value
 int32_t ReportingInterval = 10;  // Reporting Interval seconds
 
+float applyModel(float h, float t) {
+  // apply regression formula w1 + w2x + w3y 
+  float regression = MODEL_INTERCEPT + MODEL_HUM_COEF * h + MODEL_TEMP_COEF * t;
+  // return sigmoid logistic function on regression result
+  return  1/(1 + exp(0.0 - (double)regression));
+}
 
 void callback(char* topic, byte* scopepayload, unsigned int length) {
    // handle message arrived
@@ -235,9 +247,15 @@ void loop() {
     pixel.show();
     */
 
+    // Apply the model to the sensor readings
+    float modelPrediction = applyModel(h, t);
+
     // Print Message to console in JSON format
     status["temp"] = t;
     status["humidity"] = h;
+    Serial.print("Model output = ");
+    Serial.println(modelPrediction);
+    status["class"] = modelPrediction < 0.5 ? 0 : 1;
     payload.printTo(msg, 50);
     Serial.println(msg);
     if (!mqtt.publish(MQTT_TOPIC, msg)) {

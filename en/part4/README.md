@@ -30,6 +30,12 @@ This section takes the output from the Jupyter Notebook and implements the train
 
 - practical [**Implement model on ESP8266**](MODEL.md)
 
+## Workshop summary
+
+This section summarises what the workshop covered and also provides some useful links for further exploration of IoT and Data Science
+
+- [Summary and links](SUMMARY.md)
+
 ***
 *Quick links :*
 [Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

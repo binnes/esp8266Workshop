@@ -12,7 +12,7 @@ In this lab you will read IoT data into a Watson Studio Project Jupyter Notebook
 
 - Jupyter Notebooks
 - Read data from a Cloudant DB into Spark
-- How to manupulate the data within the notebook environment
+- How to manipulate the data within the notebook environment
 - How to create a model to be able to classify the IoT data to determine what is happening.
 
 ## Introduction
@@ -23,7 +23,7 @@ The steps below will build up the Jupyter notebook, there is a solution notebook
 
 ## Step 1 - Cloudant Credentials
 
-Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is storred.
+Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is stored.
 
 - Open a new browser tab.
 - Return to the [IBM Cloud dashboard](https://cloud.ibm.com) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1). ![Cloudant NoSQL Service Connection](../part3/screenshots/CloudantNoSQLServiceConnection.png)
@@ -75,7 +75,7 @@ df=readDataFrameFromCloudant('training')
 
 You should see the data from the database.  You can validate that you have the correct data format by checking you have the **class**, **humidity**, **index** and **temperature** columns in the loaded data: ![Load data in to notebook](screenshots/WatsonStudio-cell2.png)
 
-If you want to clear out the data created by previously run steps then you can use the kernel menu option to clear out and restart the notebook, or clearout and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
+If you want to clear out the data created by previously run steps then you can use the kernel menu option to clear out and restart the notebook, or clear out and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
 
 If you clear output then you can select the first cell and press run, which will run the cell then move to the next cell in the notebook.  Keep pressing run to run each cell in turn, ensure you wait for each cell to complete (At the left side of the cell the indicator **[*]** turns to **[n]**, where n is a number) before running the next step.
 
@@ -104,7 +104,7 @@ For the rest of this section feel free to explore the different options availabl
 - You may want to see what the values the data contains:
 
 ```python
-# examine the data 
+# examine the data
 df_class_0.select('temperature', 'humidity').distinct().show()
 ```
 
@@ -120,7 +120,7 @@ df.printSchema()
 spark.sql('select class, count(class) from df group by class').show()
 ```
 
-If your training data had double the number of entires for class 0 as class 1 then you can create an adjusted data frame to use for training using the following code : ```df_skew_fixed = df_class_0.sample(False, 0.5).union(df_class_1)```, which selects 50% of the records for class 0 and joins them with the records for class 1, so now both classes will have a similar number of records.  However, this should not be necessary as we ensured we captured a similar number of records for each class when training.
+If your training data had double the number of entries for class 0 as class 1 then you can create an adjusted data frame to use for training using the following code : ```df_skew_fixed = df_class_0.sample(False, 0.5).union(df_class_1)```, which selects 50% of the records for class 0 and joins them with the records for class 1, so now both classes will have a similar number of records.  However, this should not be necessary as we ensured we captured a similar number of records for each class when training.
 
 - The pixiedust package provides the ability to visualise data in a number of different ways.  Before using the package you need to import it:
 
@@ -182,14 +182,14 @@ Once you have built the model you will want to verify how accurate the model is,
 
 ```python
 #evaluate classification accuracy (1.0 = 100% accurate)
-binEval = MulticlassClassificationEvaluator().setMetricName("accuracy").setPredictionCol("prediction").setLabelCol("class")    
+binEval = MulticlassClassificationEvaluator().setMetricName("accuracy").setPredictionCol("prediction").setLabelCol("class")
 binEval.evaluate(result)
 ```
 
 - You can also apply the model to additional data you may have (needs to be in the same format as the training data, but without the class property).  
 
-    The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property avaialble, so you can see that the prediction should line up with the class.
-    
+    The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property available, so you can see that the prediction should line up with the class.
+
     (Optionally) If you want to test your model try recording another set of data without the class property.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
 
 ```python

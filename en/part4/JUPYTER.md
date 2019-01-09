@@ -23,7 +23,7 @@ The steps below will build up the Jupyter notebook, there is a solution notebook
 
 ## Step 1 - Cloudant Credentials
 
-Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database created in the [Part 3 - Store Data in Cloud Storage](../part3/CLOUDANT.md) section.
+Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is storred.
 
 - Open a new browser tab.
 - Return to the [IBM Cloud dashboard](https://cloud.ibm.com) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1). ![Cloudant NoSQL Service Connection](../part3/screenshots/CloudantNoSQLServiceConnection.png)
@@ -39,7 +39,7 @@ Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter 
 
 ### Step 2 - Loading Cloudant data into the Jupyter notebook
 
-When using the lite account on the IBM Cloud there are some restrictions on services.  One restriction is a limit on the number of transactions that can be run in a second (5 database actions per second).  To overcome this we need to ensure that data is extracted from Cloudant at a suitable rate, not to hit thi limit.
+When using the lite account on the IBM Cloud there are some restrictions on services.  One restriction is a limit on the number of transactions that can be run in a second (5 database actions per second).  To overcome this we need to ensure that data is extracted from Cloudant at a suitable rate, not to hit this limit.  The code below uses the **jsonstore.rdd.partitions** configuration option to ensure this limit is not exceeded.
 
 - Return to the Watson Studio browser tab and open the **IoT Sensor Analytics** notebook. ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
 
@@ -83,7 +83,7 @@ If you clear output then you can select the first cell and press run, which will
 
 Within the notebook you are able to manipulate the data. In this section we will use SQL to create the data frames needed to verify and visualise the training data.  You usually need to examine the training data and maybe clean it up before creating the model.  This section shows some of the techniques available.
 
-- In the next empty cell enter the following code then run the cell.  THis enables you to use SQL statements to manipulate the data, even though it came from a NoSql database:
+- In the next empty cell enter the following code then run the cell.  This code enables you to use SQL statements to manipulate the data, even though it came from a NoSql database:
 
 ```python
 # Enable SQL on the data frame
@@ -120,7 +120,7 @@ df.printSchema()
 spark.sql('select class, count(class) from df group by class').show()
 ```
 
-If your training data had double the number of entires for class 0 as class 1 then you can create an adjusted data frame to use for training using the following code : ```df_skew_fixed = df_class_0.sample(False, 0.5).union(df_class_1)```, which selects 50% of the records for class 1 and joint them with the records for class 1, so now both classes will have a similar number of records.  However, this should not be necessary as we ensured we captured a similar number of records for each class when training.
+If your training data had double the number of entires for class 0 as class 1 then you can create an adjusted data frame to use for training using the following code : ```df_skew_fixed = df_class_0.sample(False, 0.5).union(df_class_1)```, which selects 50% of the records for class 0 and joins them with the records for class 1, so now both classes will have a similar number of records.  However, this should not be necessary as we ensured we captured a similar number of records for each class when training.
 
 - The pixiedust package provides the ability to visualise data in a number of different ways.  Before using the package you need to import it:
 
@@ -149,7 +149,6 @@ from pyspark.ml.feature import StringIndexer, OneHotEncoder
 from pyspark.ml.linalg import Vectors
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.feature import Normalizer
-
 from pyspark.ml import Pipeline
 from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
@@ -191,7 +190,7 @@ binEval.evaluate(result)
 
     The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property avaialble, so you can see that the prediction should line up with the class.
     
-    (Optionally) If you want to test your model try recording another set of data without the class property.  Within the dataset have records where the sensor in your hand and records where the sensor is not being held.  See how your model performs.  *Note: remove **class,** from the select statement if you are using data without the class property*:
+    (Optionally) If you want to test your model try recording another set of data without the class property.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
 
 ```python
 # test the model
@@ -206,6 +205,8 @@ spark.sql("select humidity, temperature, class, prediction from result").show(50
 
 There is a sample solution for this part provided in the [notebooks](notebooks) folder.  If you have an issue and want to see the solution then within the IoT Sensor Analytics project select to add a new notebook.  Select to create a notebook from file and give the notebook a name - here **IoT Sensor Analytics - solution** has been used.  This assumes you have the file locally on your machine.  Select choose file and locate the **IoT Sensor Analytics.ipynb** file.  Finally ensure you have the Default Spark Python 3.5 XS runtime selected then press **Create Notebook**
   ![Import solution](screenshots/WatsonStudio-import-solution.png)
+
+Alternatively, you can select to import from URL and set the URL to : [https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb)
 
 ***
 **Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md)

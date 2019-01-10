@@ -14,7 +14,7 @@ In this lab you will store the device environmental sensor data in a Cloudant da
 - How to format a time series database record
 - How to view Cloudant databases
 
-### Introduction
+## Introduction
 
 While real-time charts of sensor data and threshold alerts are useful, the power of IoT becomes significant when data analytics techniques, Machine Learning and AI are applied to the IoT historical datasets.  The first and necessary step toward data analytics is storing the incoming data in a Cloud data storage database for later statistical modelling.
 

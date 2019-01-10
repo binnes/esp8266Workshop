@@ -15,7 +15,7 @@ In this lab you will modify the ESP8266 Arduino program to receive MQTT commands
 - How to receive MQTT commands within your ESP8266 Arduino program / sketch.
 - How to work with JSON data on the ESP8266
 
-### Introduction
+## Introduction
 
 Remote management and control of IoT Devices is critical to managing the flow of sensor data to the Cloud. The IoT Device might only need to check in occasionally during quiet periods of inactivity. Waking up the device and requesting that it report sensor data more frequently during active time periods is better for power management, bandwidth consumption and cloud storage.
 

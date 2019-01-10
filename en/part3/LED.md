@@ -14,7 +14,7 @@ In this lab you will modify / control your Device program to receive MQTT comman
 - How to receive MQTT commands within your device program / sketch
 - How to work with JSON data on the device
 
-### Introduction
+## Introduction
 
 Remote management and control of IoT Devices is critical to managing the flow of sensor data to the Cloud. Hard coded values in the IoT Device should be replaced by dynamically controlled logic in the Cloud.
 

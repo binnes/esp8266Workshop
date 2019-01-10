@@ -15,7 +15,7 @@ In this Lab you will connect the NeoPixel LED and learn how to control it from t
 - How to add new libraries to the Arduino IDE
 - How to use the neopixel Library and access documentation for additional features
 
-### Introduction
+## Introduction
 
 During the last practical we used the ESPWiFi library that was installed as part of the plugin but now we want to control a neopixel RGB LED that we will connect to the ESP8266.  One of the advantages of using Arduino is that there are many libraries available, so most common hardware will usually have an Arduino library available, so you won't need to implement the low-level control protocol for a device.
 

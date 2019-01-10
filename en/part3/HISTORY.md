@@ -13,7 +13,7 @@ In this lab you will read the historical sensor data from a Cloud storage databa
 - How to read datasets from a Cloudant database
 - How to create a chart of historical data
 
-### Introduction
+## Introduction
 
 The previous section stored the Device environment sensor data into a Cloudant DB.  This section will read the historical sensor data from a Cloud storage database and create a graph of prior readings.
 

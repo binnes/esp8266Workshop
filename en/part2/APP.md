@@ -14,7 +14,7 @@ In this lab you will pull together all the information from part 1 into a single
 - How to combine the WiFi, neopixel and DHT libraries into a single application
 - How to work with JSON data on the ESP8266
 
-### Introduction
+## Introduction
 
 In part 1 you looked at a number of example sketches to see how the WiFi, NeoPixel LED and DHT sensors work with Arduino.  Now you will create an application combining all the features then as we work through the remainder of this part you will connect the device to the IoT platform and add code to send data to the platform and receive commands from the platform.  Initially you will use unsecured MQTT connections, then at the end of this section you will add SSL/TLS and certificate verification to secure the communication.
 

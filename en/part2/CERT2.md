@@ -183,8 +183,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
 }
 
 void setup() {

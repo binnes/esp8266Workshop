@@ -73,16 +73,16 @@ unsigned char b = 0; // LED Blue value
 int32_t ReportingInterval = 10;  // Reporting Interval seconds
 
 
-void callback(char* topic, byte* scopepayload, unsigned int length) {
+void callback(char* topic, byte* payload, unsigned int length) {
    // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
 
-  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
+  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)payload);
   if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
     if (cmdData.success()) {
       //valid message received

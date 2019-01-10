@@ -16,7 +16,7 @@ In this Lab you will modify MQTT to use a secure connection.  You will learn:
 - How to add the certificate to the ESP8266 using part of the flash memory as a file system
 - Basic operations of the SPIFFS file system
 
-### Introduction
+## Introduction
 
 Having unsecured traffic for an IoT solution is not a good idea, so in this lab you will convert the unsecured MQTT connection into a SSL/TLS connection.
 
@@ -295,8 +295,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
 }
 
 void setup() {

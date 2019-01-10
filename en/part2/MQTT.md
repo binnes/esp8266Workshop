@@ -13,11 +13,11 @@ In this lab you will learn how to add MQTT messaging to an application.  You wil
 - How to connect to a MQTT broker using unsecured connection
 - How to use MQTT to connect to the Watson IoT platform
 
-### Introduction
+## Introduction
 
 In the previous lab you built the stand alone sensor application.  Now we want to make it an Internet of Things application by adding in MQTT to send the data to the IoT Platform.
 
-We will start by using an unsecured MQTT connection, then in the next section we will secure the connection.  However, the Watson IoT platform is configured to block all unsecured connections by default, so you need to configure your Watson IoT instance to allow unsecured connection.
+We will start by using an unsecured MQTT connection, then in the next section we will secure the connection.  However, the Watson IoT platform is configured to block all unsecured connections by default, so you need to configure your Watson IoT service to allow unsecured connection.
 
 ### Step 1 - Configure the Watson IoT platform to allow unsecured connections
 
@@ -73,8 +73,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
 }
 ```
 
@@ -224,8 +224,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
 }
 
 void setup() {

@@ -15,7 +15,7 @@ In this lab you will import Node-RED flows which create Dashboard Charts. After 
 - Plot Real Time sensor data
 - Trigger alerts when the real-time sensor data exceeds a threshold value
 
-### Introduction
+## Introduction
 
 In this section you will learn about Node-RED Dashboard Charts and then create a chart to graph the sensor data arriving from the device.
 

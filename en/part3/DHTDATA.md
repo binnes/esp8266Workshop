@@ -14,7 +14,7 @@ In this lab you will build a flow that receives Device environmental temperature
 - How to output the Device environmental temperature and humidity data.
 - How to work with JSON data and observe the sensor results in the Debug sidebar.
 
-### Introduction
+## Introduction
 
 In just a few nodes, Node-RED can receive the data that was transmitted from the device over MQTT to Watson IoT Platform.  This simple exercise will be the foundation for the next several sections that plot the data in a dashboard, trigger Real Time threshold alerts, store the data in Cloud Storage and allow for data analytics and anomaly detection.
 

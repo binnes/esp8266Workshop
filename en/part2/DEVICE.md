@@ -13,7 +13,7 @@ This Lab will show you how to register your ESP8266 with the IBM Watson Internet
 - How to navigate to the IoT Platform console
 - How to define a device type and register a device in the IoT Platform
 
-### Introduction
+## Introduction
 
 Before you can connect a device to the Watson IoT Platform you need to define how the device will connect to the platform and also register the device to generate an access token for the device.  This will be used to verify the device identity (we will come back to device authentication later in this part of the workshop).
 

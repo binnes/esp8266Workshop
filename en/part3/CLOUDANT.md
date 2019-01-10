@@ -14,7 +14,7 @@ In this lab you will store the device environmental sensor data in a Cloudant da
 - How to format a time series database record
 - How to view Cloudant databases
 
-### Introduction
+## Introduction
 
 While real-time charts of sensor data and threshold alerts are useful, the power of IoT becomes significant when data analytics techniques, Machine Learning and AI are applied to the IoT historical datasets.  The first and necessary step toward data analytics is storing the incoming data in a Cloud data storage database for later statistical modelling.
 
@@ -42,13 +42,14 @@ In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT
 
 ### Step 3 - Observe Sensor Data being added to the Cloudant database
 
-- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB (1) service connection.
+- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection:
  ![Cloudant NoSQL Service Connection](screenshots/CloudantNoSQLServiceConnection.png)
-- Read about the Cloudant Storage service and press the **Launch** button.
+- The database linked to your application is an alias link to the actual database instance, so select the link to get to the actual database instance: ![Database alias link](screenshots/CloudantNoSQLServiceAlias.png)
+- Read about the Cloudant Storage service and press the **Launch** button:
  ![Cloudant NoSQL Service Instance](screenshots/CloudantNoSQLServiceInstance.png)
 - The IoT Sensor device data is stored in the Cloudant service.
  ![Cloudant NoSQL Databases](screenshots/CloudantNoSQLDatabases.png)
-- Click on historicaldata1 and then observe the **table** view of temperature, humidity and timestamp data.
+- Click on historicaldata1 and then observe the **table** view of temperature, humidity and timestamp data:
  ![Cloudant NoSQL Historian Data](screenshots/CloudantNoSQLHistorianDB.png)
 
 ***

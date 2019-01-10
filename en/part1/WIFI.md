@@ -14,7 +14,7 @@ This Lab will show you how to connection your ESP8266 to a local WiFi network.  
 - Be able to add a Serial connection and generate output to the serial connection.
 - Understand the function calls needed to start up the WiFi and Serial connections then how to use the connections and where to find documentation about the functions available.
 
-### Introduction
+## Introduction
 
 In the First App practical you verified you had a working development environment and uploaded your first application to the ESP8266.  Now we will start exploring some of the more advanced functionality of the ESP8266, starting with the on board WiFi interface.
 

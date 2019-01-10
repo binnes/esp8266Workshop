@@ -15,7 +15,7 @@ In this lab you will set up Node-RED in your Watson IoT Starter application crea
 - How to install additional Node-RED nodes
 - How to import a prebuilt flow from GitHub
 
-### Introduction
+## Introduction
 
 Node-RED is an open-source
 Node.js application that provides a visual programming editor that makes it easy to wire together flows.

@@ -14,7 +14,7 @@ In this lab you will learn how to deploy a starter application to the IBM Cloud.
 - Access the catalog of services and select a Starter Kit to deploy
 - Deploy a Starter Kit to the IBM Cloud
 
-### Introduction
+## Introduction
 
 Before finishing part 1 you should deploy the starter application that we will be using in Part 2, as this can take a few minutes to deploy and become available.
 
@@ -22,7 +22,7 @@ Before starting these steps it is assumed you have completed the steps in the [p
 
 ### Step 1 - Accessing the cloud and selecting an appropriate space
 
-Login to your cloud account and make sure you are working in one of the US South, United Kingdom or Germany locations, as these locations have all the required services we will be using for the rest of the workshop.
+[Login](https://cloud.ibm.com) to your cloud account and make sure you are working in one of the US South, United Kingdom or Germany locations, as these locations have all the required services we will be using for the rest of the workshop.
 
 If you haven't previously used any of the locations you will need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  Click to **Add a space** then select the region and provide a name for the space.
 

@@ -21,7 +21,7 @@ The values of C, w1 and w2 are the values from the Jupyter Notebook in the previ
 Here the coefficients are w1 and w2 and the intercept is the constant C.  Note the order of the weightings was specified by the order of the properties fed into the Vector Assembler:
 
 ```python
-vectorAssembler = VectorAssembler(inputCols=["humidity","temperature"], outputCol="features")
+vectorAssembler = VectorAssembler(inputCols=["humidity","temp"], outputCol="features")
 ```
 
 so the first coefficient is the weighting for the humidity property and the second coefficient is the weighting for the temperature property.

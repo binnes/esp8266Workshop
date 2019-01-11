@@ -93,8 +93,8 @@ df.createOrReplaceTempView('df')
 - Now we will create a new data frame for each training class.  In the next cell enter then run the following:
 
 ```python
-df_class_0 = spark.sql('select index, temperature, humidity, class from df where class = 0')
-df_class_1 = spark.sql('select index, temperature, humidity, class from df where class = 1')
+df_class_0 = spark.sql('select time, temp, humidity, class from df where class = 0')
+df_class_1 = spark.sql('select time, temp, humidity, class from df where class = 1')
 df_class_0.createOrReplaceTempView('df_class_0')
 df_class_1.createOrReplaceTempView('df_class_1')
 ```
@@ -105,7 +105,7 @@ For the rest of this section feel free to explore the different options availabl
 
 ```python
 # examine the data
-df_class_0.select('temperature', 'humidity').distinct().show()
+df_class_0.select('temp', 'humidity').distinct().show()
 ```
 
 - You can verify the database schema:
@@ -158,7 +158,7 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 ```python
 # create binary classifier model
-vectorAssembler = VectorAssembler(inputCols=["humidity","temperature"],
+vectorAssembler = VectorAssembler(inputCols=["humidity","temp"],
                                   outputCol="features")
 lr = LogisticRegression(maxIter=1000).setLabelCol("class")
 pipeline = Pipeline(stages=[vectorAssembler, lr ])
@@ -190,15 +190,23 @@ binEval.evaluate(result)
 
     The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property available, so you can see that the prediction should line up with the class.
 
-    (Optionally) If you want to test your model try recording another set of data without the class property.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
-
 ```python
 # test the model
 #re-read data from cloudant
 new_df = readDataFrameFromCloudant('training')
 result = model.transform(new_df)
 result.createOrReplaceTempView('result')
-spark.sql("select humidity, temperature, class, prediction from result").show(50)
+spark.sql("select humidity, temp, class, prediction from result").show(50)
+```
+
+    (Optionally) If you want to test your model try recording another set of data without the class property - the historic data you are collecting is in the correct format for this.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
+
+```python
+#read historic data from cloudant
+new_df = readDataFrameFromCloudant('historicaldata1')
+result = model.transform(new_df)
+result.createOrReplaceTempView('result')
+spark.sql("select humidity, temp, prediction from result").show(50)
 ```
 
 ## Sample solution

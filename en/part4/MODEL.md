@@ -26,7 +26,7 @@ vectorAssembler = VectorAssembler(inputCols=["humidity","temp"], outputCol="feat
 
 so the first coefficient is the weighting for the humidity property and the second coefficient is the weighting for the temperature property.
 
-The sigmoid function is: ```f(x) = 1/(e^-x)```
+The sigmoid function is: ```f(x) = 1/(1+e^-x)```
 
 Given the two functions we can create an implementation in C that can be integrated with our ESP8266 application:
 

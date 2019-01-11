@@ -10,14 +10,14 @@
 
 In this lab you will read IoT data into a Watson Studio Project Jupyter Notebook and perform some analytics.  You will learn:
 
-- Jupyter Notebooks
-- Read data from a Cloudant DB into Spark
+- How to use Jupyter Notebooks
+- How to read data from a Cloudant DB into Spark
 - How to manipulate the data within the notebook environment
 - How to create a model to be able to classify the IoT data to determine what is happening.
 
 ## Introduction
 
-Jupyter Notebook is a web-based interactive computational environment for interactive data science and scientific computing. A Jupyter Notebook document is a JSON document, following a versioned schema, and containing an ordered list of input/output cells which can contain code, text (using Markdown), mathematics, plots and rich media, usually ending with the ".ipynb" extension. A Jupyter kernel is a program responsible for handling various types of request (code execution, code completions, inspection), and providing a reply.
+Jupyter Notebooks are a web-based computational environment for interactive data science and scientific computing. A Jupyter Notebook document is a JSON document, following a versioned schema, and containing an ordered list of input/output cells which can contain code, text (using Markdown), mathematics, plots and rich media, usually ending with the ".ipynb" extension. A Jupyter kernel is a program responsible for handling various types of request (code execution, code completions, inspection), and providing a reply.
 
 The steps below will build up the Jupyter notebook, there is a solution notebook at the end to use if you need assistance to complete any step.
 
@@ -39,7 +39,7 @@ Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter 
 
 ### Step 2 - Loading Cloudant data into the Jupyter notebook
 
-When using the lite account on the IBM Cloud there are some restrictions on services.  One restriction is a limit on the number of transactions that can be run in a second (5 database actions per second).  To overcome this we need to ensure that data is extracted from Cloudant at a suitable rate, not to hit this limit.  The code below uses the **jsonstore.rdd.partitions** configuration option to ensure this limit is not exceeded.
+When using the lite account on the IBM Cloud there are some restrictions on services.  One restriction is a limit on the number of requests that can be run in a second (5 database actions per second).  To overcome this we need to ensure that data is extracted from Cloudant at a suitable rate, not to hit this limit.  The code below uses the **jsonstore.rdd.partitions** configuration option to ensure this limit is not exceeded.
 
 - Return to the Watson Studio browser tab and open the **IoT Sensor Analytics** notebook. ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
 
@@ -83,7 +83,7 @@ If you clear output then you can select the first cell and press run, which will
 
 Within the notebook you are able to manipulate the data. In this section we will use SQL to create the data frames needed to verify and visualise the training data.  You usually need to examine the training data and maybe clean it up before creating the model.  This section shows some of the techniques available.
 
-- In the next empty cell enter the following code then run the cell.  This code enables you to use SQL statements to manipulate the data, even though it came from a NoSql database:
+- In the next empty cell enter the following code then run the cell.  This code enables you to use SQL statements to manipulate the data, even though it came from a NoSql database. Those are so-called Apache Spark DataFrames able to wrap SQL, NoSQL and file data sources:
 
 ```python
 # Enable SQL on the data frame
@@ -101,7 +101,7 @@ df_class_1.createOrReplaceTempView('df_class_1')
 
 For the rest of this section feel free to explore the different options available.  Enter each of the code samples in a cell in the notebook then run the cell to see the results.
 
-- You may want to see what the values the data contains:
+- You may want to see the contents of the DataFrame:
 
 ```python
 # examine the data
@@ -154,7 +154,7 @@ from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 ```
 
-- Now we build the pipeline of operations to generate the model.  Here we need to create vectors from our data and pass them through a logistic regression algorithm.  The ```pipeline.fit(...)``` and ```model.transform(...)``` functions run the pipeline:
+- Now we build the pipeline of operations to generate the model.  Here we need to create vectors from our data and pass them through a logistic regression algorithm.  The ```pipeline.fit(...)``` and ```model.transform(...)``` functions run the previously defined pipeline:
 
 ```python
 # create binary classifier model
@@ -166,7 +166,7 @@ model = pipeline.fit(df)
 result = model.transform(df)
 ```
 
-- Once the model is created we need to extract the coefficients and the intercept values, so we can implement the model on the ESP8266.  You will need these values for the next part of the workshop, so make a note of them now:
+- Once the model is trained we need to extract the model parameters (coefficients and the intercept values in the case of logistic regression), so we can implement the model on the ESP8266.  You will need these values for the next part of the workshop, so make a note of them now:
 
 ```python
 model.stages[1].coefficients
@@ -178,7 +178,7 @@ model.stages[1].intercept
 
 ## Step 5 - Test the model
 
-Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accurate over over the training data:
+Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accuracy over the training data:
 
 ```python
 #evaluate classification accuracy (1.0 = 100% accurate)

@@ -1,3 +1,70 @@
+*Quick links :*
+[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
+***
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [**ESP8266 model**](MODEL.md) - [Summary](SUMMARY.md)
+***
+
+# Run the model on the ESP8266 device
+
+## Learning Objectives
+
+In this section you will learn how to take the model parameters generated in the previous section and implement a function to run the model on the ESP8266 to provide real-time classification.
+
+## Logistic regression
+
+The algorithm at the heart of the model we generated is [Logistic Regression](https://en.wikipedia.org/wiki/Logistic_regression), which uses the Logit function (long-odds) then applies the Logistic sigmoid function:
+
+Logit function for 2 predictor values h and t (humidity and temp) is: ```C + w1*h + w2*t``` where C is a constant and w1 and w2 are weighting values for the predictors.
+
+The values of C, w1 and w2 are the values from the Jupyter Notebook in the previous section: ![model output](screenshots/WatsonStudio-model-parameters.png)
+
+Here the coefficients are w1 and w2 and the intercept is the constant C.  Note the order of the weightings was specified by the order of the properties fed into the Vector Assembler:
+
+```python
+vectorAssembler = VectorAssembler(inputCols=["humidity","temp"], outputCol="features")
+```
+
+so the first coefficient is the weighting for the humidity property and the second coefficient is the weighting for the temperature property.
+
+The sigmoid function is: ```f(x) = 1/(1+e^-x)```
+
+Given the two functions we can create an implementation in C that can be integrated with our ESP8266 application:
+
+```C
+#include <math.h>
+
+#define MODEL_INTERCEPT -14.172253183961212
+#define MODEL_TEMP_COEF -3.0625
+#define MODEL_HUM_COEF 1.3247
+
+float applyModel(float h, float t) {
+  // apply logit formula C + w1*h + w2*t
+  float regression = MODEL_INTERCEPT + MODEL_HUM_COEF * h + MODEL_TEMP_COEF * t;
+  // return sigmoid logistic function on logit result
+  return  1/(1 + exp(0.0 - (double)regression));
+}
+```
+
+## Incorporating real-time classification on the ESP8266
+
+Now we have a function that applies the trained model that can be implemented in C on the ESP8266, we can incorporate the result into our code.
+
+Each time new readings are made we can call the ```applyModel()``` function.  The output of the function will be a floating point number where numbers nearest 0.0 represent class 0 in our training data and numbers nearest 1.0 represent class 1 in our training scenario.  A simple comparison assigning results less than 0.5 to class 0 and results above 0.5 to class 1 is all that is needed to assign a set of readings to a class.
+
+So we can incorporate this into the loop function to set another property on the message sent to the IoT platform:
+
+```C
+// Apply the model to the sensor readings
+float modelPrediction = applyModel(h, t);
+
+...
+
+status["class"] = modelPrediction < 0.5 ? 0 : 1;
+```
+
+The completed ESP8266 application should now look like:
+
+```C
 #include <FS.h>
 #include <ESP8266WiFi.h>
 #include <time.h>
@@ -79,22 +146,22 @@ unsigned char b = 0; // LED Blue value
 int32_t ReportingInterval = 10;  // Reporting Interval seconds
 
 float applyModel(float h, float t) {
-  // apply regression formula w1 + w2x + w3y 
+  // apply regression formula w1 + w2x + w3y
   float regression = MODEL_INTERCEPT + MODEL_HUM_COEF * h + MODEL_TEMP_COEF * t;
   // return sigmoid logistic function on regression result
   return  1/(1 + exp(0.0 - (double)regression));
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
+void callback(char* topic, byte* scopepayload, unsigned int length) {
    // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] : ");
   
-  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)payload);
+  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)scopepayload);
 
-  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)payload);
+  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
   if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
     if (cmdData.success()) {
       //valid message received
@@ -272,3 +339,10 @@ void loop() {
     Serial.println();
   }
 }
+```
+
+***
+**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [**ESP8266 model**](MODEL.md) - [Summary](SUMMARY.md)
+***
+*Quick links :*
+[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

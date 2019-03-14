@@ -50,7 +50,7 @@ If you are attending an IBM face-to-face workshop, then the boards you will be u
 
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :
 
-- [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html) (This is the manufacturers web site, in Chinese, for the USB driver chip on the LoLin NodeNCU board - use Google Chrome to translate, or just click the download link to access the macOS driver).  After installing goto System Preferences -> Security and Privacy to allow the driver to be loaded.
+- [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html) (This is the manufacturers web site, in Chinese, for the USB driver chip on the LoLin NodeNCU board - use Google Chrome to translate, or just click the download link to access the macOS driver).  **After installing goto System Preferences -> Security and Privacy to allow the driver to be loaded.**
   - Alternatively if you use [homebrew](https://brew.sh) you can install the driver using command
 
     ```bash
@@ -70,6 +70,8 @@ If you are a Mac user and use [homebrew](https://brew.sh) then the driver can be
 ```bash
 brew cask install homebrew/cask-drivers/silicon-labs-vcp-driver
 ```
+
+On Mac after the install you may need to approve the driver.  From the Apple menu, go to **System Preferences -> Security and Privacy** to allow the driver to be loaded.
 
 When the driver is installed and the NodeMCU module is connected you can test if the driver is working:
 

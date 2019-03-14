@@ -165,9 +165,9 @@ WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
 // variables to hold data
-StaticJsonBuffer<100> jsonBuffer;
-JsonObject& payload = jsonBuffer.createObject();
-JsonObject& status = payload.createNestedObject("d");
+StaticJsonDocument<100> jsonDoc;
+JsonObject payload = jsonDoc.to<JsonObject>();
+JsonObject status = payload.createNestedObject("d");
 static char msg[50];
 
 float h = 0.0;
@@ -309,7 +309,7 @@ void loop() {
     // Send data to Watson IoT Platform
     status["temp"] = t;
     status["humidity"] = h;
-    payload.printTo(msg, 50);
+    serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
     if (!mqtt.publish(MQTT_TOPIC, msg)) {
       Serial.println("MQTT Publish failed");

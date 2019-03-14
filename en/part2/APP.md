@@ -22,9 +22,7 @@ In part 1 you looked at a number of example sketches to see how the WiFi, NeoPix
 
 Create a new sketch in the Arduino IDE using *File* -> *New* or the icon in the tool bar.  The save the sketch *File* -> *Save* and name the sketch, suggested name **esp8266Workshop**.
 
-You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for **ArduinoJson** and install the latest v5.x version of the library.
-
-**Note, do not use beta versions of the ArduinoJson library, stick to the latest released v5.x versions.  You can use the drop down in the library manager to select which version of the library to install.  If you have installed v6 beta, then use the library manager to replace the version with the latest 5.x.x release of the library.  You will get a compile error if you use v6 with the bootcamp code.**
+You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for **ArduinoJson** and install the latest version of the library.  **Note: You must have the latest version (6.x or higher) as the API changed from v5 to v6, so this code will not compile with v5 or earlier**
 
 ### Step 2 - Input the application code
 
@@ -69,10 +67,11 @@ Adafruit_NeoPixel pixel = Adafruit_NeoPixel(1, RGB_PIN, NEOPIXEL_TYPE);
 DHT dht(DHT_PIN, DHTTYPE);
 
 // variables to hold data
-StaticJsonBuffer<100> jsonBuffer;
-JsonObject& payload = jsonBuffer.createObject();
-JsonObject& status = payload.createNestedObject("d");
+StaticJsonDocument<100> jsonDoc;
+JsonObject payload = jsonDoc.to<JsonObject>();
+JsonObject status = payload.createNestedObject("d");
 static char msg[50];
+
 float h = 0.0; // humidity
 float t = 0.0; // temperature
 unsigned char r = 0; // LED RED value
@@ -136,7 +135,7 @@ void loop()
     // Print Message to console in JSON format
     status["temp"] = t;
     status["humidity"] = h;
-    payload.printTo(msg, 50);
+    serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
   }
   delay(10000);
@@ -161,19 +160,19 @@ The LED should also be set to a colour based on the temperature and the WARN and
 
 JSON format is widely used for APIs and data exchange between systems.  The above sketch uses one of the optimised JSON libraries for small memory devices.  To use the library you need to:
 
-1. Initialise the library and allocate some memory for the library to work with : `StaticJsonBuffer<100> jsonBuffer;`
-2. Create a new, empty JSON object : `JsonObject& payload = jsonBuffer.createObject();`
+1. Initialise the library and allocate some memory for the library to work with : `StaticJsonDocument<100> jsonDoc;`
+2. Create a new, empty JSON object : `JsonObject payload = jsonDoc.to<JsonObject>();`
 3. Add required properties using one of the available functions:
 
     ```C++
-    JsonObject& status = payload.createNestedObject("d");
+    JsonObject status = payload.createNestedObject("d");
     status["temp"] = t;
     status["humidity"] = h;
     ```
 
-The **printTo()** function converts the JSON object to a string and writes it into the provided buffer, so it can be used as a c-string.
+The **serializeJson()** function converts the JSON object to a string and writes it into the provided buffer, so it can be used as a c-string.
 
-See the library [documentation](https://arduinojson.org/?utm_source=meta&utm_medium=library.properties) for additional functionality.
+See the library [documentation](https://arduinojson.org/v6/doc/) for additional functionality.
 
 ***
 **Part 2** - [Device Registration](DEVICE.md) - [**Application**](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)

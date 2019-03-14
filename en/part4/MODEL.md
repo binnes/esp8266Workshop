@@ -132,10 +132,10 @@ WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
 // variables to hold data
-StaticJsonBuffer<100> jsonBuffer;
-JsonObject& payload = jsonBuffer.createObject();
-JsonObject& status = payload.createNestedObject("d");
-StaticJsonBuffer<100> jsonReceiveBuffer;
+StaticJsonDocument<100> jsonDoc;
+JsonObject payload = jsonDoc.to<JsonObject>();
+JsonObject status = payload.createNestedObject("d");
+StaticJsonDocument<100> jsonReceiveDoc;
 static char msg[50];
 
 float h = 0.0; // humidity
@@ -152,42 +152,40 @@ float applyModel(float h, float t) {
   return  1/(1 + exp(0.0 - (double)regression));
 }
 
-void callback(char* topic, byte* scopepayload, unsigned int length) {
-   // handle message arrived
+void callback(char* topic, byte* payload, unsigned int length) {
+  // handle message arrived
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] : ");
   
-  scopepayload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
-  Serial.println((char *)scopepayload);
-
-  JsonObject& cmdData = jsonReceiveBuffer.parseObject((char *)scopepayload);
-  if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
-    if (cmdData.success()) {
+  payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
+  Serial.println((char *)payload);
+  DeserializationError err = deserializeJson(jsonReceiveDoc, (char *)payload);
+  if (err) {
+    Serial.print(F("deserializeJson() failed with code ")); 
+    Serial.println(err.c_str());
+  } else {
+    JsonObject cmdData = jsonReceiveDoc.as<JsonObject>();
+    if (0 == strcmp(topic, MQTT_TOPIC_DISPLAY)) {
       //valid message received
-      r = cmdData.get<unsigned char>("r"); // this form allows you specify the type of the data you want from the JSON object
+      r = cmdData["r"].as<unsigned char>(); // this form allows you specify the type of the data you want from the JSON object
       g = cmdData["g"];
       b = cmdData["b"];
-      jsonReceiveBuffer.clear();
+      jsonReceiveDoc.clear();
       pixel.setPixelColor(0, r, g, b);
       pixel.show();
-    } else {
-      Serial.println("Received invalid JSON data");
-    }
-  } else if (0 == strcmp(topic, MQTT_TOPIC_INTERVAL)) {
-    if (cmdData.success()) {
+    } else if (0 == strcmp(topic, MQTT_TOPIC_INTERVAL)) {
       //valid message received
-      ReportingInterval = cmdData.get<int32_t>("Interval"); // this form allows you specify the type of the data you want from the JSON object
+      ReportingInterval = cmdData["Interval"].as<int32_t>(); // this form allows you specify the type of the data you want from the JSON object
       Serial.print("Reporting Interval has been changed:");
       Serial.println(ReportingInterval);
-      jsonReceiveBuffer.clear();
+      jsonReceiveDoc.clear();
     } else {
-      Serial.println("Received invalid JSON data");
+      Serial.println("Unknown command received");
     }
-  } else {
-    Serial.println("Unknown command received");
   }
 }
+
 
 
 void setup() {
@@ -307,11 +305,11 @@ void loop() {
   } else {
     /* Control of the LED is now handles by the incoming command
     // Set RGB LED Colour based on temp
-    b = (t < ALARM_COLD) ? 255 : ((t < WARN_COLD) ? 150 : 0);
-    r = (t >= ALARM_HOT) ? 255 : ((t > WARN_HOT) ? 150 : 0);
-    g = (t > ALARM_COLD) ? ((t <= WARN_HOT) ? 255 : ((t < ALARM_HOT) ? 150 : 0)) : 0;
-    pixel.setPixelColor(0, r, g, b);
-    pixel.show();
+    //b = (t < ALARM_COLD) ? 255 : ((t < WARN_COLD) ? 150 : 0);
+    //r = (t >= ALARM_HOT) ? 255 : ((t > WARN_HOT) ? 150 : 0);
+    //g = (t > ALARM_COLD) ? ((t <= WARN_HOT) ? 255 : ((t < ALARM_HOT) ? 150 : 0)) : 0;
+    //pixel.setPixelColor(0, r, g, b);
+    //pixel.show();
     */
 
     // Apply the model to the sensor readings
@@ -323,20 +321,20 @@ void loop() {
     Serial.print("Model output = ");
     Serial.println(modelPrediction);
     status["class"] = modelPrediction < 0.5 ? 0 : 1;
-    payload.printTo(msg, 50);
+    serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
     if (!mqtt.publish(MQTT_TOPIC, msg)) {
       Serial.println("MQTT Publish failed");
     }
   }
 
+  Serial.print("ReportingInterval :");
+  Serial.print(ReportingInterval);
+  Serial.println();
   // Pause - but keep polling MQTT for incoming messages
   for (int32_t i = 0; i < ReportingInterval; i++) {
     mqtt.loop();
     delay(1000);
-    Serial.print("ReportingInterval :");
-    Serial.print(ReportingInterval);
-    Serial.println();
   }
 }
 ```

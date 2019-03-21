@@ -38,29 +38,31 @@ In a command windows enter the following commands, you need to replace some valu
 
 *Note for Windows users: If you opted for the openssl windows binary install and didn't add the bin directory to your path, then you will need to use the full path to the openssl binary e.g. `c:\OpenSSL-Win64\bin\openssl` in the commands below.  Also you do not have access to the xxd command, so cannot run the xxd commands shown, but the generated header file is not needed for this workshop.*
 
-```bash
-openssl genrsa -aes256 -passout pass:password123 -out rootCA_key.pem 2048
+```Shell
+COUNTRY="GB"
+STATE="DOR"
+LOCATION="Bournemouth"
+ORG_ID="z53u40"
+PASSWORD="password123"
 
-openssl req -new -sha256 -x509 -days 3560 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=z53u40 Root CA" -extensions v3_ca -set_serial 1 -passin pass:password123 -key rootCA_key.pem -out rootCA_certificate.pem -config ext.cfg
-
+openssl genrsa -aes256 -passout pass:${PASSWORD} -out rootCA_key.pem 2048
+openssl req -new -sha256 -x509 -days 3560 -subj "/C=${COUNTRY}/ST=${STATE}/L=${LOCATION}/O=${ORG_ID}/OU=${ORG_ID} Corporate/CN=${ORG_ID} Root CA" -extensions v3_ca -set_serial 1 -passin pass:${PASSWORD} -key rootCA_key.pem -out rootCA_certificate.pem -config ext.cfg
 openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.der
-
 xxd -i rootCA_certificate.der rootCA_certificate.der.h
 ```
 
 replacing:
 
-- C=GB : GB is a country code , so use your own country (CA=Canada, US=USA, .....)
-- ST=DOR : DOR is an English county, replace with appropriate state/county/region
-- L=Bournemouth : Bournemouth is an English town, replace with appropriate location
-- O=z53u40 : z53u40 is the Organisation ID for my IoT Platform
-- OU=z53u40 Corporate : z53u40 is the Organisation ID for my IoT Platform
-- CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform
-- pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
+- COUNTRY=GB : GB is a country code , so use your own country (CA=Canada, US=USA, .....)
+- STATE=DOR : DOR is an English county, replace with appropriate state/county/region
+- LOCATION=Bournemouth : Bournemouth is an English town, replace with appropriate location
+- ORG_ID=z53u40 : z53u40 is the Organisation ID for my IoT Platform
+- PASSWORD=password123 : this is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
+- `ext.cfg` is available in the [certificates](/certificates) folder of this repository.
 
 *Note: If you get an error similar to ```Can't load /home/xxx/.rnd into RNG```, you can ignore it.  It just indicates that this is the first time you have used the random number generator.*
 
-This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
+This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the `xxd` command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
 
 ### Step 2 - Uploading the root CA Certificate to the IoT Platform
 
@@ -76,19 +78,21 @@ You need to edit file [srvext.cfg](/certificates/srvext.cfg), which you should h
 
 To generate a certificate for the IoT platform to use run the following commands:
 
-```bash
-openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem 2048
+```Shell
+COUNTRY="GB"
+STATE="DOR"
+LOCATION="Bournemouth"
+ORG_ID="z53u40"
+PASSWORD="password123"
 
-openssl req -new -sha256 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40/CN=z53u40.messaging.internetofthings.ibmcloud.com" -passin pass:password123 -key mqttServer_key.pem -out mqttServer_crt.csr
-
-openssl x509 -days 3560 -in mqttServer_crt.csr -out mqttServer_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -extensions v3_req -extfile srvext.cfg -set_serial 11
-
+openssl genrsa -aes256 -passout pass:${PASSWORD} -out mqttServer_key.pem 2048
+openssl req -new -sha256 -subj "/C=${COUNTRY}/ST=${STATE}/L=${LOCATION}/O=${ORG_ID}/OU=${ORG_ID} Corporate/CN=${ORG_ID}.messaging.internetofthings.ibmcloud.com" -passin pass:${PASSWORD} -key mqttServer_key.pem -out mqttServer_crt.csr
+openssl x509 -days 3560 -in mqttServer_crt.csr -out mqttServer_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:${PASSWORD} -CAkey rootCA_key.pem -extensions v3_req -extfile srvext.cfg -set_serial 11
 openssl x509 -outform der -in mqttServer_crt.pem -out mqttServer_crt.der
-
 xxd -i mqttServer_crt.der mqttServer_crt.der.h
 ```
 
-again substituting values for C=, ST=, L=, O=, OU= and CN=, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by **.messaging.internetofthings.ibmcloud.com**, which should also match the **subjectAltName** field in the [srvext.cfg](/certificates/srvext.cfg) file.
+again substituting values for `COUNTRY`, `STATE`, `LOCATION`, `ORG_ID` and `PASSWORD`, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by **.messaging.internetofthings.ibmcloud.com**, which should also match the **subjectAltName** field in the [srvext.cfg](/certificates/srvext.cfg) file. The `srvext.cfg` file is available in the [certificates](/certificates) folder of this repository
 
 The commands above generate a new key for the server, creates a certificate request for the server, issues the certificate and signs it with the root CA key, saving it as a pem file.  The certificate is converted from pem to der format and lastly the xxd command creates a header file to embed the certificate in code.
 
@@ -98,11 +102,13 @@ Now you have the server certificate you can upload to the IoT platform in the se
 
 Your can test the server certificate by using openssl:
 
-``` bash
-openssl s_client -CAfile <CA certificate pem file> -showcerts -state  -servername <org ID>.messaging.internetofthings.ibmcloud.com -connect <org ID>.messaging.internetofthings.ibmcloud.com:8883
+```Shell
+ORG_ID="z53u40"
+
+openssl s_client -CAfile rootCA_certificate.pem -showcerts -state -servername ${ORG_ID}.messaging.internetofthings.ibmcloud.com -connect ${ORG_ID}.messaging.internetofthings.ibmcloud.com:8883
 ```
 
-replace <CA certificate pem file> with the name of the CA root certificate and <org ID> with the 6 character org ID for your instance of the IOT Platform.
+replace `ORG_ID` with the 6 character org ID for your instance of the IoT Platform.
 
 ### Step 5 - Adding the root CA certificate to the ESP8266
 
@@ -294,7 +300,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] : ");
-  
+
   payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
   Serial.println((char *)payload);
 }

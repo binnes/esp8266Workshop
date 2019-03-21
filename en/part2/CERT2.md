@@ -18,17 +18,23 @@ In this lab you will extend the application by enabling client side certificates
 
 The openssl tool must be used to generate the key and certificate, as in the previous lab.  You need to work in the same directory as you did in the previous lab, as the commands below need access to the rootCA_certificate.pem file.  If you altered the root CA key password, then remember to change the value in the commands shown below:
 
-```bash
-openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem 2048
+```Shell
+COUNTRY="GB"
+STATE="DOR"
+LOCATION="Bournemouth"
+ORG_ID="z53u40"
+PASSWORD="password123"
+DEV_TYPE="ESP8266"
+DEV_ID="dev01"
 
-openssl req -new -sha256 -subj "/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=d:ESP8266:dev01" -passin pass:password123 -key SecuredDev01_key.pem -out SecuredDev01_crt.csr
-
-openssl x509 -days 3650 -in SecuredDev01_crt.csr -out SecuredDev01_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -set_serial 131
-
-openssl rsa -outform der -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_key.key
-
+openssl genrsa -aes256 -passout pass:${PASSWORD} -out SecuredDev01_key.pem 2048
+openssl req -new -sha256 -subj "/C=${COUNTRY}/ST=${STATE}/L=${LOCATION}/O=${ORG_ID}/OU=${ORG_ID} Corporate/CN=d:${DEV_TYPE}:${DEV_ID}" -passin pass:${PASSWORD} -key SecuredDev01_key.pem -out SecuredDev01_crt.csr
+openssl x509 -days 3650 -in SecuredDev01_crt.csr -out SecuredDev01_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:${PASSWORD} -CAkey rootCA_key.pem -set_serial 131
+openssl rsa -outform der -in SecuredDev01_key.pem -passin pass:${PASSWORD} -out SecuredDev01_key.key
 openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
 ```
+
+where `DEV_TYPE` and `DEV_ID` are, respectively, the device type and device ID you used when the device was registered.
 
 ### Step 2 - Upload the certificate and key to the ESP8266 device
 
@@ -182,7 +188,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] : ");
-  
+
   payload[length] = 0; // ensure valid content is zero terminated so can treat as c-string
   Serial.println((char *)payload);
 }

@@ -50,7 +50,7 @@ xxd -i rootCA_certificate.der rootCA_certificate.der.h
 
 replacing:
 
-- C=GB : GB is a country code , so use your own country (CA=Canada, US=USA, .....)
+- C=GB : GB is an ISO alpha-2 country code , so use your own country (CA=Canada, US=USA, .....).  You can find a list of valid ISO alpha-2 cuntry codes [here](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
 - ST=DOR : DOR is an English county, replace with appropriate state/county/region
 - L=Bournemouth : Bournemouth is an English town, replace with appropriate location
 - O=z53u40 : z53u40 is the Organisation ID for my IoT Platform

@@ -46,15 +46,15 @@ A new browser tab will open to the Node-RED start page. Proceed through the setu
 
 ![IoT Starter Flow 1](screenshots/IoTStarter-DeleteFlow1-c.png)
 
-### Step 3 - How to install additional Node-RED nodes
+### Step 3 - How to install additional Node-RED nodes (Information only)
 
 - The IoT Starter Application deployed into IBM Cloud includes just a small subset of Node-RED nodes. The Node-RED palette can be extended with over one thousand additional nodes for different devices and functionality. These NPM nodes can be browsed at <http://flows.nodered.org>
-- In this Step, you will add the **Node-RED Dashboard** nodes to your Internet of Things Starter Application.
+- In part 1 you updated the Application configuration to add the dashboard nodes, you could have also used the Node-RED menu item **Manage palette** to add the nodes
 - Click on the Node-RED **Menu** (1) in the upper right corner, then **Manage palette** (2)
 
 ![Node-RED Manage Palette](screenshots/Node-RED-ManagePalette-a.png)
 
-- Turn to the **Install** tab (3), type node-red-dashboard (4) and press the **Install** button (5).
+- Turn to the **Install** tab (3), type the name of the node you want to install (4) and press the **Install** button (5).
 
 ![Node-RED Manage Palette](screenshots/Node-RED-ManagePalette-b.png)
 

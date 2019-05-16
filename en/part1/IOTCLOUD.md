@@ -98,7 +98,7 @@ In the next set of instructions you will access the browser based editor include
             "node-red-node-openwhisk":"0.x",
             "node-red-node-cf-cloudant":"0.x",
             "node-red-contrib-scx-ibmiotapp":"0.x",
-            "node-red-dashboard":"2.x"    
+            "node-red-dashboard":"2.x"
         },
         "scripts": {
             "start": "node --max-old-space-size=180 index.js --settings ./bluemix-settings.js -v"

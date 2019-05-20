@@ -42,7 +42,7 @@ To create the flow, open up the Node-RED editor running on the IBM Cloud (as use
 2. Connect the **ibmiot** node to the **change** node and then the **change** node to the **debug** node.  DO NOT connect the **cloudant out** node yet.
 3. Configure the **ibmiot** node to use the cloud service and listen to all JSON data from all devices as shown: ![nodered ibmiot node config](screenshots/nr-ibmiot-config.png)
 4. Configure the **change** node to have 2 set rules.  The first rule reformats the data received from the IoT platform, to flatten it and add a timestamp.  The second rule adds the class property and initially sets it to class 0:
-   - set msg.payload to JSONata expression ```msg.payload.{"time" : $millis(),"temp" : d.temperature, "humidity" : d.humidity}```
+   - set msg.payload to JSONata expression ```msg.payload.{"time" : $millis(),"temp" : d.temp, "humidity" : d.humidity}```
    - set msg.payload.class to number 0  
    as shown : ![nodered change node config](screenshots/nr-change-config.png)
 5. Configure the **cloudant out** node to use the cloud service and set the database name to training and ensure the operation is set to insert and to only store msg.payload object as shown: ![nodered cloudant out node config](screenshots/nr-cloudant-config.png)

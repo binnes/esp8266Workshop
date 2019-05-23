@@ -58,7 +58,7 @@ When you save the file you should be prompted to save it as a new file (you cann
 
 Compile and upload the sketch to see the LED change colours.
 
-The to of your code should look like this:
+The top of your code should look like this:
 
 ```cpp
 #include <Adafruit_NeoPixel.h>
@@ -116,11 +116,11 @@ void loop() {
 
 To add the NeoPixel to your own application you need to do the following:
 
-1. Create an instance of a Neopixel `Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);`
+1. Create an instance of a Neopixel `Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, LED_PIN, NEO_GRB + NEO_KHZ800);`
     - The first parameter is the number of pixels in the chain
     - the second parameter is the GPIO number the pixel(s) are connected to
     - The third parameter allows you to identify what type of pixel is connected.  There are a number of different types of pixel.  Some include a white LED to give a better white light.  Some expect the green data to be sent first whilst others require the red data to be sent first.  There are also different communication speeds used.
-2. Before using and commands to alter the pixels you need to initialise the pixel library using the **begin()** call.  `strip.begin();`  This is usually done in the **setup()** function.
+2. Before using any commands to alter the pixels you need to initialise the pixel library using the **begin()** call.  `strip.begin();`  This is usually done in the **setup()** function.
 3. Set the pixels to the desired colours (note: this doesn't change the pixel colours immediately)
     - There are a number of calls in the neopixel library to be able to set the colour of a pixel.  The first parameter always is the number of the pixel you want to set in the chain (starting with 0 as the first pixel):
         - `setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b)`

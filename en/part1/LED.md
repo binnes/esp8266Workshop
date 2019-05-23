@@ -52,7 +52,7 @@ Once you have the connections made you can connect the board to your laptop.  Lo
 
 1. Change the PIN number to 5.  D1 on the NodeMCU board maps to GPIO5 on the ESP8266 processor - see the [pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/)
 2. Set the number of pixels to 1 in the strip definition line
-3. In the loop function comment out the 4 lines starting with **theatreChase** as these cause rapid flashing when only a single LED is connected, which is not pleasant to look at.
+3. In the loop function comment out the 4 lines starting with **theaterChase** as these cause rapid flashing when only a single LED is connected, which is not pleasant to look at.
 
 When you save the file you should be prompted to save it as a new file (you cannot override example files, so need to save them to another location to be able to modify them).
 

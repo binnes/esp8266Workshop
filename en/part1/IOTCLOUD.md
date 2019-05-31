@@ -82,10 +82,11 @@ In the next set of instructions you will access the browser based editor include
 
     ```JSON
     {
-        "name"         : "node-red-bluemix",
-        "version"      : "0.9.0",
+        "name"         : "iot-bluemix",
+        "version"      : "0.6.0",
         "dependencies": {
             "when": "~3.x",
+            "mongodb": "~1.4.x",
             "nano": "6.2.x",
             "bcrypt": "1.0.2",
             "cfenv":"~1.0.0",
@@ -98,12 +99,16 @@ In the next set of instructions you will access the browser based editor include
             "node-red-node-openwhisk":"0.x",
             "node-red-node-cf-cloudant":"0.x",
             "node-red-contrib-scx-ibmiotapp":"0.x",
+            "node-red-contrib-ibm-wiotp-device-ops":"0.x",
+            "node-red-contrib-iot-virtual-device":"0.x",
+            "node-red-contrib-ibmpush":"0.x",
+            "node-red-contrib-bluemix-hdfs":"0.x",
             "node-red-dashboard":"2.x"
         },
         "scripts": {
-            "start": "node --max-old-space-size=180 index.js --settings ./bluemix-settings.js -v"
+            "start": "node --max-old-space-size=192 index.js --settings ./bluemix-settings.js -v"
         },
-        "engines": {
+        "engines":
             "node": "8.x"
         }
     }

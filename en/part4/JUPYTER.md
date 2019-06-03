@@ -73,7 +73,7 @@ spark = SparkSession\
 df=readDataFrameFromCloudant('training')
 ```
 
-You should see the data from the database.  You can validate that you have the correct data format by checking you have the **class**, **humidity**, **index** and **temperature** columns in the loaded data: ![Load data in to notebook](screenshots/WatsonStudio-cell2.png)
+Run the cell by pressing ther run button in the toolbar.  You should see the data from the database.  You can validate that you have the correct data format by checking you have the **class**, **humidity**, **index** and **temperature** columns in the loaded data: ![Load data in to notebook](screenshots/WatsonStudio-cell2.png)
 
 If you want to clear out the data created by previously run steps then you can use the kernel menu option to clear out and restart the notebook, or clear out and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
 

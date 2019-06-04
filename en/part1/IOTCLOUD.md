@@ -65,7 +65,7 @@ Once your application is deployed and running you need to enable the Continuous 
 
 7. Return to Toolchain overview, but clicking on breadcrumb train at top of page, you want the first time your toolchain name appears after Toolchains
 
-    ![breadcrumpo trail](../images/BreadcrumbTrail.png)
+    ![breadcrumb trail](../images/BreadcrumbTrail.png)
 
 You now have the application deployed and access to the source code and a devops pipeline configured to automatically build and redeploy the application whenever a change is pushed to the master branch of the git repository
 
@@ -73,12 +73,12 @@ You now have the application deployed and access to the source code and a devops
 
 In the next set of instructions you will access the browser based editor included with the Continuous Delivery toolchain to make changes to the Node-RED application
 
-1. Select the **Ecliple Orion Web IDE** from the toolchain
+1. Select the **Eclipse Orion Web IDE** from the toolchain
 2. Select **package.json** from the list of files
 
     ![Orion Editor](../images/OrionEditor.png)
 
-3. Modify the file, remove the sqldb-dashdb nodes and add the dashboard nodes.  The modifiled file should look like:
+3. Modify the file, remove the sqldb-dashdb nodes and add the dashboard nodes.  The modified file should look like:
 
     ```JSON
     {

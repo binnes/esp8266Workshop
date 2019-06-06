@@ -108,7 +108,7 @@ In the next set of instructions you will access the browser based editor include
         "scripts": {
             "start": "node --max-old-space-size=192 index.js --settings ./bluemix-settings.js -v"
         },
-        "engines":
+        "engines": {
             "node": "8.x"
         }
     }

@@ -281,7 +281,7 @@ void loop() {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // No Token Authentication
+//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
       Serial.println("MQTT Connected");
 // Should verify the certificates here - like in the startup function
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);

@@ -29,7 +29,7 @@ Launch the IoT platform console, then switch to the Settings section.  Under Sec
 
 In the Arduino IDE you need to add the MQTT code, but before adding the MQTT code you need to install the library.  In the library manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for and install the PubSubClient.  Then add the include to the top of the application, below the existing include files
 
-`#include <PubSubClient.h>`
+```#include <PubSubClient.h>```
 
 Now add some #define statements to contain that the MQTT code will use.  Add these under the comment **UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT**:
 

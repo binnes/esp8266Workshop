@@ -50,65 +50,72 @@ You need to connect the Data In, +'ve voltage and ground to the ESP8266 board as
 
 Once you have the connections made you can connect the board to your laptop.  Load the example sketch **strandtest** *File* -> *Examples* -> *AdaFruit Neopixel* -> *strandtest*.  You need to make a couple of changes to the example sketch:
 
-1. Change the PIN number to 5.  D1 on the NodeMCU board maps to GPIO5 on the ESP8266 processor - see the [pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/)
-2. Set the number of pixels to 1 in the strip definition line
-3. In the loop function comment out the 4 lines starting with **theatreChase** as these cause rapid flashing when only a single LED is connected, which is not pleasant to look at.
+1. Change the LED_PIN number to 5.  D1 on the NodeMCU board maps to GPIO5 on the ESP8266 processor - see the [pinout](https://circuits4you.com/2017/12/31/nodemcu-pinout/)
+2. Set the number of pixels to 1 in the LED_COUNT definition
+3. In the loop function comment out the 4 lines starting with **theaterChase** as these cause rapid flashing when only a single LED is connected, which is not pleasant to look at
 
 When you save the file you should be prompted to save it as a new file (you cannot override example files, so need to save them to another location to be able to modify them).
 
 Compile and upload the sketch to see the LED change colours.
 
-The to of your code should look like this:
+The top of your code should look like this:
 
 ```cpp
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-  #include <avr/power.h>
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
 
-#define PIN 5
+// Which pin on the Arduino is connected to the NeoPixels?
+// On a Trinket or Gemma we suggest changing this to 1:
+#define LED_PIN    5
 
-// Parameter 1 = number of pixels in strip
-// Parameter 2 = Arduino pin number (most are valid)
-// Parameter 3 = pixel type flags, add together as needed:
+// How many NeoPixels are attached to the Arduino?
+#define LED_COUNT 1
+
+// Declare our NeoPixel strip object:
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+// Argument 1 = Number of pixels in NeoPixel strip
+// Argument 2 = Arduino pin number (most are valid)
+// Argument 3 = Pixel type flags, add together as needed:
 //   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);
 
-// IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
-// pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
-// and minimize distance between Arduino and first pixel.  Avoid connecting
-// on a live circuit...if you must, connect GND first.
+
+// setup() function -- runs once at startup --------------------------------
 
 void setup() {
-  // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
-  #if defined (__AVR_ATtiny85__)
-    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
-  // End of trinket special code
+  // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
+  // Any other board, you can remove this part (but no harm leaving it):
+#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+  clock_prescale_set(clock_div_1);
+#endif
+  // END of Trinket-specific code.
 
-
-  strip.begin();
-  strip.show(); // Initialize all pixels to 'off'
+  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();            // Turn OFF all pixels ASAP
+  strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
 }
 
-void loop() {
-  // Some example procedures showing how to display to the pixels:
-  colorWipe(strip.Color(255, 0, 0), 50); // Red
-  colorWipe(strip.Color(0, 255, 0), 50); // Green
-  colorWipe(strip.Color(0, 0, 255), 50); // Blue
-//colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
-  // Send a theater pixel chase in...
-  //theaterChase(strip.Color(127, 127, 127), 50); // White
-  //theaterChase(strip.Color(127, 0, 0), 50); // Red
-  //theaterChase(strip.Color(0, 0, 127), 50); // Blue
 
-  rainbow(20);
-  rainbowCycle(20);
-  //theaterChaseRainbow(50);
+// loop() function -- runs repeatedly as long as board is on ---------------
+
+void loop() {
+  // Fill along the length of the strip in various colors...
+  colorWipe(strip.Color(255,   0,   0), 50); // Red
+  colorWipe(strip.Color(  0, 255,   0), 50); // Green
+  colorWipe(strip.Color(  0,   0, 255), 50); // Blue
+
+  // Do a theater marquee effect in various colors...
+  //theaterChase(strip.Color(127, 127, 127), 50); // White, half brightness
+  //theaterChase(strip.Color(127,   0,   0), 50); // Red, half brightness
+  //theaterChase(strip.Color(  0,   0, 127), 50); // Blue, half brightness
+
+  rainbow(10);             // Flowing rainbow cycle along the whole strip
+  //theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
 }
 ```
 
@@ -116,11 +123,11 @@ void loop() {
 
 To add the NeoPixel to your own application you need to do the following:
 
-1. Create an instance of a Neopixel `Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);`
+1. Create an instance of a Neopixel `Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);`
     - The first parameter is the number of pixels in the chain
-    - the second pixel is the GPIO number the pixel(s) are connected to
+    - the second parameter is the GPIO number the pixel(s) are connected to
     - The third parameter allows you to identify what type of pixel is connected.  There are a number of different types of pixel.  Some include a white LED to give a better white light.  Some expect the green data to be sent first whilst others require the red data to be sent first.  There are also different communication speeds used.
-2. Before using and commands to alter the pixels you need to initialise the pixel library using the **begin()** call.  `strip.begin();`  This is usually done in the **setup()** function.
+2. Before using any commands to alter the pixels you need to initialise the pixel library using the **begin()** call.  `strip.begin();`  This is usually done in the **setup()** function.
 3. Set the pixels to the desired colours (note: this doesn't change the pixel colours immediately)
     - There are a number of calls in the neopixel library to be able to set the colour of a pixel.  The first parameter always is the number of the pixel you want to set in the chain (starting with 0 as the first pixel):
         - `setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b)`

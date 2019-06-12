@@ -162,7 +162,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println((char *)payload);
   DeserializationError err = deserializeJson(jsonReceiveDoc, (char *)payload);
   if (err) {
-    Serial.print(F("deserializeJson() failed with code ")); 
+    Serial.print(F("deserializeJson() failed with code "));
     Serial.println(err.c_str());
   } else {
     JsonObject cmdData = jsonReceiveDoc.as<JsonObject>();

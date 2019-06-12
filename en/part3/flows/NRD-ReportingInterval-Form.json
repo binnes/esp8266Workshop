@@ -33,8 +33,8 @@
         "label": "",
         "group": "9ad3da6a.01c6c8",
         "order": 0,
-        "width": "6",
-        "height": "5",
+        "width": "10",
+        "height": "6",
         "options": [
             {
                 "label": "Reporting Interval (seconds)",
@@ -47,6 +47,8 @@
             "Seconds": ""
         },
         "payload": "",
+        "submit": "Submit",
+        "cancel": "Cancel",
         "topic": "",
         "x": 110,
         "y": 120,
@@ -130,7 +132,7 @@
         "name": "Change ESP8266 Reporting Interval",
         "tab": "c3370009.3c597",
         "disp": true,
-        "width": "6",
+        "width": "10",
         "collapse": false
     },
     {

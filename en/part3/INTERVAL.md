@@ -58,7 +58,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 ### Step 4 - Send MQTT Commands using IBM IoT Node
 
 - Double-click on the IBM IoT node (4). An **Edit ibmiot out node** sidebar will open.
-- The **IBM IoT out** node is configured to send a **Device Command** (5) to your ESP8266 device Id.
+- The **IBM IoT out** node is configured to send a **Device Command** (5) to your ESP8266 Device Id.
 - The **Command Type** will be named *interval* (6).
 - Press the red Done button.
 

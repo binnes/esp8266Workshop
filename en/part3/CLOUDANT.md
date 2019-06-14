@@ -42,14 +42,14 @@ In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT
 
 ### Step 3 - Observe Sensor Data being added to the Cloudant database
 
-- Return to the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection:
+- Return to the [IBM Cloud dashboard](https://cloud.ibm.com/dashboard/apps/) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection:
  ![Cloudant NoSQL Service Connection](screenshots/CloudantNoSQLServiceConnection.png)
 - The database linked to your application is an alias link to the actual database instance, so select the link to get to the actual database instance: ![Database alias link](screenshots/CloudantNoSQLServiceAlias.png)
 - Read about the Cloudant Storage service and press the **Launch** button:
  ![Cloudant NoSQL Service Instance](screenshots/CloudantNoSQLServiceInstance.png)
 - The IoT Sensor device data is stored in the Cloudant service.
  ![Cloudant NoSQL Databases](screenshots/CloudantNoSQLDatabases.png)
-- Click on historicaldata1 and then observe the **table** view of temperature, humidity and timestamp data:
+- Click on historicaldata1 and then observe the **Table** view of temperature, humidity and timestamp data:
  ![Cloudant NoSQL Historian Data](screenshots/CloudantNoSQLHistorianDB.png)
 
 ***

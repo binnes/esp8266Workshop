@@ -1,442 +1,87 @@
 [
     {
-        "id": "572a4fbb.49dd48",
+        "id": "94c09d59.9dec58",
         "type": "tab",
-        "label": "Historical Chart",
+        "label": "Store Sensor Data",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "958dd94a.779118",
-        "type": "debug",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 910,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "fe0204d0.c3dad8",
-        "type": "ui_chart",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "group": "5571671c.8ea9b",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "label": "ESP8266 DHT Historian Chart",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "10",
-        "removeOlderPoints": "5000",
-        "removeOlderUnit": "60",
-        "cutout": 0,
-        "useOneColor": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "useOldStyle": false,
-        "x": 970,
-        "y": 60,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "c31f0811.b2031",
+        "id": "b9c55847.c9b15",
         "type": "function",
-        "z": "572a4fbb.49dd48",
-        "name": "Create a Chart Array for Chart.js",
-        "func": "// This function reformats the timeseries data into an array that \n// Chart.js (See http://www.chartjs.org/ ) will plot\n// The node-red-dashboard Chart node uses Chart.js \n\nvar starttime = flow.get(\"start-time\");\nvar endtime = flow.get(\"end-time\");\n\nif( msg.payload.length === 0 ) {\n    // The historical database does not contain values for this date range \n    // Reset the chart with a blank array\n    msg.payload = [] ;\n    return msg;\n}\n\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Data\"],\n                   \"data\":[[{\"x\":msg.payload[0].time,\"y\":msg.payload[0].temp}]],\n                   \"labels\":[\"Data\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.length; i++ ) {\n    if( (msg.payload[i].time >= starttime) && (msg.payload[i].time <= endtime) ) {\n        // This temperature reading is within the Date Range\n        ChartData[0].data[0].push( { \"x\":msg.payload[i].time,\"y\":msg.payload[i].temp } );\n    }    \n}\n// Now we need to sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "z": "94c09d59.9dec58",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n        time:     new Date().getTime(),\n        temp:     msg.payload.d.temp,\n        humidity: msg.payload.d.humidity\n    } ;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 640,
-        "y": 60,
+        "x": 280,
+        "y": 100,
         "wires": [
             [
-                "fe0204d0.c3dad8",
-                "958dd94a.779118"
+                "8b252f83.75b5b8",
+                "affeba19.aa9fc8"
             ]
         ]
     },
     {
-        "id": "6e2193b1.51757c",
-        "type": "cloudant in",
-        "z": "572a4fbb.49dd48",
+        "id": "8b252f83.75b5b8",
+        "type": "debug",
+        "z": "94c09d59.9dec58",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 510,
+        "y": 70,
+        "wires": []
+    },
+    {
+        "id": "e7126b1c.0bfd08",
+        "type": "ibmiot in",
+        "z": "94c09d59.9dec58",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "ESP8266",
+        "eventType": "status",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": false,
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 70,
+        "y": 100,
+        "wires": [
+            [
+                "b9c55847.c9b15"
+            ]
+        ]
+    },
+    {
+        "id": "affeba19.aa9fc8",
+        "type": "cloudant out",
+        "z": "94c09d59.9dec58",
         "name": "",
         "cloudant": "",
         "database": "historicaldata1",
-        "service": "esp8266-workshop-cloudantNoSQLDB",
-        "search": "_all_",
-        "design": "",
-        "index": "",
-        "x": 370,
-        "y": 60,
-        "wires": [
-            [
-                "a291ea3c.dcfa08",
-                "c31f0811.b2031"
-            ]
-        ]
-    },
-    {
-        "id": "a291ea3c.dcfa08",
-        "type": "debug",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 570,
-        "y": 100,
+        "service": "",
+        "payonly": true,
+        "operation": "insert",
+        "x": 540,
+        "y": 130,
         "wires": []
-    },
-    {
-        "id": "9e5cf2f1.9769b",
-        "type": "ui_button",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "group": "11d8514.a44dcaf",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Load ESP8266 DHT Data",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 130,
-        "y": 60,
-        "wires": [
-            [
-                "6e2193b1.51757c"
-            ]
-        ]
-    },
-    {
-        "id": "6285082c.aec5f",
-        "type": "comment",
-        "z": "572a4fbb.49dd48",
-        "name": "http request technique",
-        "info": "",
-        "x": 160,
-        "y": 940,
-        "wires": []
-    },
-    {
-        "id": "2e3aaf57.71141",
-        "type": "function",
-        "z": "572a4fbb.49dd48",
-        "name": "Set up Search Parameters",
-        "func": "//var VCAP = JSON.parse(context.global.process.env.VCAP_SERVICES);\n//var cloudant = VCAP.cloudantNoSQLDB[0].credentials.url;\nvar cloudant =\"https://6f66f491-b57e-43b6-b1f3-437828f407bc-bluemix:2207a24ad26ab3a12f4eebcfa028d1afc10f1fec4c967344b364dd6b2303bc9c@6f66f491-b57e-43b6-b1f3-437828f407bc-bluemix.cloudant.com\"\n\nvar date = msg.payload;\n\nmsg.count=0;\n\nmsg.query='/uhc2jan2018/_design/byField/_search/timestamp?q=' + date + event + device + '&sort=\"ts\"&include_docs=true&limit=200';\nmsg.query='/uhcnuggets03012019/_design/byField/_search/timestamp?q=' + date + event + device + '&sort=\"ts\"&include_docs=true&limit=200';\n\nmsg.url = cloudant + msg.query\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 180,
-        "y": 980,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2b6d09cc.7b7406",
-        "type": "change",
-        "z": "572a4fbb.49dd48",
-        "name": "Query Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"query\":\"OrderId:'1801'\",\"limit\":100}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 1040,
-        "wires": [
-            [
-                "17753fc5.b40fd8"
-            ]
-        ]
-    },
-    {
-        "id": "17753fc5.b40fd8",
-        "type": "cloudant in",
-        "z": "572a4fbb.49dd48",
-        "name": "by Index of pos-paid-testdec17",
-        "cloudant": "4e09106f.2e2d9",
-        "database": "pos-paid-testdec17",
-        "service": "_ext_",
-        "search": "_idx_",
-        "design": "QueueName",
-        "index": "QueueName",
-        "x": 550,
-        "y": 1040,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "56012a.b24426d8",
-        "type": "inject",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "topic": "",
-        "payload": "true",
-        "payloadType": "bool",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 130,
-        "y": 1040,
-        "wires": [
-            [
-                "2b6d09cc.7b7406"
-            ]
-        ]
-    },
-    {
-        "id": "8e580bf8.76c91",
-        "type": "comment",
-        "z": "572a4fbb.49dd48",
-        "name": "Select Date Range",
-        "info": "",
-        "x": 120,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "ff2f490.74aef38",
-        "type": "ui_date_picker",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "label": "Start Date",
-        "group": "11d8514.a44dcaf",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "topic": "",
-        "x": 280,
-        "y": 200,
-        "wires": [
-            [
-                "9c32e685.0ca7e8"
-            ]
-        ]
-    },
-    {
-        "id": "88032976.91902",
-        "type": "ui_date_picker",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "label": "End Date",
-        "group": "11d8514.a44dcaf",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "topic": "",
-        "x": 270,
-        "y": 240,
-        "wires": [
-            [
-                "716de554.1cb37c"
-            ]
-        ]
-    },
-    {
-        "id": "2191d8b4.1dac78",
-        "type": "debug",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 670,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "5b678ae7.552f5c",
-        "type": "debug",
-        "z": "572a4fbb.49dd48",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 670,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "f3cab755.d3d0b8",
-        "type": "change",
-        "z": "572a4fbb.49dd48",
-        "name": "Start Date",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "1451624400000",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 120,
-        "y": 200,
-        "wires": [
-            [
-                "ff2f490.74aef38"
-            ]
-        ]
-    },
-    {
-        "id": "48e2f858.675d9",
-        "type": "change",
-        "z": "572a4fbb.49dd48",
-        "name": "End Date",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "1577750401000",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 110,
-        "y": 240,
-        "wires": [
-            [
-                "88032976.91902"
-            ]
-        ]
-    },
-    {
-        "id": "9c32e685.0ca7e8",
-        "type": "change",
-        "z": "572a4fbb.49dd48",
-        "name": "Start Time Range",
-        "rules": [
-            {
-                "t": "set",
-                "p": "start-time",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 200,
-        "wires": [
-            [
-                "2191d8b4.1dac78"
-            ]
-        ]
-    },
-    {
-        "id": "716de554.1cb37c",
-        "type": "change",
-        "z": "572a4fbb.49dd48",
-        "name": "End Time Range",
-        "rules": [
-            {
-                "t": "set",
-                "p": "end-time",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 240,
-        "wires": [
-            [
-                "5b678ae7.552f5c"
-            ]
-        ]
-    },
-    {
-        "id": "5571671c.8ea9b",
-        "type": "ui_group",
-        "z": "",
-        "name": "Historical Data",
-        "tab": "1f3fcf14.3e0841",
-        "order": 1,
-        "disp": true,
-        "width": "18"
-    },
-    {
-        "id": "11d8514.a44dcaf",
-        "type": "ui_group",
-        "z": "",
-        "name": "Chart Controls",
-        "tab": "1f3fcf14.3e0841",
-        "order": 2,
-        "disp": true,
-        "width": "6"
-    },
-    {
-        "id": "4e09106f.2e2d9",
-        "type": "cloudant",
-        "z": "",
-        "host": "https://16ad429e-9d49-4534-afa9-7955a9981991-bluemix:b95ca428fb2cd18ae9106e393f14eb7c45d82fd58bb53c5a04f821607b0e268e@16ad429e-9d49-4534-afa9-7955a9981991-bluemix.cloudant.com",
-        "name": "cloudant-xh"
-    },
-    {
-        "id": "1f3fcf14.3e0841",
-        "type": "ui_tab",
-        "z": "",
-        "name": "Historical Data",
-        "icon": "fa-area-chart",
-        "order": 5
     }
 ]

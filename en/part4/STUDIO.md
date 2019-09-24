@@ -51,13 +51,16 @@ Projects are your workspace to organize your resources, such as assets like data
 #### Create a New Project
 
 - Click on **Create a project**
-- Select the **Standard** tile and press the **Create Project** button
 
-![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject-Tiles.png)
+![Watson Studio Welcome screenshot](screenshots/WatsonStudio-Welcome.png)
+
+- Select the **Create an empty project** tile
+
+![Watson Studio New project screenshot](screenshots/WatsonStudio-CreateNewProject.png)
 
 - Give your Project a name : **IoT Sensor Analytics**
 - If you already have a Cloud Object Storage instance then it should be selected
-  
+
 ![Watson Studio New project screenshot](screenshots/WatsonStudio-NewProject.png)
 
 - if you don't have a Cloud Object Storage instance, then press the **Add** button to create one.  Ensure the Lite plan is selected then select **Create** then **Confirm** to create the instance.  Press the **Refresh** button to get the Cloud Storage instance to show up as the selected storage for your new Watson Studio project.
@@ -71,7 +74,7 @@ Projects are your workspace to organize your resources, such as assets like data
 - From the top menu, select **Add to project**, and then **Notebook**
 - Select **Blank**
 - Give the notebook a name : **IoT Sensor Analytics**
-- Scroll down to the **Select runtime** dropdown and choose **Default Spark Python 3.5 XS (Driver with 1 vCPU and 4 GB RAM, 2 executors with 1 vCPU and 4 GB RAM each** runtime
+- Scroll down to the **Select runtime** dropdown and choose **Default Spark Python 3.6 XS (Driver with 1 vCPU and 4 GB RAM, 2 executors with 1 vCPU and 4 GB RAM each** runtime
 
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook.png)
 

@@ -30,11 +30,15 @@ If you haven't previously used any of the locations you will need to create a **
 
 ### Step 2 - Deploy a Starter Kit
 
-Open up the Catalog using the top menu, then select Starter Kits from the left menu, then select the Internet of Things Platform Starter.  In the screen presented enter a name for your application - this needs to be a name that is unique to your application, so a good naming convention is to use your initials followed by a name that describes the purpose of the app or the solution name.  This will also form part of the URL for the application.
+- 0pen up the Catalog using the top menu, then select Starter Kits from the left menu
+- select the Node-RED Starter
+- in the screen presented choose the region your space is in (must be London, Frankfurt or Dallas)
+- ensure the Lite plan is selected
+- enter a name for your application - this needs to be a name that is unique to your application, so a good naming convention is to use your initials followed by a name that describes the purpose of the app or the solution name.  This will also form part of the URL for the application.
+- verify the org and space you want to deploy the application into
+- leave the Selected plan information at the default values then select the **Create** button.
 
-Next select the location and space you want to deploy the application into . Leave the Selected plan information at the default values then select the **Create** button.
-
-The Starter Kit is now deploying a JavaScript application running Node-RED, a low code development environment, an instance of Cloudant NoSQL database and an instance of the Watson Internet of Things Platform.
+The Starter Kit is now deploying a JavaScript application running Node-RED, a low code development environment and an instance of Cloudant NoSQL database.
 
 Please leave this to deploy - now is a good time to go for a break.
 
@@ -46,88 +50,30 @@ Once your application is deployed and running you need to enable the Continuous 
 
 1. Switch to the Overview page of your deployed application
 2. Press the **Enable** button in the continuous delivery section
-3. Select the correct region and resource group you want to deploy the toolchain to, if the default values are not correct, then press the **Create** button at the bottom of the page to create the toolchain
+3. Select the correct region and resource group you want to deploy the toolchain to, if the default values are not correct, then select the **Delivery Pipeline** section
 
     ![select toolchain location](../images/toolchain_Setup.png)
 
-4. You may be prompted to create a new API key, press the **Create** key to create the keys, or if you already have a key you want to use you can enter it. Then press the **Create** button at the bottom of the page to create to toolchain
+4. Select **Create** to generate the IBM Cloud API key, press **Create** again to generate the key.
 
     ![Toolkit API key](../images/ToolAPIkey.png)
 
-5. Once the toolchain has been created select the Delivery Pipeline then select the dropdown menu (**⋮**) and then **Configure Pipeline**
+5. Select **Create** to create the toolchain
 
-    ![Select Pipeline](../images/SelectDeliveryPipeline.png)
-    ![Configure Pipeline](../images/ConfigurePipeline.png)
+    ![Toolchain create](../images/CreateToolchain.png)
 
-6. Select the **Image version** section then ensure that the latest version of the images is selected for use, select Save if you changed the image version
+### Step 4 - Add the Internet of Things Platform service to your application
 
-    ![Latest image version](../images/LatestImages.png)
-
-7. Return to Toolchain overview, but clicking on breadcrumb train at top of page, you want the first time your toolchain name appears after Toolchains
-
-    ![breadcrumb trail](../images/BreadcrumbTrail.png)
-
-You now have the application deployed and access to the source code and a devops pipeline configured to automatically build and redeploy the application whenever a change is pushed to the master branch of the git repository
-
-### Step 4 - Modify the Node-RED configuration
-
-In the next set of instructions you will access the browser based editor included with the Continuous Delivery toolchain to make changes to the Node-RED application
-
-1. Select the **Eclipse Orion Web IDE** from the toolchain
-2. Select **package.json** from the list of files
-
-    ![Orion Editor](../images/OrionEditor.png)
-
-3. Modify the file, remove the sqldb-dashdb nodes and add the dashboard nodes.  The modified file should look like:
-
-    ```JSON
-    {
-        "name"         : "iot-bluemix",
-        "version"      : "0.6.0",
-        "dependencies": {
-            "when": "~3.x",
-            "mongodb": "~1.4.x",
-            "nano": "6.2.x",
-            "bcrypt": "1.0.2",
-            "cfenv":"~1.0.0",
-            "express":"4.x",
-            "body-parser":"1.x",
-            "http-shutdown":"1.2.0",
-            "node-red": "0.x",
-            "node-red-bluemix-nodes":"1.x",
-            "node-red-node-watson":"0.x",
-            "node-red-node-openwhisk":"0.x",
-            "node-red-node-cf-cloudant":"0.x",
-            "node-red-contrib-scx-ibmiotapp":"0.x",
-            "node-red-contrib-ibm-wiotp-device-ops":"0.x",
-            "node-red-contrib-iot-virtual-device":"0.x",
-            "node-red-contrib-ibmpush":"0.x",
-            "node-red-contrib-bluemix-hdfs":"0.x",
-            "node-red-dashboard":"2.x"
-        },
-        "scripts": {
-            "start": "node --max-old-space-size=192 index.js --settings ./bluemix-settings.js -v"
-        },
-        "engines": {
-            "node": "8.x"
-        }
-    }
-    ```
-
-4. Save the file using the shortcut (Ctrl or Cmd S) or use the menu **File → Save** option.
-5. Switch to the Git section of the IDE, using the side menu icon.  Then enter a commit message for the change, verify the changed code is correct then hit the **Commit** button to commit the change to the local git branch
-6. To make the change live you need to push the change to the master branch on the git server.  Press the **Push** button to send the committed changes from your local branch to the server master branch
-
-    ![Git push](../images/GitPush.png)
-
-7. Once you pushed the changes, the delivery pipeline will automatically notice the change and run the build and deploy stages of the delivery pipeline.  To see this:
-
-    - select the arrow on the top menu (circled in the above image) to return to the toolchain
-    - select delivery pipeline
-
-    You should see the stages run.  You can see the last commit message in the build stage.  Once the pipeline has completed, your changes will be running
-
-    ![Running Pipeline](../images/RunningPipeline.png)
+1. Select **Catalog** from the top menu
+2. Select **Internet of Things** from the side menu
+3. Select **Internet of Things Platform**
+4. Ensure the same region is selected as the application is deployed in and the Lite plan is selected then hit the **Create button**
+    ![Deploy IoT Platform Service](../images/DeployIoTPlatformService.png)
+5. Change to the Connections section and press **Create connection**
+6. Select your app (may need to select the CLOUD FOUNDRY SPACE to get the app to be populated on the page) then press **CONNECT**
+7. Press **Connect & restage app**
+8. Select the Dashboard from the main menu ![menu](../images/menu.png)(Top left of web console UI)
+9. Select Cloud Foundry Apps then select your application to return to your application overview page
 
 You now have the cloud application deployed, so you are now ready to move to the [next section](../part2/README.md) of the workshop to setup secured communications between the ESP8266 device and the IBM Cloud IOT service
 

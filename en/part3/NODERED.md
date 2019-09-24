@@ -30,21 +30,12 @@ Recall that in Part 1, you created a IoT Starter Application. Once the Green **R
 A new browser tab will open to the Node-RED start page. Proceed through the setup pages by selecting a username / password to access the Node-RED editor. Remember your username / password. Click the red button **Go to your Node-RED flow editor** to launch the editor.
 ![Node-RED Welcome](screenshots/Node-RED-Welcome.png)
 
-- The Node-RED Visual Programming Editor will open with a default flow.
-- On the left side is a palette of nodes that you can drag onto the flow.
-- You can wire nodes together to create a program.
-- The sample IoT Starter flow is not applicable to this workshop and can be deleted.
-
-![IoT Starter Flow 1](screenshots/IoTStarter-DeleteFlow1-a.png)
-
-- Click the **+** icon (7) to add a new tab.  Double Click on the **Flow 2** tab header (8).
-- Rename this tab from **Flow 2** to Receive ESP8266 Data (9)
-
-![IoT Starter Flow 1](screenshots/IoTStarter-DeleteFlow1-b.png)
-
-- Double Click on the **Flow 1** tab header (10).  Press the **Delete** button. (11)
-
-![IoT Starter Flow 1](screenshots/IoTStarter-DeleteFlow1-c.png)
+- The Node-RED Visual Programming Editor will open with a default flow
+- On the left side is a palette of nodes that you can drag onto the flow
+- You can wire nodes together to create a program
+- Double Click on the **Flow 1** tab header
+- Rename this tab from **Flow 1** to **Receive ESP8266 Data**
+  ![IoT Starter Flow 1](screenshots/Starter-RenameTab.png)
 
 ### Step 3 - How to install additional Node-RED nodes (Information only)
 

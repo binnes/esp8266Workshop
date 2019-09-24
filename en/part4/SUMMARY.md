@@ -34,16 +34,15 @@ This is just a taster of the many skills needed to implement an IoT solution.   
 ## Coursera courses provided by IBM
 
 IBM has created a number of courses on the Coursera learning platform.  These courses can be taken for free (the audit course option) or can be purchased.  When auditing a course you get access to the learning material, but cannot take the marked assessments and do not earn the course certificate or IBM Open Badge.  If you choose to purchase the course then you need to complete all the marked assessments and once passes, you will earn a Coursera course certificate and optionally an IBM Open Badge, showing you have completed the course.  
-
-- Watson IoT platform and Node-RED - [A Developer's Guide to IoT](https://www.coursera.org/learn/developer-iot/home/welcome)
-- Node-RED - [A Developer's Guide to Node-RED](https://www.coursera.org/learn/developer-nodered/home/welcome)
   
-There is also a Data Science specialisation, which comprises of 3 courses and a capstone project:
+There is a Data Science specialisation, which comprises of 3 courses and a capstone project:
 
 - Data Science - [Advanced Data Science with IBM Specialization](https://www.coursera.org/specializations/advanced-data-science-ibm)
   - [Fundamentals of Scalable Data Science](https://www.coursera.org/learn/ds)
   - [Advanced Machine Learning and Signal Processing](https://www.coursera.org/learn/advanced-machine-learning-signal-processing)
   - [Applied AI with DeepLearning](https://www.coursera.org/learn/ai)
+
+To go beyond the basics of Node-RED there is additional material available on the [Node-RED website](https://nodered.ord) and there is a [workshop](https://github.com/binnes/moreNodeRedWorkshop) to learn more about Node-RED features
 
 ***
 **Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md) - [**Summary**](SUMMARY.md)

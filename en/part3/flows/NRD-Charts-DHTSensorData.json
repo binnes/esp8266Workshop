@@ -1,65 +1,201 @@
 [
     {
-        "id": "537283ab.5ef624",
+        "id": "70c1e3a2.13a89c",
         "type": "tab",
         "label": "Chart Intro",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "9fa5ae27.2c6838",
+        "id": "874c1089.25ecb",
         "type": "tab",
         "label": "Dashboard Intro",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "2a9f98d3.89463",
+        "id": "1b8a4ed6.b6b209",
         "type": "tab",
         "label": "Plot DHT Sensor Data",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "3b10840.e8a04fc",
+        "id": "285b33eb.753ec4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "rvrsig.messaging.internetofthings.ibmcloud.com",
+        "port": "8883",
+        "tls": "48d2bad.fe42944",
+        "clientid": "a:rvrsig:bootcamp",
+        "usetls": true,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
+    },
+    {
+        "id": "48d2bad.fe42944",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "rootCA_certificate.pem",
+        "servername": "rvrsig.messaging.internetofthings.ibmcloud.com",
+        "verifyservercert": true
+    },
+    {
+        "id": "eb77816e.e58658",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e5daedab.ebc278",
         "type": "ui_group",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Dashboard Controls",
-        "tab": "da01dede.4c6fe8",
+        "tab": "6c0f9ea8.bc1d",
         "order": 2,
         "disp": true,
         "width": "6"
     },
     {
-        "id": "ff0ecf5d.bee87",
+        "id": "7c35b7e4.64a6d8",
         "type": "ui_group",
         "z": "",
         "name": "Start / Stop",
-        "tab": "da01dede.4c6fe8",
+        "tab": "6c0f9ea8.bc1d",
         "order": 1,
         "disp": true,
         "width": "6"
     },
     {
-        "id": "da01dede.4c6fe8",
+        "id": "6c0f9ea8.bc1d",
         "type": "ui_tab",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Introduction",
         "icon": "dashboard",
         "order": 2
     },
     {
-        "id": "a08a610d.d26148",
+        "id": "fad07bb4.8b914",
         "type": "ui_group",
         "z": "",
         "name": "ESP8266 Sensors",
-        "tab": "9acd054e.522e18",
+        "tab": "57db0461.91a864",
         "disp": true,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "9acd054e.522e18",
+        "id": "57db0461.91a864",
         "type": "ui_tab",
         "z": "",
         "name": "ESP8266 Workshop",
@@ -67,7 +203,7 @@
         "order": 3
     },
     {
-        "id": "a6642517.33c128",
+        "id": "880e71e.37c581",
         "type": "ui_base",
         "theme": {
             "name": "theme-light",
@@ -156,36 +292,36 @@
         }
     },
     {
-        "id": "b84d1cfb.bb9d28",
+        "id": "b4900017.3c0458",
         "type": "ui_group",
         "z": "",
         "name": "Line Chart Examples",
-        "tab": "311c5ab9.1536a6",
+        "tab": "95ed2630.ec825",
         "disp": true,
         "width": "8"
     },
     {
-        "id": "227c4089.a7b298",
+        "id": "997b37a6.c8e72",
         "type": "ui_group",
         "z": "",
         "name": "Bar Chart Examples",
-        "tab": "311c5ab9.1536a6",
+        "tab": "95ed2630.ec825",
         "order": 3,
         "disp": true,
         "width": "8"
     },
     {
-        "id": "e75237e3.b0a2b8",
+        "id": "8ed24b32.a6fdd8",
         "type": "ui_group",
         "z": "",
         "name": "Pie Chart Examples",
-        "tab": "311c5ab9.1536a6",
+        "tab": "95ed2630.ec825",
         "order": 2,
         "disp": true,
         "width": "6"
     },
     {
-        "id": "311c5ab9.1536a6",
+        "id": "95ed2630.ec825",
         "type": "ui_tab",
         "z": "",
         "name": "Chart Examples",
@@ -193,9 +329,9 @@
         "order": 1
     },
     {
-        "id": "8ca2324a.35e27",
+        "id": "beee549d.b307e8",
         "type": "inject",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "",
         "topic": "",
         "payload": "",
@@ -207,14 +343,14 @@
         "y": 140,
         "wires": [
             [
-                "fc77c46b.45161"
+                "55e6f958.f13ce8"
             ]
         ]
     },
     {
-        "id": "41341309.e28eac",
+        "id": "124a9bbb.88a054",
         "type": "function",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Random #s",
         "func": "if( msg.payload === false ) {\n    return null;\n}\nmsg.payload = Math.round(Math.random()*100);\nreturn msg;",
         "outputs": 1,
@@ -223,16 +359,16 @@
         "y": 60,
         "wires": [
             [
-                "838eb2fe.a65d18"
+                "78905f9b.d7b88"
             ]
         ]
     },
     {
-        "id": "8b1abada.50c0f",
+        "id": "722f3af7.9f8a4c",
         "type": "ui_chart",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Chart",
-        "group": "3b10840.e8a04fc",
+        "group": "e5daedab.ebc278",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -262,6 +398,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": true,
+        "outputs": 2,
         "x": 350,
         "y": 240,
         "wires": [
@@ -270,11 +407,11 @@
         ]
     },
     {
-        "id": "e2218e66.f7f2",
+        "id": "8fa9c19e.3e425",
         "type": "ui_gauge",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Gauge",
-        "group": "3b10840.e8a04fc",
+        "group": "e5daedab.ebc278",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -296,12 +433,12 @@
         "wires": []
     },
     {
-        "id": "a564d49b.423fe",
+        "id": "abb86f92.1df9f8",
         "type": "ui_slider",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "",
         "label": "Slider",
-        "group": "3b10840.e8a04fc",
+        "group": "e5daedab.ebc278",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -317,10 +454,10 @@
         ]
     },
     {
-        "id": "cf9efe9a.9f4958",
+        "id": "491fd593.2b0b3c",
         "type": "ui_text",
-        "z": "9fa5ae27.2c6838",
-        "group": "3b10840.e8a04fc",
+        "z": "874c1089.25ecb",
+        "group": "e5daedab.ebc278",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -333,12 +470,12 @@
         "wires": []
     },
     {
-        "id": "fc77c46b.45161",
+        "id": "55e6f958.f13ce8",
         "type": "ui_switch",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "",
         "label": "Switch",
-        "group": "ff0ecf5d.bee87",
+        "group": "7c35b7e4.64a6d8",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -358,15 +495,15 @@
         "y": 140,
         "wires": [
             [
-                "41341309.e28eac"
+                "124a9bbb.88a054"
             ]
         ]
     },
     {
-        "id": "e85b747e.d72f18",
+        "id": "5db0a22e.ec8fa4",
         "type": "ui_text",
-        "z": "9fa5ae27.2c6838",
-        "group": "ff0ecf5d.bee87",
+        "z": "874c1089.25ecb",
+        "group": "7c35b7e4.64a6d8",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -379,9 +516,9 @@
         "wires": []
     },
     {
-        "id": "fb092c51.5c82c8",
+        "id": "1c0abd51.3da0c3",
         "type": "inject",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Instructions",
         "topic": "",
         "payload": "Use the toggle switch to start / stop the generation of random numbers",
@@ -393,14 +530,14 @@
         "y": 60,
         "wires": [
             [
-                "e85b747e.d72f18"
+                "5db0a22e.ec8fa4"
             ]
         ]
     },
     {
-        "id": "d15fc007.21d758",
+        "id": "c8b3ec17.047c98",
         "type": "ui_toast",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "position": "top right",
         "displayTime": "5",
         "highlight": "",
@@ -414,9 +551,9 @@
         "wires": []
     },
     {
-        "id": "8a148f66.12b8a8",
+        "id": "e439bf08.4dd8f",
         "type": "switch",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Warn on High Values",
         "property": "payload",
         "propertyType": "msg",
@@ -434,14 +571,14 @@
         "y": 400,
         "wires": [
             [
-                "bf2ca4b7.cd3fc8"
+                "e136bc29.1ee92"
             ]
         ]
     },
     {
-        "id": "bf2ca4b7.cd3fc8",
+        "id": "e136bc29.1ee92",
         "type": "template",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "Alert Msg",
         "field": "payload",
         "fieldType": "msg",
@@ -453,96 +590,60 @@
         "y": 400,
         "wires": [
             [
-                "d15fc007.21d758"
+                "c8b3ec17.047c98"
             ]
         ]
     },
     {
-        "id": "838eb2fe.a65d18",
+        "id": "78905f9b.d7b88",
         "type": "link out",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "",
         "links": [
-            "60e988f6.fee118"
+            "918c33d5.c494b8"
         ],
         "x": 555,
         "y": 140,
         "wires": []
     },
     {
-        "id": "60e988f6.fee118",
+        "id": "918c33d5.c494b8",
         "type": "link in",
-        "z": "9fa5ae27.2c6838",
+        "z": "874c1089.25ecb",
         "name": "",
         "links": [
-            "838eb2fe.a65d18"
+            "78905f9b.d7b88"
         ],
         "x": 95,
         "y": 360,
         "wires": [
             [
-                "8b1abada.50c0f",
-                "e2218e66.f7f2",
-                "a564d49b.423fe",
-                "cf9efe9a.9f4958",
-                "8a148f66.12b8a8"
+                "722f3af7.9f8a4c",
+                "8fa9c19e.3e425",
+                "abb86f92.1df9f8",
+                "491fd593.2b0b3c",
+                "e439bf08.4dd8f"
             ]
         ]
     },
     {
-        "id": "7e2f5111.c2b428",
-        "type": "ibmiot in",
-        "z": "2a9f98d3.89463",
-        "authentication": "boundService",
-        "apiKey": "",
-        "inputType": "evt",
-        "logicalInterface": "",
-        "ruleId": "",
-        "deviceId": "",
-        "applicationId": "",
-        "deviceType": "ESP8266",
-        "eventType": "status",
-        "commandType": "",
-        "format": "json",
-        "name": "IBM IoT",
-        "service": "registered",
-        "allDevices": true,
-        "allApplications": "",
-        "allDeviceTypes": false,
-        "allLogicalInterfaces": false,
-        "allEvents": false,
-        "allCommands": "",
-        "allFormats": "",
-        "qos": 0,
-        "x": 80,
-        "y": 180,
-        "wires": [
-            [
-                "3faa5036.f9b148",
-                "b88622fa.d6e71",
-                "1cd13f69.00ac09",
-                "def64771.b11f18"
-            ]
-        ]
-    },
-    {
-        "id": "3faa5036.f9b148",
+        "id": "6ac489fc.c9b67",
         "type": "debug",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
-        "x": 270,
-        "y": 110,
+        "x": 410,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "b88622fa.d6e71",
+        "id": "d45abe9c.def34",
         "type": "change",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "Chart Temperature",
         "rules": [
             {
@@ -558,18 +659,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 290,
-        "y": 160,
+        "x": 430,
+        "y": 120,
         "wires": [
             [
-                "f6d75975.73f14"
+                "5df73fea.11493"
             ]
         ]
     },
     {
-        "id": "1cd13f69.00ac09",
+        "id": "6fabcda7.577e8c",
         "type": "change",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "Chart Humidity",
         "rules": [
             {
@@ -585,18 +686,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 280,
-        "y": 200,
+        "x": 420,
+        "y": 160,
         "wires": [
             [
-                "6e6b19b7.84278"
+                "8b71a4f2.76ef88"
             ]
         ]
     },
     {
-        "id": "def64771.b11f18",
+        "id": "f2aae052.389b98",
         "type": "switch",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "Warn on High Values",
         "property": "payload.d.temp",
         "propertyType": "msg",
@@ -610,18 +711,18 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 300,
-        "y": 250,
+        "x": 440,
+        "y": 200,
         "wires": [
             [
-                "fecea96.e1191d8"
+                "58f1c3c4.06b554"
             ]
         ]
     },
     {
-        "id": "fecea96.e1191d8",
+        "id": "58f1c3c4.06b554",
         "type": "template",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "Alert Msg",
         "field": "payload",
         "fieldType": "msg",
@@ -629,20 +730,20 @@
         "syntax": "mustache",
         "template": "Alert : Critical Value Detected {{payload.d.temp}}",
         "output": "str",
-        "x": 490,
-        "y": 250,
+        "x": 640,
+        "y": 200,
         "wires": [
             [
-                "c1b9a28b.e4b4f8"
+                "2217d1c5.fc7e86"
             ]
         ]
     },
     {
-        "id": "f6d75975.73f14",
+        "id": "5df73fea.11493",
         "type": "ui_chart",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "",
-        "group": "a08a610d.d26148",
+        "group": "fad07bb4.8b914",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -672,19 +773,20 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 480,
-        "y": 160,
+        "outputs": 2,
+        "x": 630,
+        "y": 120,
         "wires": [
             [],
             []
         ]
     },
     {
-        "id": "6e6b19b7.84278",
+        "id": "8b71a4f2.76ef88",
         "type": "ui_chart",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "name": "",
-        "group": "a08a610d.d26148",
+        "group": "fad07bb4.8b914",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -714,17 +816,18 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 490,
-        "y": 200,
+        "outputs": 2,
+        "x": 640,
+        "y": 160,
         "wires": [
             [],
             []
         ]
     },
     {
-        "id": "c1b9a28b.e4b4f8",
+        "id": "2217d1c5.fc7e86",
         "type": "ui_toast",
-        "z": "2a9f98d3.89463",
+        "z": "1b8a4ed6.b6b209",
         "position": "top right",
         "displayTime": "5",
         "highlight": "",
@@ -733,16 +836,16 @@
         "cancel": "",
         "topic": "",
         "name": "",
-        "x": 680,
-        "y": 250,
+        "x": 830,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "3a3ec027.2075b",
+        "id": "4669f842.19887",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "b84d1cfb.bb9d28",
+        "group": "b4900017.3c0458",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -772,6 +875,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 600,
         "y": 120,
         "wires": [
@@ -780,9 +884,9 @@
         ]
     },
     {
-        "id": "c4bb6ddb.3475d8",
+        "id": "7fc2ba83.ac9764",
         "type": "function",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "Fill Single Chart Array",
         "func": "var chart = [{\n    \"series\":[\"A\"],\n    \"data\":[[{\"x\":1504029632890,\"y\":5},\n             {\"x\":1504029633514,\"y\":8},\n             {\"x\":1504029634400,\"y\":3}]],\n    \"labels\":[\"\"]\n}];\nmsg.payload = chart;\n\nreturn msg;",
         "outputs": 1,
@@ -791,15 +895,15 @@
         "y": 120,
         "wires": [
             [
-                "3a3ec027.2075b",
-                "feec490d.0b42f"
+                "4669f842.19887",
+                "5b465269.d9b074"
             ]
         ]
     },
     {
-        "id": "feec490d.0b42f",
+        "id": "5b465269.d9b074",
         "type": "debug",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "active": true,
         "console": "false",
@@ -809,9 +913,9 @@
         "wires": []
     },
     {
-        "id": "27f6c63c.1cd0a2",
+        "id": "487e1d0a.885b3c",
         "type": "comment",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "Sample Dashboard that plots various Chart types",
         "info": "",
         "x": 250,
@@ -819,11 +923,11 @@
         "wires": []
     },
     {
-        "id": "b1fde22c.c7e378",
+        "id": "1889799b.b9e7fe",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "b84d1cfb.bb9d28",
+        "group": "b4900017.3c0458",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -853,6 +957,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 610,
         "y": 220,
         "wires": [
@@ -861,9 +966,9 @@
         ]
     },
     {
-        "id": "a94eada9.dd7e68",
+        "id": "3a39449a.d2d1b4",
         "type": "function",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "Fill Multiple Line Chart Array",
         "func": "var chart = [  {\"series\":[\"A\",\"B\",\"C\"],\n                \"data\":[\n                    [{\"x\":1504029632890,\"y\":5},\n                     {\"x\":1504029636001,\"y\":4},\n                     {\"x\":1504029638656,\"y\":2}],\n                    [{\"x\":1504029633514,\"y\":6},\n                     {\"x\":1504029636622,\"y\":7},\n                     {\"x\":1504029639539,\"y\":6}],\n                    [{\"x\":1504029634400,\"y\":7},\n                     {\"x\":1504029637959,\"y\":9},\n                     {\"x\":1504029640317,\"y\":7}]\n                ],\n                \"labels\":[\"\"]}];\nmsg.payload = chart;\n\nreturn msg;",
         "outputs": 1,
@@ -872,15 +977,15 @@
         "y": 220,
         "wires": [
             [
-                "b1fde22c.c7e378",
-                "e26b76d1.f81a7"
+                "1889799b.b9e7fe",
+                "5f19abd2.332974"
             ]
         ]
     },
     {
-        "id": "e26b76d1.f81a7",
+        "id": "5f19abd2.332974",
         "type": "debug",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "active": true,
         "console": "false",
@@ -890,11 +995,11 @@
         "wires": []
     },
     {
-        "id": "66b41377.89cd64",
+        "id": "d8b2187d.c66668",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "227c4089.a7b298",
+        "group": "997b37a6.c8e72",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -924,6 +1029,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 610,
         "y": 540,
         "wires": [
@@ -932,9 +1038,9 @@
         ]
     },
     {
-        "id": "2ed762c3.10562e",
+        "id": "9145bef6.8fb7a8",
         "type": "inject",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "topic": "",
         "payload": "true",
@@ -946,14 +1052,14 @@
         "y": 120,
         "wires": [
             [
-                "c4bb6ddb.3475d8"
+                "7fc2ba83.ac9764"
             ]
         ]
     },
     {
-        "id": "8353596b.9e8c4",
+        "id": "4408bd0a.2dec4c",
         "type": "inject",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "topic": "",
         "payload": "true",
@@ -965,14 +1071,14 @@
         "y": 220,
         "wires": [
             [
-                "a94eada9.dd7e68"
+                "3a39449a.d2d1b4"
             ]
         ]
     },
     {
-        "id": "db058834.1899f",
+        "id": "245662f7.dfdc5e",
         "type": "inject",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "topic": "",
         "payload": "true",
@@ -984,14 +1090,14 @@
         "y": 540,
         "wires": [
             [
-                "209e7294.5561de"
+                "5b27020e.c7ef14"
             ]
         ]
     },
     {
-        "id": "209e7294.5561de",
+        "id": "5b27020e.c7ef14",
         "type": "function",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "Fill Bar Chart Array",
         "func": "var bar={};\nbar.labels = [\"Q1 16\",\"Q2 16\",\"Q3 16\",\"Q4 16\",\"Q1 17\",\"Q2 17\",\"Q3 17\"];\nbar.series = ['Sales A', 'Sales B', 'Sales C', 'Sales D'];\n// An array of 4 arrays of 7 elements\nbar.data = [\n    [65, 59, 80, 81, 56, 55, 40],\n    [28, 48, 40, 19, 86, 27, 90],\n    [38, 28, 20, 49, 45, 60, 20],\n    [58, 18, 40, 29, 15, 30, 60]\n  ];\nreturn {payload:[bar]};",
         "outputs": 1,
@@ -1000,16 +1106,16 @@
         "y": 540,
         "wires": [
             [
-                "66b41377.89cd64",
-                "68f3e5e8.580584",
-                "6c6bae93.dcdf38"
+                "d8b2187d.c66668",
+                "b4747700.f7799",
+                "61b69949.35ab98"
             ]
         ]
     },
     {
-        "id": "68f3e5e8.580584",
+        "id": "b4747700.f7799",
         "type": "debug",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "active": true,
         "console": "false",
@@ -1019,11 +1125,11 @@
         "wires": []
     },
     {
-        "id": "6c6bae93.dcdf38",
+        "id": "61b69949.35ab98",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "227c4089.a7b298",
+        "group": "997b37a6.c8e72",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -1053,6 +1159,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 619.0908813476562,
         "y": 580,
         "wires": [
@@ -1061,11 +1168,11 @@
         ]
     },
     {
-        "id": "35ac1173.6ea2de",
+        "id": "e327788f.626038",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "e75237e3.b0a2b8",
+        "group": "8ed24b32.a6fdd8",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1095,6 +1202,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 580,
         "y": 320,
         "wires": [
@@ -1103,9 +1211,9 @@
         ]
     },
     {
-        "id": "1173f80e.157c",
+        "id": "ddad07ea.e06ed8",
         "type": "function",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "Fill Pie Chart Array",
         "func": "var pie={};\npie.labels = [\"Geo1\",\"Geo2\",\"Geo3\",\"Geo4\",\"Geo5\"];\npie.series = ['Sales A', 'Sales B', 'Sales C', 'Sales D'];\npie.data =   [ [16, 27, 42, 65, 89] ];\n//return {payload:[pie]};\n\nvar pie={ \"labels\" : [\"Geo1\",\"Geo2\",\"Geo3\",\"Geo4\",\"Geo5\"],\n          \"series\" : ['Sales A', 'Sales B', 'Sales C', 'Sales D'],\n          \"data\"   : [ [16, 27, 42, 65, 89] ]\n        };\nmsg.payload = [pie];\nreturn msg;",
         "outputs": 1,
@@ -1114,18 +1222,18 @@
         "y": 320,
         "wires": [
             [
-                "35ac1173.6ea2de",
-                "f2064f40.09968",
-                "f7383d61.954c68",
-                "f99d40ab.ccf22",
-                "636fef81.d10d2"
+                "e327788f.626038",
+                "5d316c04.32fbac",
+                "a5319928.1377d",
+                "2adc0d57.4a413a",
+                "556c21ae.c95c8"
             ]
         ]
     },
     {
-        "id": "1ef45f0.dc50021",
+        "id": "41784a69.7dd054",
         "type": "inject",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "topic": "",
         "payload": "true",
@@ -1137,14 +1245,14 @@
         "y": 320,
         "wires": [
             [
-                "1173f80e.157c"
+                "ddad07ea.e06ed8"
             ]
         ]
     },
     {
-        "id": "f2064f40.09968",
+        "id": "5d316c04.32fbac",
         "type": "debug",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
         "active": true,
         "console": "false",
@@ -1154,11 +1262,11 @@
         "wires": []
     },
     {
-        "id": "f7383d61.954c68",
+        "id": "a5319928.1377d",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "e75237e3.b0a2b8",
+        "group": "8ed24b32.a6fdd8",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -1188,6 +1296,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 610,
         "y": 400.9090881347656,
         "wires": [
@@ -1196,11 +1305,11 @@
         ]
     },
     {
-        "id": "636fef81.d10d2",
+        "id": "556c21ae.c95c8",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "e75237e3.b0a2b8",
+        "group": "8ed24b32.a6fdd8",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -1230,6 +1339,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 590,
         "y": 440,
         "wires": [
@@ -1238,11 +1348,11 @@
         ]
     },
     {
-        "id": "f99d40ab.ccf22",
+        "id": "2adc0d57.4a413a",
         "type": "ui_chart",
-        "z": "537283ab.5ef624",
+        "z": "70c1e3a2.13a89c",
         "name": "",
-        "group": "e75237e3.b0a2b8",
+        "group": "8ed24b32.a6fdd8",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -1272,11 +1382,32 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
+        "outputs": 2,
         "x": 590,
         "y": 360,
         "wires": [
             [],
             []
+        ]
+    },
+    {
+        "id": "dae25288.0600e8",
+        "type": "mqtt in",
+        "z": "1b8a4ed6.b6b209",
+        "name": "",
+        "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "285b33eb.753ec4",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "6ac489fc.c9b67",
+                "d45abe9c.def34",
+                "6fabcda7.577e8c",
+                "f2aae052.389b98"
+            ]
         ]
     }
 ]

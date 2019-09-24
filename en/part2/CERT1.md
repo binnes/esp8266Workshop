@@ -22,13 +22,13 @@ Having unsecured traffic for an IoT solution is not a good idea, so in this lab 
 
 When using SSL/TLS you can verify the certificate(s) presented by the server if you have the certificate of the Root Certificate Authority used to sign the server certificate.  Your Laptop will have common root CA certificates installed as part of the OS or browser so web traffic can be secured and the padlock on your browser can be shown.  However, you need to add any certificate to IoT devices if you want to verify server certificates.
 
-There is a limitation in the SSL/TLS library provided in the Arduino environment as part of the ESP8266 plugin.  This library will verify a server certificate, but not if the certificate chain contains intermediate certificates.  The Watson IoT Platform certificate is available on [this](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) page, but includes a chain of certificates, which the ESP8266 library cannot verify.
-
 The Watson IoT platform does allow you to replace the certificates used for MQTT traffic, so in this exercise you will generate your own self-signed certificates, add them to the Watson IoT platform and the ESP8266 code, to enable a SSL/TLS connection with the server certificate verified against the root CA certificate installed on the ESP8266.
 
 The platform [documentation](https://console.bluemix.net/docs/services/IoT/reference/security/set_up_certificates.html#set_up_certificates) provides information about what information must be contained in certificates to work with the platform.
 
 In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files in the [certificates](/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
+
+The commands are provided to create text (pem) and binary (der) formats of the keys and certificates, as some device libraries require one or the other format.  In this workshop we will only use the text versions of the certificates and keys.
 
 ### Step 1 - Generating a root Certificate Authority Key and Certificate
 
@@ -106,7 +106,7 @@ replace <CA certificate pem file> with the name of the CA root certificate and <
 
 ### Step 5 - Adding the root CA certificate to the ESP8266
 
-To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The TLS library we are using only supports the binary format, so the rootCA_certificate.der needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.der file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 Sketch Data Upload*
+To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The rootCA_certificate.pem needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.pem file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 Sketch Data Upload*
 
 ### Step 6 - Adding the root CA certificate to your OS or browser
 
@@ -140,8 +140,9 @@ Make the following code changes:
 - Add an include at the top of the file to access the file system : `#include <FS.h>`
 - Add an include after the **ESP8266WiFi.h** include to add time : `#include <time.h>`
 - Change the MQTT_PORT to use the secure port 8883 : `#define MQTT_PORT 8883`
-- Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.der"`
-- Change the wifiClient to use the secure version : `WiFiClientSecure wifiClient;`
+- Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.pem"`
+- Change the wifiClient to use the secure version : `BearSSL::WiFiClientSecure wifiClient;`
+- Add a new variable definition below the mqtt variable definition : `char *ca_cert;`
 - Add #define to set timezone offset : `#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)`
 - Add #define to set day light saving offset : `#define TZ_DST    60  //Minutes timezone offset for Daylight saving`
 
@@ -152,13 +153,21 @@ Make the following code changes:
   SPIFFS.begin();
   File ca = SPIFFS.open(CA_CERT_FILE, "r");
   if(!ca) {
-    Serial.println("Couldn't load cert");
+    Serial.println("Couldn't load CA cert");
   } else {
-    bool ret = wifiClient.loadCACert(ca);
-    Serial.print("Loading CA cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = ca.size();
+    ca_cert = (char *)malloc(certSize);
+    if (certSize != ca.readBytes(ca_cert, certSize)) {
+      Serial.println("Loading CA cert failed");
+    } else {
+      Serial.println("Loaded CA cert");
+    }
     ca.close();
   }
+
+  //Set the cert(s) in the WiFi client
+  BearSSL::X509List rootCert(ca_cert);
+  wifiClient.setTrustAnchors(&rootCert);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
@@ -180,15 +189,13 @@ Make the following code changes:
   // Connect to MQTT - IBM Watson IoT Platform
   while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
-      if (wifiClient.verifyCertChain(MQTT_HOST)) {
-        Serial.println("certificate matches");
-      } else {
-        // ignore for now - but usually don't want to proceed if a valid cert not presented!
-        Serial.println("certificate doesn't match");
-      }
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
+      Serial.print("last SSL Error = ");
+      Serial.print(wifiClient.getLastSSLError(msg, 50));
+      Serial.print(" : ");
+      Serial.println(msg);      
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }
@@ -238,7 +245,7 @@ The finished application should look like this:
 #define MQTT_TOKEN "password"
 #define MQTT_TOPIC "iot-2/evt/status/fmt/json"
 #define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
-#define CA_CERT_FILE "/rootCA_certificate.der"
+#define CA_CERT_FILE "/rootCA_certificate.pem"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
@@ -275,6 +282,8 @@ DHT dht(DHT_PIN, DHTTYPE);
 void callback(char* topic, byte* payload, unsigned int length);
 WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
+
+char *ca_cert;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -327,11 +336,19 @@ void setup() {
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
-    bool ret = wifiClient.loadCACert(ca);
-    Serial.print("Loading CA cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = ca.size();
+    ca_cert = (char *)malloc(certSize);
+    if (certSize != ca.readBytes(ca_cert, certSize)) {
+      Serial.println("Loading CA cert failed");
+    } else {
+      Serial.println("Loaded CA cert");
+    }
     ca.close();
   }
+
+  //Set the cert(s) in the WiFi client
+  BearSSL::X509List rootCert(ca_cert);
+  wifiClient.setTrustAnchors(&rootCert);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
@@ -353,15 +370,13 @@ void setup() {
   // Connect to MQTT - IBM Watson IoT Platform
    while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-      if (wifiClient.verifyCertChain(MQTT_HOST)) {
-        Serial.println("certificate matches");
-      } else {
-        // ignore for now - but usually don't want to proceed if a valid cert not presented!
-        Serial.println("certificate doesn't match");
-      }
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
+      Serial.print("last SSL Error = ");
+      Serial.print(wifiClient.getLastSSLError(msg, 50));
+      Serial.print(" : ");
+      Serial.println(msg);      
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }
@@ -375,12 +390,15 @@ void loop() {
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
-// Should verify the certificates here - like in the startup function
-      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
+     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
-      Serial.println("MQTT Failed to connect!");
-      delay(5000);
+      Serial.print("last SSL Error = ");
+      Serial.print(wifiClient.getLastSSLError(msg, 50));
+      Serial.print(" : ");
+      Serial.println(msg);      
+      Serial.println("MQTT Failed to connect! ... retrying");
+      delay(500);
     }
   }
   h = dht.readHumidity();

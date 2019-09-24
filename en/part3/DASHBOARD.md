@@ -52,10 +52,10 @@ The next Node-RED flow - **Dashboard Intro** - uses a variety of UI widgets to d
 
 ### Step 4 - Plot Device Environmental Sensor Data
 
-Now that you have learned about Node-RED Dashboard and Chart types, you are ready to plot the real-time device environmental sensor data.
+Now that you have learned about Node-RED Dashboard and Chart types, you are ready to plot the real-time device environmental sensor data.  If you are working in the lite plan on the IBM Cloud memory is limited, so you may want to delete the tabs Chart Intro and Dashboard Intro by double clicking each tab to open up the tab configuration sidebar, where you will find a delete button.
 
 - Turn to the next flow - **Plot DHT Sensor Data**
-- The **IBM IoT** node is already configured to receive *status* Device Events from the ESP8266 Device Type.
+- The **mqtt in** node may need to be configured to pull in the config you created in the previous section.is already configured to receive *status* Device Events from the ESP8266 Device Type.
 - The **Change** nodes extract the ```msg.payload.d.temp``` and ```msg.payload.d.humidity``` values from the JSON object sent over MQTT from the device environmental sensor to Watson IoT Platform.
 - The environmental sensor values are sent to two charts to plot Temperature and Humidity.
  ![NRD ESP8266 DHT chart flow](screenshots/Node-RED-Dashboard-DHT-flow.png)
@@ -75,7 +75,7 @@ Often IoT devices and sensors are deployed so that alerts can be triggered when 
 - The Alert message is sent to a **Node-RED Dashboard Notification** node to display in the browser.
 - This flow could be extended to call a **Twilio** node to send a SMS message.  It could raise an alarm in another system by triggering a REST API call to the manufacturing production operations systems.
 
- ![NRD ESP8266 DHT chart flow](screenshots/Node-RED-Dashboard-DHT-flow.png)
+ ![NRD ESP8266 DHT chart flow](screenshots/Node-RED-Dashboard-DHT-flow2.png)
 
 - Return to the Node-RED Dashboard **ESP8266 Workshop** tab and increase the temperature of your DHT sensor above 30C.
 

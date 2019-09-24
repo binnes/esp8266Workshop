@@ -27,56 +27,87 @@ openssl x509 -days 3650 -in SecuredDev01_crt.csr -out SecuredDev01_crt.pem -req 
 
 openssl rsa -outform der -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_key.key
 
+openssl rsa -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_key_nopass.pem
+
 openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
 ```
 
 ### Step 2 - Upload the certificate and key to the ESP8266 device
 
-You need to add the private key (SecuredDev01_key.key) and the certificate (SecuredDev01_crt.der) to the data folder inside the sketch folder then run the data uploader tool (*Tools* -> *ESP8266 Sketch Data Upload*) to install the certificates on the device filesystem.
+You need to add the private key (SecuredDev01_key_nopass.pem) and the certificate (SecuredDev01_crt.pem) to the data folder inside the sketch folder then run the data uploader tool (*Tools* -> *ESP8266 Sketch Data Upload*) to install the certificates on the device filesystem.  The SSL library on the ESP does not provide a mechanism to enter a password for the key, so the version of the key without the password needs to be provided.  Remember to close the Serial Monitor window before running the data upload tool.
 
 ### Step 3 - Modify the application to use the client certificate and key
 
 Now you can modify the code to load the certificates and add them to the connection:
 
-Add two mode #define statements containing the names of the key and certificate:
+Add two more #define statements containing the names of the key and certificate:
 
 ```C++
-#define KEY_FILE "/SecuredDev01_key.key"
-#define CERT_FILE "/SecuredDev01_crt.der"
+#define KEY_FILE "/SecuredDev01_key_nopass.pem"
+#define CERT_FILE "/SecuredDev01_crt.pem"
+```
+
+Add two more variable declarations to hold the additional certificates:
+
+```C++
+char *client_cert;
+char *client_key;
 ```
 
 then update the code within the setup() function to load the additional key and certificate:
 
 ```C++
 // Get certs from file system and load into WiFiSecure client
+  // Get cert(s) from file system
   SPIFFS.begin();
   File ca = SPIFFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
-    bool ret = wifiClient.loadCACert(ca);
-    Serial.print("Loading CA cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = ca.size(); 
+    ca_cert = (char *)malloc(certSize);
+    if (certSize != ca.readBytes(ca_cert, certSize)) {
+      Serial.println("Loading CA cert failed");
+    } else {
+      Serial.println("Loaded CA cert"); 
+    }
     ca.close();
   }
+  
   File key = SPIFFS.open(KEY_FILE, "r");
   if(!key) {
     Serial.println("Couldn't load key");
   } else {
-    bool ret = wifiClient.loadPrivateKey(key);
-    Serial.print("Loading key returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t keySize = key.size();
+    client_key = (char *)malloc(keySize);
+    if (keySize != key.readBytes(client_key, keySize)) {
+      Serial.println("Loading key failed");
+    } else {
+      Serial.println("Loaded key"); 
+    }
     key.close();
   }
+  
   File cert = SPIFFS.open(CERT_FILE, "r");
   if(!cert) {
     Serial.println("Couldn't load cert");
   } else {
-    bool ret = wifiClient.loadCertificate(cert);
-    Serial.print("Loading cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = cert.size();
+    client_cert = (char *)malloc(certSize);
+    if (certSize != cert.readBytes(client_cert, certSize)) {
+      Serial.println("Loading client cert failed");
+    } else {
+      Serial.println("Loaded client cert"); 
+    }
     cert.close();
   }
+  
+  //Set the cert(s) in the WiFi client
+  BearSSL::X509List rootCert(ca_cert);
+  wifiClient.setTrustAnchors(&rootCert);
+  BearSSL::X509List clientCert(client_cert);
+  BearSSL::PrivateKey clientKey(client_key);
+  wifiClient.setClientRSACert(&clientCert, &clientKey); 
 ```
 
 ### Step 4 - Run the application
@@ -125,9 +156,9 @@ The finished application should look like this:
 #define MQTT_TOKEN "password"
 #define MQTT_TOPIC "iot-2/evt/status/fmt/json"
 #define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
-#define CA_CERT_FILE "/rootCA_certificate.der"
-#define KEY_FILE "/SecuredDev01_key.key"
-#define CERT_FILE "/SecuredDev01_crt.der"
+#define CA_CERT_FILE "/rootCA_certificate.pem"
+#define KEY_FILE "/SecuredDev01_key_nopass.pem"
+#define CERT_FILE "/SecuredDev01_crt.pem"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
@@ -161,8 +192,12 @@ DHT dht(DHT_PIN, DHTTYPE);
 
 // MQTT objects
 void callback(char* topic, byte* payload, unsigned int length);
-WiFiClientSecure wifiClient;
+BearSSL::WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
+
+char *ca_cert;
+char *client_cert;
+char *client_key;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -215,29 +250,50 @@ void setup() {
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
-    bool ret = wifiClient.loadCACert(ca);
-    Serial.print("Loading CA cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = ca.size(); 
+    ca_cert = (char *)malloc(certSize);
+    if (certSize != ca.readBytes(ca_cert, certSize)) {
+      Serial.println("Loading CA cert failed");
+    } else {
+      Serial.println("Loaded CA cert"); 
+    }
     ca.close();
   }
+  
   File key = SPIFFS.open(KEY_FILE, "r");
   if(!key) {
     Serial.println("Couldn't load key");
   } else {
-    bool ret = wifiClient.loadPrivateKey(key);
-    Serial.print("Loading key returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t keySize = key.size();
+    client_key = (char *)malloc(keySize);
+    if (keySize != key.readBytes(client_key, keySize)) {
+      Serial.println("Loading key failed");
+    } else {
+      Serial.println("Loaded key"); 
+    }
     key.close();
   }
+  
   File cert = SPIFFS.open(CERT_FILE, "r");
   if(!cert) {
     Serial.println("Couldn't load cert");
   } else {
-    bool ret = wifiClient.loadCertificate(cert);
-    Serial.print("Loading cert returned ");
-    Serial.println((ret)? "true" : "false");
+    size_t certSize = cert.size();
+    client_cert = (char *)malloc(certSize);
+    if (certSize != cert.readBytes(client_cert, certSize)) {
+      Serial.println("Loading client cert failed");
+    } else {
+      Serial.println("Loaded client cert"); 
+    }
     cert.close();
   }
+  
+  //Set the cert(s) in the WiFi client
+  BearSSL::X509List rootCert(ca_cert);
+  wifiClient.setTrustAnchors(&rootCert);
+  BearSSL::X509List clientCert(client_cert);
+  BearSSL::PrivateKey clientKey(client_key);
+  wifiClient.setClientRSACert(&clientCert, &clientKey); 
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
@@ -260,15 +316,13 @@ void setup() {
    while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
 //    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
-      if (wifiClient.verifyCertChain(MQTT_HOST)) {
-        Serial.println("certificate matches");
-      } else {
-        // ignore for now - but usually don't want to proceed if a valid cert not presented!
-        Serial.println("certificate doesn't match");
-      }
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
+      Serial.print("last SSL Error = ");
+      Serial.print(wifiClient.getLastSSLError(msg, 50));
+      Serial.print(" : ");
+      Serial.println(msg);
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }
@@ -283,12 +337,15 @@ void loop() {
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
 //    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
       Serial.println("MQTT Connected");
-// Should verify the certificates here - like in the startup function
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
-      Serial.println("MQTT Failed to connect!");
-      delay(5000);
+      Serial.print("last SSL Error = ");
+      Serial.print(wifiClient.getLastSSLError(msg, 50));
+      Serial.print(" : ");
+      Serial.println(msg);
+      Serial.println("MQTT Failed to connect! ... retrying");
+      delay(500);
     }
   }
   h = dht.readHumidity();

@@ -20,13 +20,16 @@ This Lab will show you how to use the Arduino IDE with the ESP8266 plugin to cre
 Let's start with a simple application to display information about the flash memory.  Start by setting up your Arduino IDE to the correct settings for the board.  Using the *Tools* menu, ensure the following settings are set:
 
 - Board : **NodeMCU 1.0 (ESP-12E Module)**
+- Upload Speed : **115200**
+- CPU Frequency : **160 MHz**
 - Flash Size : **4M (1M SPIFFS)**
 - Debug Port : **Disabled**
 - Debug Level : **None**
-- IwIP Variant : **v2 Lower Memory**
-- CPU Frequency : **160 MHz**
-- Upload Speed : **115200**
+- IwIP Variant : **v2 Higher Bandwidth**
+- vTables: **Flash**
+- Exceptions: **Disabled**
 - Erase Flash : **Only Sketch**
+- SSL Support : **All SSL ciphers (most compatible)**
 - Port : *Connect the ESP8266 to your laptop using a MicroUSB cable and then select your port, depending on OS*
 
 ### Step 2 - Loading an example sketch

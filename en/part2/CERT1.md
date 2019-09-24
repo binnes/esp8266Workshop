@@ -189,12 +189,6 @@ Make the following code changes:
   // Connect to MQTT - IBM Watson IoT Platform
   while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
-      if (wifiClient.verifyCertChain(MQTT_HOST)) {
-        Serial.println("certificate matches");
-      } else {
-        // ignore for now - but usually don't want to proceed if a valid cert not presented!
-        Serial.println("certificate doesn't match");
-      }
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
@@ -396,8 +390,7 @@ void loop() {
     // Attempt to connect
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
-// Should verify the certificates here - like in the startup function
-      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
+     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
     } else {
       Serial.print("last SSL Error = ");

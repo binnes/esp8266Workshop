@@ -30,6 +30,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 </p>
 
 - Turn to the *Set ESP8266 Interval* flow tab.
+- Fix the configuration of the **mqtt in** node
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
 ![Node-RED Dashboard Form flow screenshot](screenshots/NRD-ReportingIntervalForm-flow.png)
@@ -53,16 +54,17 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 - The Dashboard **Form** node queries the user for a new interval value.
 - The result is passed in a ```msg.payload.Seconds``` JSON Object to a **Switch** node which tests if the number entered is equal to or greater than Zero.
 - The ```msg.payload``` is reformatted in a **Change** node using the JSONata Expression editor into a JSON Object ```{"Interval":msg.payload.Seconds}```
-- The resulting JSON Object is passed to an **IBM IoT out** node.
+- The resulting JSON Object is passed to an **mqtt out** node.
+- The topic configured in the **mqtt out** node specifies the device to receive the command.  In many circumstances it is not alwa
 
-### Step 4 - Send MQTT Commands using IBM IoT Node
+### Step 4 - Send MQTT Commands using the **MQTT Out** Node
 
-- Double-click on the IBM IoT node (4). An **Edit ibmiot out node** sidebar will open.
-- The **IBM IoT out** node is configured to send a **Device Command** (5) to your ESP8266 Device Id.
-- The **Command Type** will be named *interval* (6).
+- Double-click on the IBM IoT node (4). An **Edit mqtt out node** sidebar will open.
+- The **mqtt out** node is configured to send a **Device Command** (5) to your ESP8266 Device Id by using the appropriate topic.  The target device is identified as part of the topic
+- The **Command Type** will be named *interval* and is also set in the topic
 - Press the red Done button.
 
-![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-iotnode.png)
+![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-mqttnode.png)
 
 ### Step 5 - Reprogram the ESP8266 to subscribe to MQTT Commands
 

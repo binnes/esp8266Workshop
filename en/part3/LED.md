@@ -28,15 +28,17 @@ This section will build a Node-RED flow where you can change the LED color and t
   <strong>Get the Code: <a href="flows/NR-SetLED-Threshold.json">Node-RED Set LED Threshold Flow</strong></a>
 </p>
 
+- Fix the **mqtt in** and **mqtt out** node configuration
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
 ![Node-RED Set LED flow screenshot](screenshots/Node-RED-SetLED-flow.png)
 
 ### Step 2 - Node-RED Set LED flow
 
-- The Node-RED flow receives the DHT environmental sensor data from the IBM IoT in node.
+- The Node-RED flow receives the DHT environmental sensor data from the **mqtt in** node.
 - A **Switch** node checks the temperature and depending on the value, chooses the Threshold color.
 - Several **Change** nodes set the RGB color values.
+- A **Change** node sets the topic value.  This is generated from the incoming topic using [JSONata](http://jsonata.org)
 - The RGB values are sent using a MQTT *display* device command to the device.
 
 ### Step 3 - Temperature Threshold
@@ -44,18 +46,22 @@ This section will build a Node-RED flow where you can change the LED color and t
 - Double-click on the Switch node. An **Edit switch node** sidebar will open.
 - The **Switch** node checks the temperature and depending on the value, chooses the Threshold color.
 
-![Node-RED Dashboard Form flow node](screenshots/Node-RED-SetLED-Switchnode.png)
+![Node-RED Set LED switch node](screenshots/Node-RED-SetLED-Switchnode.png)
 
 - Press the Cancel button when you have finished reviewing the switch node.
 
-### Step 4 - Send MQTT Commands using IBM IoT Node
+### Step 4 - Send MQTT Commands using **mqtt out** Node
 
-- Double-click on the IBM IoT node. An **Edit ibmiot out node** sidebar will open.
-- The **IBM IoT out** node is configured to send a **Device Command** to your Device device Id.
+- Double-click on the **mqtt out** node. An **Edit mqtt out node** sidebar will open.
+- The **mqtt out** node has no topic configured as it is sent in with the incoming message.
+  ![Node-RED Set LED mqtt out node](screenshots/Node-RED-SetLED-mqtt-node.png)
+- Press the red Done button to close the **mqtt out** sidebar.
+- Double-click the set msg.topic change node to open the **Edit change node** sidebar
+- click the **...** after the to input box to open the JSONata editor
+- See how the topic is created by extracting the device type and device id from the incoming topic
 - The **Command Type** will be named *display*.
-- Press the red Done button.
-
-![Node-RED Dashboard Form flow node](screenshots/Node-RED-SetLED-IoTnode.png)
+  ![Node-RED Set LED JSONata](screenshots/Node-RED-SetLED-JSONata.png)
+- Press the red Done button and then the red Done button again to close the side bars.
 
 ### Step 5 - Inspect ESP8266 program which handles Display Device Commands
 

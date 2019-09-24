@@ -1,37 +1,18 @@
 [
     {
-        "id": "7c88d57a.53943c",
+        "id": "e5a09c23.5c058",
         "type": "tab",
         "label": "Set ESP8266 Interval",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "ccdc2055.bb79e8",
-        "type": "ibmiot out",
-        "z": "7c88d57a.53943c",
-        "authentication": "boundService",
-        "apiKey": "",
-        "outputType": "cmd",
-        "deviceId": "dev01",
-        "deviceType": "ESP8266",
-        "eventCommandType": "interval",
-        "format": "json",
-        "data": "{}",
-        "qos": 0,
-        "name": "IBM IoT",
-        "service": "registered",
-        "x": 630,
-        "y": 150,
-        "wires": []
-    },
-    {
-        "id": "504c80a6.cf59c",
+        "id": "dad5abe9.11687",
         "type": "ui_form",
-        "z": "7c88d57a.53943c",
+        "z": "e5a09c23.5c058",
         "name": "Dashboard Form",
         "label": "",
-        "group": "9ad3da6a.01c6c8",
+        "group": "e389f013.59067",
         "order": 0,
         "width": "10",
         "height": "6",
@@ -54,14 +35,14 @@
         "y": 120,
         "wires": [
             [
-                "5b2e97c6.026e5"
+                "3e299fcc.05928"
             ]
         ]
     },
     {
-        "id": "5b2e97c6.026e5",
+        "id": "3e299fcc.05928",
         "type": "switch",
-        "z": "7c88d57a.53943c",
+        "z": "e5a09c23.5c058",
         "name": "Secs >= 0",
         "property": "payload.Seconds",
         "propertyType": "msg",
@@ -79,14 +60,14 @@
         "y": 120,
         "wires": [
             [
-                "7ccccec9.5f6968"
+                "68d48aee.c0d33c"
             ]
         ]
     },
     {
-        "id": "7ccccec9.5f6968",
+        "id": "68d48aee.c0d33c",
         "type": "change",
-        "z": "7c88d57a.53943c",
+        "z": "e5a09c23.5c058",
         "name": "",
         "rules": [
             {
@@ -106,15 +87,15 @@
         "y": 120,
         "wires": [
             [
-                "8c278d24.76d9f",
-                "ccdc2055.bb79e8"
+                "4ff2f972.a81858",
+                "8d9d9f1b.1c62b8"
             ]
         ]
     },
     {
-        "id": "8c278d24.76d9f",
+        "id": "4ff2f972.a81858",
         "type": "debug",
-        "z": "7c88d57a.53943c",
+        "z": "e5a09c23.5c058",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -126,21 +107,74 @@
         "wires": []
     },
     {
-        "id": "9ad3da6a.01c6c8",
+        "id": "8d9d9f1b.1c62b8",
+        "type": "mqtt out",
+        "z": "e5a09c23.5c058",
+        "name": "",
+        "topic": "iot-2/type/ESP8266/id/dev01/cmd/interval/fmt/json",
+        "qos": "",
+        "retain": "",
+        "broker": "285b33eb.753ec4",
+        "x": 750,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e389f013.59067",
         "type": "ui_group",
         "z": "",
         "name": "Change ESP8266 Reporting Interval",
-        "tab": "c3370009.3c597",
+        "tab": "ba499216.0fd8e",
         "disp": true,
         "width": "10",
         "collapse": false
     },
     {
-        "id": "c3370009.3c597",
+        "id": "285b33eb.753ec4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "rvrsig.messaging.internetofthings.ibmcloud.com",
+        "port": "8883",
+        "tls": "48d2bad.fe42944",
+        "clientid": "a:rvrsig:bootcamp",
+        "usetls": true,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
+    },
+    {
+        "id": "ba499216.0fd8e",
         "type": "ui_tab",
         "z": "",
         "name": "ESP8266 Interval",
         "icon": "dashboard",
         "order": 4
+    },
+    {
+        "id": "48d2bad.fe42944",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "rootCA_certificate.pem",
+        "servername": "rvrsig.messaging.internetofthings.ibmcloud.com",
+        "verifyservercert": true
     }
 ]

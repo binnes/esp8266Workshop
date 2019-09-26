@@ -25,11 +25,11 @@ Let's start with a simple application to display information about the flash mem
 - Flash Size : **4M (1M SPIFFS)**
 - Debug Port : **Disabled**
 - Debug Level : **None**
-- IwIP Variant : **v2 Higher Bandwidth**
+- IwIP Variant : **v2 Lower Memory**
 - vTables: **Flash**
 - Exceptions: **Disabled**
 - Erase Flash : **Only Sketch**
-- SSL Support : **All SSL ciphers (most compatible)**
+- SSL Support : **Basic SSL ciphers (lower ROM use)**
 - Port : *Connect the ESP8266 to your laptop using a MicroUSB cable and then select your port, depending on OS*
 
 ### Step 2 - Loading an example sketch

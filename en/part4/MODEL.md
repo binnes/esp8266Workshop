@@ -131,9 +131,9 @@ void callback(char* topic, byte* payload, unsigned int length);
 BearSSL::WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
-char *ca_cert;
-char *client_cert;
-char *client_key;
+BearSSL::X509List *rootCert;
+BearSSL::X509List *clientCert;
+BearSSL::PrivateKey *clientKey;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -193,6 +193,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 
 void setup() {
+  char *ca_cert = nullptr;
+  char *client_cert = nullptr;
+  char *client_key = nullptr;
+  
   // Start serial console
   Serial.begin(115200);
   Serial.setTimeout(2000);
@@ -220,13 +224,16 @@ void setup() {
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
-    size_t certSize = ca.size(); 
+    size_t certSize = ca.size();
     ca_cert = (char *)malloc(certSize);
     if (certSize != ca.readBytes(ca_cert, certSize)) {
       Serial.println("Loading CA cert failed");
     } else {
-      Serial.println("Loaded CA cert"); 
+      Serial.println("Loaded CA cert");
+      rootCert = new BearSSL::X509List(ca_cert);
+      wifiClient.setTrustAnchors(rootCert);
     }
+    free(ca_cert);
     ca.close();
   }
   
@@ -239,8 +246,10 @@ void setup() {
     if (keySize != key.readBytes(client_key, keySize)) {
       Serial.println("Loading key failed");
     } else {
-      Serial.println("Loaded key"); 
+      Serial.println("Loaded key");
+      clientKey = new BearSSL::PrivateKey(client_key);
     }
+    free(client_key);
     key.close();
   }
   
@@ -253,17 +262,14 @@ void setup() {
     if (certSize != cert.readBytes(client_cert, certSize)) {
       Serial.println("Loading client cert failed");
     } else {
-      Serial.println("Loaded client cert"); 
+      Serial.println("Loaded client cert");
+      clientCert = new BearSSL::X509List(client_cert);
     }
+    free(client_cert);
     cert.close();
   }
   
-  //Set the cert(s) in the WiFi client
-  BearSSL::X509List rootCert(ca_cert);
-  wifiClient.setTrustAnchors(&rootCert);
-  BearSSL::X509List clientCert(client_cert);
-  BearSSL::PrivateKey clientKey(client_key);
-  wifiClient.setClientRSACert(&clientCert, &clientKey);
+  wifiClient.setClientRSACert(clientCert, clientKey);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "1.pool.ntp.org", "0.pool.ntp.org");

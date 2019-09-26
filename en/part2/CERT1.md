@@ -102,7 +102,7 @@ Your can test the server certificate by using openssl:
 openssl s_client -CAfile <CA certificate pem file> -showcerts -state  -servername <org ID>.messaging.internetofthings.ibmcloud.com -connect <org ID>.messaging.internetofthings.ibmcloud.com:8883
 ```
 
-replace <CA certificate pem file> with the name of the CA root certificate and <org ID> with the 6 character org ID for your instance of the IOT Platform.
+replace `<CA certificate pem file>` with the name of the CA root certificate and `<org ID>` with the 6 character org ID for your instance of the IOT Platform.
 
 ### Step 5 - Adding the root CA certificate to the ESP8266
 
@@ -142,13 +142,15 @@ Make the following code changes:
 - Change the MQTT_PORT to use the secure port 8883 : `#define MQTT_PORT 8883`
 - Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.pem"`
 - Change the wifiClient to use the secure version : `BearSSL::WiFiClientSecure wifiClient;`
-- Add a new variable definition below the mqtt variable definition : `char *ca_cert;`
+- Add a new variable definition below the mqtt variable definition : `BearSSL::X509List *rootCert;`
 - Add #define to set timezone offset : `#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)`
 - Add #define to set day light saving offset : `#define TZ_DST    60  //Minutes timezone offset for Daylight saving`
 
 - Modify the MQTT connection code in the setup() function to establish a secure connection:
 
 ```C++
+  char *ca_cert = nullptr;
+  
   // Get certs from file system and load into WiFiSecure client
   SPIFFS.begin();
   File ca = SPIFFS.open(CA_CERT_FILE, "r");
@@ -161,13 +163,12 @@ Make the following code changes:
       Serial.println("Loading CA cert failed");
     } else {
       Serial.println("Loaded CA cert");
+      rootCert = new BearSSL::X509List(ca_cert);
+      wifiClient.setTrustAnchors(rootCert);
     }
+    free(ca_cert);
     ca.close();
   }
-
-  //Set the cert(s) in the WiFi client
-  BearSSL::X509List rootCert(ca_cert);
-  wifiClient.setTrustAnchors(&rootCert);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
@@ -195,7 +196,7 @@ Make the following code changes:
       Serial.print("last SSL Error = ");
       Serial.print(wifiClient.getLastSSLError(msg, 50));
       Serial.print(" : ");
-      Serial.println(msg);      
+      Serial.println(msg);
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }
@@ -283,7 +284,7 @@ void callback(char* topic, byte* payload, unsigned int length);
 WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
-char *ca_cert;
+BearSSL::X509List *rootCert;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -309,6 +310,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 
 void setup() {
+  char *ca_cert = nullptr;
+
  // Start serial console
   Serial.begin(115200);
   Serial.setTimeout(2000);
@@ -342,13 +345,12 @@ void setup() {
       Serial.println("Loading CA cert failed");
     } else {
       Serial.println("Loaded CA cert");
+      rootCert = new BearSSL::X509List(ca_cert);
+      wifiClient.setTrustAnchors(rootCert);
     }
+    free(ca_cert);
     ca.close();
   }
-
-  //Set the cert(s) in the WiFi client
-  BearSSL::X509List rootCert(ca_cert);
-  wifiClient.setTrustAnchors(&rootCert);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "pool.ntp.org", "0.pool.ntp.org");
@@ -376,7 +378,7 @@ void setup() {
       Serial.print("last SSL Error = ");
       Serial.print(wifiClient.getLastSSLError(msg, 50));
       Serial.print(" : ");
-      Serial.println(msg);      
+      Serial.println(msg);
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }
@@ -396,7 +398,7 @@ void loop() {
       Serial.print("last SSL Error = ");
       Serial.print(wifiClient.getLastSSLError(msg, 50));
       Serial.print(" : ");
-      Serial.println(msg);      
+      Serial.println(msg);
       Serial.println("MQTT Failed to connect! ... retrying");
       delay(500);
     }

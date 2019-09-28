@@ -75,7 +75,7 @@ If you have a custom server certificate configured on the IoT platform then you 
 - Click the pencil icon next to the Server property to configure the MQTT server properties - this will open the **mqtt-broker node** sidebar
   - Enter the server name in the Server field (*orgId*.messaging.internetofthings.ibmcloud.com)
   - Enter 8883 as the Port
-  - Enter the Client ID (a:*orgId*:*appId).  The appID can be any unique string
+  - Enter the Client ID (a:*orgId*:*appId*).  The appID can be any unique string
   - Enable secure (SSL/TLS) connection then select the pencil next to the TLS configuration to open the **Edit tls-config node** sidebar
     - Upload the rootCA_certificate.pem file you created in part 2 that is enabled on your server as the CA Certificate
     - Enable Verify server certificate

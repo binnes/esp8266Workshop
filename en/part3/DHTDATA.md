@@ -80,7 +80,7 @@ If you have a custom server certificate configured on the IoT platform then you 
     - Upload the rootCA_certificate.pem file you created in part 2 that is enabled on your server as the CA Certificate
     - Enable Verify server certificate
     - Enter the Server Name (*orgId*.messaging.internetofthings.ibmcloud.com).  This sets the SNI extension on the TLS connection
-    - Select Update to close the **Edit tls-config node ![TLS Config](screenshots/TLSconfig.png)
+    - Select Update to close the **Edit tls-config node** ![TLS Config](screenshots/TLSconfig.png)
   - You have finished on the connection tab ![broker connection](screenshots/mqttBrokerConnection.png)
   - Switch to the Security tab and enter the Username and Password - get these from the application runtime environment variables tab of your IBM Cloud application ![mqtt Broker Security](screenshots/mqttBrokerSecurity.png)
   - press the Update button to return to the **Edit mqtt in node** sidepanel

@@ -281,7 +281,7 @@ DHT dht(DHT_PIN, DHTTYPE);
 
 // MQTT objects
 void callback(char* topic, byte* payload, unsigned int length);
-WiFiClientSecure wifiClient;
+BearSSL::WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
 BearSSL::X509List *rootCert;

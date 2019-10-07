@@ -1,15 +1,15 @@
 [
     {
-        "id": "3f89b781.8355",
+        "id": "f57f32df.2e86d",
         "type": "tab",
         "label": "Store Sensor Data",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "3d1dc1d.df604be",
+        "id": "3f0be2ca.a1cc0e",
         "type": "function",
-        "z": "3f89b781.8355",
+        "z": "f57f32df.2e86d",
         "name": "Format Time Series DB record",
         "func": "msg.payload = {\n        time:     new Date().getTime(),\n        temp:     msg.payload.d.temp,\n        humidity: msg.payload.d.humidity\n    } ;\nreturn msg;",
         "outputs": 1,
@@ -18,15 +18,15 @@
         "y": 100,
         "wires": [
             [
-                "b1eade5a.c9c698",
-                "55dc5505.6f4a44"
+                "a3c1e72f.69eea",
+                "cd51a4a4.837468"
             ]
         ]
     },
     {
-        "id": "b1eade5a.c9c698",
+        "id": "a3c1e72f.69eea",
         "type": "debug",
-        "z": "3f89b781.8355",
+        "z": "f57f32df.2e86d",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -38,9 +38,9 @@
         "wires": []
     },
     {
-        "id": "55dc5505.6f4a44",
+        "id": "cd51a4a4.837468",
         "type": "cloudant out",
-        "z": "3f89b781.8355",
+        "z": "f57f32df.2e86d",
         "name": "",
         "cloudant": "",
         "database": "historicaldata1",
@@ -52,60 +52,20 @@
         "wires": []
     },
     {
-        "id": "b2b42be8.66018",
+        "id": "826667e0.94458",
         "type": "mqtt in",
-        "z": "3f89b781.8355",
+        "z": "f57f32df.2e86d",
         "name": "",
         "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
         "qos": "2",
         "datatype": "json",
-        "broker": "285b33eb.753ec4",
+        "broker": "",
         "x": 150,
         "y": 100,
         "wires": [
             [
-                "3d1dc1d.df604be"
+                "3f0be2ca.a1cc0e"
             ]
         ]
-    },
-    {
-        "id": "285b33eb.753ec4",
-        "type": "mqtt-broker",
-        "z": "",
-        "name": "",
-        "broker": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "port": "8883",
-        "tls": "48d2bad.fe42944",
-        "clientid": "a:rvrsig:bootcamp",
-        "usetls": true,
-        "compatmode": false,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": ""
-    },
-    {
-        "id": "48d2bad.fe42944",
-        "type": "tls-config",
-        "z": "",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "rootCA_certificate.pem",
-        "servername": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "verifyservercert": true
     }
 ]

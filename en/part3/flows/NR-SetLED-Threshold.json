@@ -1,15 +1,15 @@
 [
     {
-        "id": "1828cc5a.7a1af4",
+        "id": "27aa2877.e08a5",
         "type": "tab",
         "label": "ESP8266 Set LED",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "1072d76.eb253a9",
+        "id": "f6355b73.7c595",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "Set LED Blue",
         "rules": [
             {
@@ -29,14 +29,14 @@
         "y": 60,
         "wires": [
             [
-                "51f4770b.75c2"
+                "a2abedb0.0c5408"
             ]
         ]
     },
     {
-        "id": "b1cfc892.73199",
+        "id": "f8f8ce92.7aa5e",
         "type": "switch",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "property": "payload.d.temp",
         "propertyType": "msg",
@@ -80,26 +80,26 @@
         "y": 140,
         "wires": [
             [
-                "1072d76.eb253a9"
+                "f6355b73.7c595"
             ],
             [
-                "a5f91dfb.5895c8"
+                "fa9c2154.d9c0d8"
             ],
             [
-                "2cd2e4ce.c0da4c"
+                "aacd5412.ae47a"
             ],
             [
-                "144b40fb.7c63f7"
+                "c55ea44f.8ca5e8"
             ],
             [
-                "88c7b050.2519e8"
+                "97882982.e7a308"
             ]
         ]
     },
     {
-        "id": "a5f91dfb.5895c8",
+        "id": "fa9c2154.d9c0d8",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "Set LED Turquoise",
         "rules": [
             {
@@ -119,14 +119,14 @@
         "y": 100,
         "wires": [
             [
-                "51f4770b.75c2"
+                "a2abedb0.0c5408"
             ]
         ]
     },
     {
-        "id": "2cd2e4ce.c0da4c",
+        "id": "aacd5412.ae47a",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "Set LED Green",
         "rules": [
             {
@@ -146,14 +146,14 @@
         "y": 140,
         "wires": [
             [
-                "51f4770b.75c2"
+                "a2abedb0.0c5408"
             ]
         ]
     },
     {
-        "id": "144b40fb.7c63f7",
+        "id": "c55ea44f.8ca5e8",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "Set LED Yellow",
         "rules": [
             {
@@ -173,14 +173,14 @@
         "y": 180,
         "wires": [
             [
-                "51f4770b.75c2"
+                "a2abedb0.0c5408"
             ]
         ]
     },
     {
-        "id": "88c7b050.2519e8",
+        "id": "97882982.e7a308",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "Set LED RED",
         "rules": [
             {
@@ -200,14 +200,14 @@
         "y": 220,
         "wires": [
             [
-                "51f4770b.75c2"
+                "a2abedb0.0c5408"
             ]
         ]
     },
     {
-        "id": "93d51978.42c23",
+        "id": "2d0028fd.b5b618",
         "type": "debug",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -220,9 +220,9 @@
         "wires": []
     },
     {
-        "id": "219c5e10.91a87a",
+        "id": "ff6a7c1b.3c8ea",
         "type": "debug",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -235,40 +235,40 @@
         "wires": []
     },
     {
-        "id": "52c06abd.aa6d6c",
+        "id": "18c7b740.2927f1",
         "type": "mqtt in",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
         "qos": "2",
         "datatype": "json",
-        "broker": "285b33eb.753ec4",
+        "broker": "",
         "x": 190,
         "y": 140,
         "wires": [
             [
-                "b1cfc892.73199",
-                "219c5e10.91a87a"
+                "f8f8ce92.7aa5e",
+                "ff6a7c1b.3c8ea"
             ]
         ]
     },
     {
-        "id": "78f9c60c.e98d2",
+        "id": "1b32dddf.4c5aea",
         "type": "mqtt out",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "topic": "",
         "qos": "",
         "retain": "",
-        "broker": "285b33eb.753ec4",
+        "broker": "",
         "x": 1050,
         "y": 160,
         "wires": []
     },
     {
-        "id": "51f4770b.75c2",
+        "id": "a2abedb0.0c5408",
         "type": "change",
-        "z": "1828cc5a.7a1af4",
+        "z": "27aa2877.e08a5",
         "name": "",
         "rules": [
             {
@@ -288,49 +288,9 @@
         "y": 140,
         "wires": [
             [
-                "93d51978.42c23",
-                "78f9c60c.e98d2"
+                "2d0028fd.b5b618",
+                "1b32dddf.4c5aea"
             ]
         ]
-    },
-    {
-        "id": "285b33eb.753ec4",
-        "type": "mqtt-broker",
-        "z": "",
-        "name": "",
-        "broker": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "port": "8883",
-        "tls": "48d2bad.fe42944",
-        "clientid": "a:rvrsig:bootcamp",
-        "usetls": true,
-        "compatmode": false,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": ""
-    },
-    {
-        "id": "48d2bad.fe42944",
-        "type": "tls-config",
-        "z": "",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "rootCA_certificate.pem",
-        "servername": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "verifyservercert": true
     }
 ]

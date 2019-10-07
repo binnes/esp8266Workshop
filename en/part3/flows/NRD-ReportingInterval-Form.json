@@ -1,18 +1,18 @@
 [
     {
-        "id": "e5a09c23.5c058",
+        "id": "6bad8bb6.70a5d4",
         "type": "tab",
         "label": "Set ESP8266 Interval",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "dad5abe9.11687",
+        "id": "e5ab460d.1ebe28",
         "type": "ui_form",
-        "z": "e5a09c23.5c058",
+        "z": "6bad8bb6.70a5d4",
         "name": "Dashboard Form",
         "label": "",
-        "group": "e389f013.59067",
+        "group": "77bda0c.5155c6",
         "order": 0,
         "width": "10",
         "height": "6",
@@ -35,14 +35,14 @@
         "y": 120,
         "wires": [
             [
-                "3e299fcc.05928"
+                "4a4e49ab.059b8"
             ]
         ]
     },
     {
-        "id": "3e299fcc.05928",
+        "id": "4a4e49ab.059b8",
         "type": "switch",
-        "z": "e5a09c23.5c058",
+        "z": "6bad8bb6.70a5d4",
         "name": "Secs >= 0",
         "property": "payload.Seconds",
         "propertyType": "msg",
@@ -60,14 +60,14 @@
         "y": 120,
         "wires": [
             [
-                "68d48aee.c0d33c"
+                "6cb3e759.d0d3e"
             ]
         ]
     },
     {
-        "id": "68d48aee.c0d33c",
+        "id": "6cb3e759.d0d3e",
         "type": "change",
-        "z": "e5a09c23.5c058",
+        "z": "6bad8bb6.70a5d4",
         "name": "",
         "rules": [
             {
@@ -87,15 +87,15 @@
         "y": 120,
         "wires": [
             [
-                "4ff2f972.a81858",
-                "8d9d9f1b.1c62b8"
+                "ff0e210a.d5634",
+                "df4ffabd.cc7a1"
             ]
         ]
     },
     {
-        "id": "4ff2f972.a81858",
+        "id": "ff0e210a.d5634",
         "type": "debug",
-        "z": "e5a09c23.5c058",
+        "z": "6bad8bb6.70a5d4",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -107,74 +107,34 @@
         "wires": []
     },
     {
-        "id": "8d9d9f1b.1c62b8",
+        "id": "df4ffabd.cc7a1",
         "type": "mqtt out",
-        "z": "e5a09c23.5c058",
+        "z": "6bad8bb6.70a5d4",
         "name": "",
         "topic": "iot-2/type/ESP8266/id/dev01/cmd/interval/fmt/json",
         "qos": "",
         "retain": "",
-        "broker": "285b33eb.753ec4",
+        "broker": "",
         "x": 750,
         "y": 140,
         "wires": []
     },
     {
-        "id": "e389f013.59067",
+        "id": "77bda0c.5155c6",
         "type": "ui_group",
         "z": "",
         "name": "Change ESP8266 Reporting Interval",
-        "tab": "ba499216.0fd8e",
+        "tab": "1a6939e5.65966e",
         "disp": true,
         "width": "10",
         "collapse": false
     },
     {
-        "id": "285b33eb.753ec4",
-        "type": "mqtt-broker",
-        "z": "",
-        "name": "",
-        "broker": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "port": "8883",
-        "tls": "48d2bad.fe42944",
-        "clientid": "a:rvrsig:bootcamp",
-        "usetls": true,
-        "compatmode": false,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": ""
-    },
-    {
-        "id": "ba499216.0fd8e",
+        "id": "1a6939e5.65966e",
         "type": "ui_tab",
         "z": "",
         "name": "ESP8266 Interval",
         "icon": "dashboard",
         "order": 4
-    },
-    {
-        "id": "48d2bad.fe42944",
-        "type": "tls-config",
-        "z": "",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "rootCA_certificate.pem",
-        "servername": "rvrsig.messaging.internetofthings.ibmcloud.com",
-        "verifyservercert": true
     }
 ]

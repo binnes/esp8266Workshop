@@ -26,17 +26,39 @@ The Watson IoT platform does allow you to replace the certificates used for MQTT
 
 The platform [documentation](https://console.bluemix.net/docs/services/IoT/reference/security/set_up_certificates.html#set_up_certificates) provides information about what information must be contained in certificates to work with the platform.
 
-In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files in the [certificates](/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
+In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files and 2 script files in the [certificates](/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
 
 The commands are provided to create text (pem) and binary (der) formats of the keys and certificates, as some device libraries require one or the other format.  In this workshop we will only use the text versions of the certificates and keys.
 
-### Step 1 - Generating a root Certificate Authority Key and Certificate
+### Step 1 - Generating the Certificates
 
-You will start by generating a root CA key and certificate.  This will then be used to sign a server certificate.
+To simplify the creation of the certificates use the provided script files.  You need to modify the top section of the file (.bat file if you are working in a Windows command window, .sh file if you are working on MacOS or in a Linux terminal window):
+
+- **OPENSSL_BIN** - needs to contain the openssl command.  The provided value should work for default installs.
+- **COUNTRY_CODE** - is the country code where you are (for information purposes in cert - can leave at GB or you can find a list of valid ISO alpha-2 country codes [here](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes))
+- **COUNTY_STATE** - is the county, state or district where you are (for information purposes in cert - can leave at DOR, which is for Dorset, and English county)
+- **TOWN** - is the city, town or village where you are (for information purposes in cert - can leave at Bournemouth)
+- **IOT_ORG** - MUST be the 6 character org id of your instance of the Watson IoT platform
+- **DEVICE_TYPE** - is the device type for your device, defined in the IoT platform.  **ESP8266** is the default value you were recommended to use in the workshop instructions
+- DEVICE_ID - us the device id for your device, defined in the IoT platform.  **dev01** is the default value you were recommended to use in the workshop instructions.
+
+Do not make any modifications below the comment in the script file.
+
+Once you have saved your changes you can run the script to generate all the certificates:
+
+- Linux, MacOS:  
+    `chmod +x makeCertificates.sh`  
+    `. ./makeCertificates.sh`
+- Windows:  
+    `makeCertificates.bat`
+
+### Step 1a - INFORMATION ONLY
+
+The script starts by generating a root CA key and certificate.  This will then be used to sign a server certificate.
 
 In a command windows enter the following commands, you need to replace some values, so do not just copy and paste the commands as shown, or your certificates will not work!
 
-*Note for Windows users: If you opted for the openssl windows binary install and didn't add the bin directory to your path, then you will need to use the full path to the openssl binary e.g. `c:\OpenSSL-Win64\bin\openssl` in the commands below.  Also you do not have access to the xxd command, so cannot run the xxd commands shown, but the generated header file is not needed for this workshop.*
+The commands run by the script are:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out rootCA_key.pem 2048
@@ -50,7 +72,7 @@ xxd -i rootCA_certificate.der rootCA_certificate.der.h
 
 replacing:
 
-- C=GB : GB is an ISO alpha-2 country code , so use your own country (CA=Canada, US=USA, .....).  You can find a list of valid ISO alpha-2 country codes [here](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
+- C=GB : GB is an ISO alpha-2 country code
 - ST=DOR : DOR is an English county, replace with appropriate state/county/region
 - L=Bournemouth : Bournemouth is an English town, replace with appropriate location
 - O=z53u40 : z53u40 is the Organisation ID for my IoT Platform
@@ -58,23 +80,19 @@ replacing:
 - CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform
 - pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.
 
-*Note: If you get an error similar to ```Can't load /home/xxx/.rnd into RNG```, you can ignore it.  It just indicates that this is the first time you have used the random number generator.*
-
 This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.
 
 ### Step 2 - Uploading the root CA Certificate to the IoT Platform
 
 You need to load the root CA certificate into the IoT platform using the console.  In the settings section goto to CA Certificates in the Security section.  Select to **Add certificate** then select the rootCA_certificate.pem file you just generated to upload to the platform, then press **Save**.
 
-### Step 3 - Generating a Server key and certificate
+### Step 3 - INFORMATION ONLY - Generating a Server key and certificate
 
-Now you have a Root Certificate Authority key and certificate, they can be used to sign other certificates that can be verified using the root CA certificate.
+After generation the Root Certificate Authority key and certificate, the script generates the key and certificate for the MQTT server.  It does this by generating a key, then creating a certificate request file.  The x509 takes the certificate request and the CA root certificate and key then generates the MQTT server certificate, which is signed by the CA root certificate.
 
-You need to edit file [srvext.cfg](/certificates/srvext.cfg), which you should have retrieved from the certificates folder in this git repo.  You need to change the **subjectAltName** entry to match the DNS entry of your instance of the Watson IoT platform, so change the host part of the URL to your Organisation Id:
+The MQTT server certificate must includes the DNS name of the server.  This is used as part of the verification process at connection time, to ensure that the client is talking to the intended server.  The script generates the **srvext_custom.cfg** file with the correct DNS address for your instance of the Watson IoT platform.
 
-`subjectAltName = DNS:z53u40.messaging.internetofthings.ibmcloud.com`
-
-To generate a certificate for the IoT platform to use run the following commands:
+To generate a certificate for the IoT platform the script runs the following commands:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem 2048

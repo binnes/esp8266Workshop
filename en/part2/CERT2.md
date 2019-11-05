@@ -14,9 +14,9 @@ In this lab you will extend the application by enabling client side certificates
 - Modify the application to use the client certificates
 - Configure the IoT platform connection policy to require tokens and/or certificates
 
-### Step 1 - Generating the key and certificate for a device
+### Step 1 - INFORMATION ONLY - Generating the key and certificate for a device
 
-The openssl tool must be used to generate the key and certificate, as in the previous lab.  You need to work in the same directory as you did in the previous lab, as the commands below need access to the rootCA_certificate.pem file.  If you altered the root CA key password, then remember to change the value in the commands shown below:
+The script file you ran in the previous section has already generated the client certificates for you by running the commands shown below:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem 2048
@@ -31,6 +31,8 @@ openssl rsa -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_
 
 openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
 ```
+
+You will notice that the client certificate contains the client ID in the CN property of the certificate subject field.  This is how the certificate identifies the client to the server.  The Watson IoT platform requires the Client ID to be in the form of d:[*device type*]:[*device ID*].
 
 ### Step 2 - Upload the certificate and key to the ESP8266 device
 

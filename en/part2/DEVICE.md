@@ -21,11 +21,9 @@ You need to decide how you want to group devices, by function, by hardware type,
 
 ### Step 1 - Launch the Watson IoT Platform console
 
-In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Resource list*, then expand the Services section (ensure you select **services** NOT **Cloud Foundry Services**) and select your Internet of Things Platform service.  This will take you to the IoT Platform service screen.  Ensure the Manage section is active then press the **Launch** button to open IoT platform console.
+In the IBM Cloud navigate to your dashboard using the top menu *≡* -> *Resource list*, then expand the Services section (ensure you select **services** NOT **Cloud Foundry Services**) and select your Internet of Things Platform service.  This will take you to the IoT Platform service screen.  Ensure the Manage section is active then press the **Launch** button to open IoT platform console.  ![Launch IoT console](../images/launchIoTConsole.png)  
 
-![Launch IoT console](../images/launchIoTConsole.png)
-
-### Step 2 - Add a new device type for ESP8266 devices
+### Step 2 - Add a new device type for ESP8266 devices
 
 Navigate into the Devices section of the console and ensure you are in the **Browse** section.  Press the **+ Add Device** button the enter the following:
 

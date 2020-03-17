@@ -26,21 +26,23 @@ Before starting these steps it is assumed you have completed the steps in the [p
 
 [Login](https://cloud.ibm.com) to your cloud account.
 
-If you haven't previously used any of the locations you will need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  Click to **Add a space** then select the region and provide a name for the space.
+If you haven't previously used any of the Cloud Foundry locations you will need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  Click to **Add a space** then select the region and provide a name for the space.
 
 If you are working in a lite account you are restricted to a single Cloud Foundry space and are unable to create additional spaces in different regions unless you upgrade your account.
 
+Lite accounts have resource restrictions, so to be able to deploy the starter application you may need to delete any resources already deployed.
+
 ### Step 2 - Deploy a Starter Application
 
-- 0pen up the Catalog using the top menu, then select **Web and Applications** from the left menu
+- open up the Catalog using the top menu, then select **Web and Applications** from the left menu
 - select the **Software** tab
 - select the **Node-RED App**
 
 ![Catalog](../images/catalog.png)
 
 - in the screen presented press the **Create app** button
-- In the Create app screen optionally enter an App name (or you can simple accept the name provided) and select a region to deploy the Cloudant NoSQL database to - ideally this should be the same region you have your Cloud Foundry space in.
-- Press the **Create** button to create the App definition
+- in the Create app screen optionally enter an App name (or you can simple accept the name provided) and select a region to deploy the Cloudant NoSQL database to - ideally this should be the same region you have your Cloud Foundry space in.
+- press the **Create** button to create the App definition
 
 ![Create App](../images/createApp.png)
 

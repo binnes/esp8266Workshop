@@ -22,7 +22,7 @@ Node.js application that provides a visual programming editor that makes it easy
 
 ### Step 1 - Node-RED Visual Programming
 
-Recall that in Part 1, you created a IoT Starter Application. Once the Green **Running** icon appears, click the **View App URL** button (1)
+Recall that in Part 1, you created a IoT Starter Application. Once the application is running, click the **View App URL** button (1)
 ![IBM Cloud screenshot](screenshots/ESP8266-IoTStarter.png)
 
 ### Step 2 - How to secure your Node-RED Editor in IBM Cloud

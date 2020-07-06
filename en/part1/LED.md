@@ -23,7 +23,7 @@ You need to be careful to ensure that any library you choose supports the hardwa
 
 ### Step 1 - Adding a Library to the Arduino IDE
 
-Looking at the list, there is a compatible NeoPixel library available for the neopixel.  To install a library into the Arduino IDE you can use the Library Manager.  From the menu select *Sketch* -> *Include Library* -> *Manage Libraries...* to bring up the Library Manager.  In the search box enter NeoPixel to find libraries matching the search.  You can see there are a number of libraries available, but you want to find the Adafruit NeoPixel by Adafruit, then select the entry and click install to install the library. Once the library in installed click **close** to close the Library Manager.
+Looking at the list, there is a compatible NeoPixel library available for the neopixel.  To install a library into the Arduino IDE you can use the Library Manager.  From the menu select *Sketch* -> *Include Library* -> *Manage Libraries...* to bring up the Library Manager.  In the search box enter NeoPixel to find libraries matching the search.  You can see there are a number of libraries available, but you want to find the **Adafruit NeoPixel by Adafruit**, then select the entry and click install to install the library. Once the library in installed click **close** to close the Library Manager.
 
 ### Step 2 - Connecting the Neopixel to the ESP8266 board
 

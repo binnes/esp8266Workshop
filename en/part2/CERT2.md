@@ -36,7 +36,7 @@ You will notice that the client certificate contains the client ID in the CN pro
 
 ### Step 2 - Upload the certificate and key to the ESP8266 device
 
-You need to add the private key (SecuredDev01_key_nopass.pem) and the certificate (SecuredDev01_crt.pem) to the data folder inside the sketch folder then run the data uploader tool (*Tools* -> *ESP8266 Sketch Data Upload*) to install the certificates on the device filesystem.  The SSL library on the ESP does not provide a mechanism to enter a password for the key, so the version of the key without the password needs to be provided.  Remember to close the Serial Monitor window before running the data upload tool.
+You need to add the private key (SecuredDev01_key_nopass.pem) and the certificate (SecuredDev01_crt.pem) to the data folder inside the sketch folder then run the data uploader tool (*Tools* -> *ESP8266 LittleFS Data Upload*) to install the certificates on the device filesystem.  The SSL library on the ESP does not provide a mechanism to enter a password for the key, so the version of the key without the password needs to be provided.  Remember to close the Serial Monitor window before running the data upload tool.
 
 ### Step 3 - Modify the application to use the client certificate and key
 
@@ -63,8 +63,8 @@ then update the code within the setup() function to load the additional key and 
   char *client_key = nullptr;
 
   // Get cert(s) from file system
-  SPIFFS.begin();
-  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  LittleFS.begin();
+  File ca = LittleFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
@@ -81,7 +81,7 @@ then update the code within the setup() function to load the additional key and 
     ca.close();
   }
   
-  File key = SPIFFS.open(KEY_FILE, "r");
+  File key = LittleFS.open(KEY_FILE, "r");
   if(!key) {
     Serial.println("Couldn't load key");
   } else {
@@ -97,7 +97,7 @@ then update the code within the setup() function to load the additional key and 
     key.close();
   }
   
-  File cert = SPIFFS.open(CERT_FILE, "r");
+  File cert = LittleFS.open(CERT_FILE, "r");
   if(!cert) {
     Serial.println("Couldn't load cert");
   } else {
@@ -142,7 +142,7 @@ You will also see that you can create Custom Rules in addition to the Default Ru
 The finished application should look like this:
 
 ```C++
-#include <FS.h>
+#include <LittleFS.h>
 #include <ESP8266WiFi.h>
 #include <time.h>
 #include <Adafruit_NeoPixel.h>
@@ -255,8 +255,8 @@ void setup() {
   pixel.begin();
 
   // Get certs from file system and load into WiFiSecure client
-  SPIFFS.begin();
-  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  LittleFS.begin();
+  File ca = LittleFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
@@ -273,7 +273,7 @@ void setup() {
     ca.close();
   }
   
-  File key = SPIFFS.open(KEY_FILE, "r");
+  File key = LittleFS.open(KEY_FILE, "r");
   if(!key) {
     Serial.println("Couldn't load key");
   } else {
@@ -289,7 +289,7 @@ void setup() {
     key.close();
   }
   
-  File cert = SPIFFS.open(CERT_FILE, "r");
+  File cert = LittleFS.open(CERT_FILE, "r");
   if(!cert) {
     Serial.println("Couldn't load cert");
   } else {

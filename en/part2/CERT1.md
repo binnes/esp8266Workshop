@@ -14,7 +14,7 @@ In this Lab you will modify MQTT to use a secure connection.  You will learn:
 - How to generate certificates to enable secure connections using OpenSSL
 - How to add the certificates to the IBM Watson IoT Platform
 - How to add the certificate to the ESP8266 using part of the flash memory as a file system
-- Basic operations of the SPIFFS file system
+- Basic operations of the ESP8266 file system
 
 ## Introduction
 
@@ -124,7 +124,7 @@ replace `<CA certificate pem file>` with the name of the CA root certificate and
 
 ### Step 5 - Adding the root CA certificate to the ESP8266
 
-To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The rootCA_certificate.pem needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.pem file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 Sketch Data Upload*
+To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The rootCA_certificate.pem needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the *sketch* -> *Show sketch folder* in the Arduino menu.  Inside the sketch directory create a new directory called **data** then copy the rootCA_certificate.pem file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select *Tools* -> *ESP8266 LittleFS Data Upload*
 
 ### Step 6 - Adding the root CA certificate to your OS or browser
 
@@ -141,7 +141,7 @@ To add the root CA certificate to OS:
   - Fedora: Copy the rootCA_certificate.pem file to **/etc/pki/ca-trust/source/anchors/** (using sudo mv or other root access) then run command `update-ca-trust extract` with admin privileges.
   - Ubuntu: Copy the rootCA_certificate.crt to **/usr/local/share/ca-certificates** using admin privileges then run `update-ca-certificates`.
 - **MacOS**: Double click the certificate in Finder to open it in the Keychain Access app.  It will automatically show as not trusted.  Double click it to open up the certificate details window and then expand the **Trust** section.  Change the SSL value to **Always Trust**.  Close the certificate window (you will be prompted for your account password to verify the change).
-- **Windows**: Launch the Microsoft Management Console (enter mmc in the start menu), then select *File* ->* Add/Remove Snap-in...*. Highlight Certificates and press **Add**.  Select to manage certificates for **Computer account**, **Local computer** then press **Finish** then **OK**.  Back in the mmc, select the Certificates item in the left column then right-click the **Trusted Root Certificate Authorities** item.  From the popup menu select *All Tasks* -> *Import...* to launch the Certificate Import Wizard.  Select the rootCA_certificate pem or der file (may need to alter filter to show all files) and place it in the **Trusted Root Certificate Authorities** store.
+- **Windows**: Launch the Microsoft Management Console (enter mmc in the start menu), then select *File* ->*Add/Remove Snap-in...*. Highlight Certificates and press **Add**.  Select to manage certificates for **Computer account**, **Local computer** then press **Finish** then **OK**.  Back in the mmc, select the Certificates item in the left column then right-click the **Trusted Root Certificate Authorities** item.  From the popup menu select *All Tasks* -> *Import...* to launch the Certificate Import Wizard.  Select the rootCA_certificate pem or der file (may need to alter filter to show all files) and place it in the **Trusted Root Certificate Authorities** store.
 
 **Note** : *If you are adding a certificate to a browser certificate manager, please ensure you are adding a Certificate Authority certificate.  This should allow you to import a .pem or .der file.  If it is asking for a .p12 file then you are trying to import a certificate and key, so are in the wrong section of the certificate manager.  You want to be adding a **Certificate Authority** certificate or certificate chain.*
 
@@ -155,7 +155,7 @@ You have already uploaded the CA certificate to the ESP8266, so now the code nee
 
 Make the following code changes:
 
-- Add an include at the top of the file to access the file system : `#include <FS.h>`
+- Add an include at the top of the file to access the file system : `#include <LittleFS.h>`
 - Add an include after the **ESP8266WiFi.h** include to add time : `#include <time.h>`
 - Change the MQTT_PORT to use the secure port 8883 : `#define MQTT_PORT 8883`
 - Add a new #define to name the CA certificate : `#define CA_CERT_FILE "/rootCA_certificate.pem"`
@@ -170,8 +170,8 @@ Make the following code changes:
   char *ca_cert = nullptr;
   
   // Get certs from file system and load into WiFiSecure client
-  SPIFFS.begin();
-  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  LittleFS.begin();
+  File ca = LittleFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
@@ -225,13 +225,13 @@ Save, compile and upload the code and now you should have a secure connection.  
 
 You should now go into the IoT Platform settings section and update the connection security policy from **TLS Optional** to **TLS with Token Authentication** then **Save** the change.
 
-### Step 8 - How the SPIFFS file system works
+### Step 8 - How the LittleFS file system works
 
-The ESP8266 allows some of the on board or connected flash memory to be used as a file system.  The Arduino IDE plugin allows you to customise the size of the filesystem (*Tools* -> *Flash Size* allows you to specify 1MB or 3MB for the file system when a NodeMCU board is the target device).  The SPIFFS filesystem is a very simple file system, which does not support directories.  It is a flat list of files, however, the filenames can include the '/' character to give a sense of directory structure.  Filenames should not be more than 31 characters.
+The ESP8266 allows some of the on board or connected flash memory to be used as a file system.  The Arduino IDE plugin allows you to customise the size of the filesystem (*Tools* -> *Flash Size* allows you to specify 1MB or 3MB for the file system when a NodeMCU board is the target device).  The LittleFS filesystem is a very simple file system.  Filenames should not be more than 31 characters.
 
-The data upload tool allows the content data directory in the sketch folder to be converted to a SPIFFS filesystem and uploaded to the device, where the content can then be access from the application.
+The data upload tool allows the content data directory in the sketch folder to be converted to a LittleFS filesystem and uploaded to the device, where the content can then be access from the application.
 
-The SPIFFS filesystem is included in a sketch by including the appropriate header: `#include <FS.h>` then it is initialised with a **SPIFFS.begin()** function call.
+The LittleFS filesystem is included in a sketch by including the appropriate header: `#include <LittleFS.h>` then it is initialised with a **LittleFS.begin()** function call.
 
 The application code opens up the certificate files using the **open()** function and specifying to only allow read operations.  The **WiFiClientSecure** can load the certificates from the open File handles using the **load()** functions.
 
@@ -244,7 +244,7 @@ Further details and the full API can be seen in the [documentation](https://ardu
 The finished application should look like this:
 
 ```C++
-#include <FS.h>
+#include <LittleFS.h>
 #include <ESP8266WiFi.h>
 #include <time.h>
 #include <Adafruit_NeoPixel.h>
@@ -352,8 +352,8 @@ void setup() {
   pixel.begin();
 
   // Get certs from file system and load into WiFiSecure client
-  SPIFFS.begin();
-  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  LittleFS.begin();
+  File ca = LittleFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {

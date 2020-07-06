@@ -65,7 +65,7 @@ status["class"] = modelPrediction < 0.5 ? 0 : 1;
 The completed ESP8266 application should now look like:
 
 ```C
-#include <FS.h>
+#include <LittleFS.h>
 #include <ESP8266WiFi.h>
 #include <time.h>
 #include <Adafruit_NeoPixel.h>
@@ -219,8 +219,8 @@ void setup() {
   pixel.begin();
 
   // Get cert(s) from file system
-  SPIFFS.begin();
-  File ca = SPIFFS.open(CA_CERT_FILE, "r");
+  LittleFS.begin();
+  File ca = LittleFS.open(CA_CERT_FILE, "r");
   if(!ca) {
     Serial.println("Couldn't load CA cert");
   } else {
@@ -237,7 +237,7 @@ void setup() {
     ca.close();
   }
   
-  File key = SPIFFS.open(KEY_FILE, "r");
+  File key = LittleFS.open(KEY_FILE, "r");
   if(!key) {
     Serial.println("Couldn't load key");
   } else {
@@ -253,7 +253,7 @@ void setup() {
     key.close();
   }
   
-  File cert = SPIFFS.open(CERT_FILE, "r");
+  File cert = LittleFS.open(CERT_FILE, "r");
   if(!cert) {
     Serial.println("Couldn't load cert");
   } else {

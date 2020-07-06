@@ -84,7 +84,7 @@ When the driver is installed and the NodeMCU module is connected you can test if
 The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software).  Select the version for your OS then download and install it:
 
 - Linux : Your linux distro may have Arduino available in the software package manager catalog, if not you can manually install it:
-  - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh` 
+  - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh`
   - *Note: you may need to change the version number if you downloaded a version newer than 1.8.7*.  You some Linux distros you may need to add your user to the tty and dialout groups to be able to use the connection to the device.  You can do this using command `sudo usermod -a -G tty,dialout $USER` you will have to log out and log in again to get the added permissions
 - MacOS : simply drag Arduino app into Applications folder after unzipping)
 - Windows : run the downloaded installer application
@@ -105,15 +105,15 @@ Select *Tools* -> *Board:* -> *Board Manager...* from the menu, then enter ESP i
 
 ### Step 4 - Install the filesystem upload tool for ESP8266
 
-The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/esp8266/arduino-esp8266fs-plugin/releases).  You need to create a tools directory within the sketch directory then extract the content there.
+The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin/releases).  You need to create a tools directory within the sketch directory then extract the content there.
 
 ![tools directory](../images/toolsDirectory.png)
 
  (*Note: you can find the sketch directory location from the preferences panel of the Arduino IDE*).  The default location of the sketch directory is:
 
-- Linux - **/home/< user name >/Arduino/tools/ESP8266FS**
-- MacOS - **/Users/< user name >/Documents/Arduino/tools/ESP8266FS**
-- Windows - **C:\Users\< user name >\Documents\Arduino\tools\ESP8266FS**
+- Linux - **/home/< user name >/Arduino/tools/ESP8266LittleFS**
+- MacOS - **/Users/< user name >/Documents/Arduino/tools/ESP8266LittleFS**
+- Windows - **C:\Users\< user name >\Documents\Arduino\tools\ESP8266LittleFS**
 
 #### Step 5 - SSL utility to work with certificates
 

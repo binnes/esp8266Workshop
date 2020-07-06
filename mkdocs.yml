@@ -1,0 +1,45 @@
+site_name: ESP8266 IoT Workshop
+#site_url: https://pages.github.ibm.com/BINNES/workshop/
+#repo_url: https://github.com/binnes/esp8266Workshop
+theme:
+    name: mkdocs
+#    name: readthedocs
+    nav_style: dark
+    shortcuts:
+        help: 191    # ?
+        next: 78     # n
+        previous: 80 # p
+        search: 83   # s
+nav:
+  - Home: index.md
+  - Part 1: 
+    - Intro: part1/README.md
+    - Overview of the Workshop: part1/PREREQ.md
+    - Intro to ESP8266: part1/FIRSTAPP.md
+    - ESP8266 WiFi: part1/WIFI.md
+    - LED Light: part1/LED.md
+    - Sensor: part1/DHT.md
+    - IBM Cloud: part1/IOTCLOUD.md
+  - Part 2: 
+    - Intro: part2/README.md
+    - Device setup on Cloud: part2/DEVICE.md
+    - Creating the ESP8266 Application: part2/APP.md
+    - Intro to MQTT: part2/MQTT.md
+    - IoT Security: part2/CERT1.md
+    - Client Certificates: part2/CERT2.md
+  - Part 3:
+    - Intro: part3/README.md
+    - Node-RED: part3/NODERED.md
+    - Sensor Data: part3/DHTDATA.md
+    - Dashboards: part3/DASHBOARD.md
+    - Database: part3/CLOUDANT.md
+    - Historical Data: part3/HISTORY.md
+    - Reporting interval: part3/INTERVAL.md
+    - Remote LED control: part3/LED.md
+  - Part 4: 
+    - Intro: part4/README.md
+    - Watson Studio: part4/STUDIO.md
+    - Create Training Data: part4/TRAINING.md
+    - Jupyter Notebooks: part4/JUPYTER.md
+    - Run model on device: part4/MODEL.md
+    - Workshop Summary : part4/SUMMARY.md

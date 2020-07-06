@@ -1,0 +1,6 @@
+# action.yml
+name: 'Deploy to GitHub Pages'
+description: 'Publish Markdown docs as GitHub Pages static site'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

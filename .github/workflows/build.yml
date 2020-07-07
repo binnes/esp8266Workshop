@@ -1,0 +1,17 @@
+name: GenerateSite
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  generate:
+    name: 'Run mkdocs gh-deploy'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: generate site
+        uses: ./.github/actions/

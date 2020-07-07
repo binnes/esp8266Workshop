@@ -14,6 +14,10 @@ Workshop attendees will learn about ESP8266 programming, IoT Security, MQTT, IoT
 
 To move through the workshop you can use the top menu to select a specific section or use the **Next ->** button in the top menu to move to then next section as you finish each section.
 
+## Access to workshop material
+
+The source for this workshop is hosted on [GitHub](https://github.com/binnes/esp8266Workshop) and this site is automatically generated from the Markdown in the GitHub repository.
+
 ## Typical agenda for a workshop day
 
 This workshop works well as a face-to-face workshop taking the majority of a day.  A typical agenda can be seen [here](AGENDA.md).

@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 2** - [**Device Registration**](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
-***
-
 # Registering a new device to the Watson IoT Platform
 
 ## Lab Objectives
@@ -39,9 +33,3 @@ You are now being prompted to provide a token.  When developing I recommend choo
 Each time you connect the device the token will need to be presented to the server and once the device is registered there is no way to recover a token, you will need to delete and reregister the device if the token is lost.
 
 Enter a token for your device then press **Next**.  You will see a summary of the device.  Press **Done** to complete the device registration.  You are now shown a device Drilldown page - this is the last chance you get to see the token.  Once you leave this page the token can not be recovered. Write down the Org, Device Type, Device ID and Authentication Token. You might even consider taking a screen shot.
-
-***
-**Part 2** - [**Device Registration**](DEVICE.md) - [Application](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

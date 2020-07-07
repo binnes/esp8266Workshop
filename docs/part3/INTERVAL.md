@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [**Control Interval**](INTERVAL.md) - [Control LED](LED.md)
-***
-
 # Control your Device reporting interval via a Node-RED Dashboard Form
 
 ## Lab Objectives
@@ -25,9 +19,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.
 
-<p align="center">
-  <strong>Get the Code: <a href="flows/NRD-ReportingInterval-Form.json">Node-RED Dashboard Reporting Interval Form Flow</strong></a>
-</p>
+Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](flows/NRD-ReportingInterval-Form.json)
 
 - Turn to the *Set ESP8266 Interval* flow tab.
 - Fix the configuration of the **mqtt in** node
@@ -55,7 +47,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 - The result is passed in a ```msg.payload.Seconds``` JSON Object to a **Switch** node which tests if the number entered is equal to or greater than Zero.
 - The ```msg.payload``` is reformatted in a **Change** node using the JSONata Expression editor into a JSON Object ```{"Interval":msg.payload.Seconds}```
 - The resulting JSON Object is passed to an **mqtt out** node.
-- The topic configured in the **mqtt out** node specifies the device to receive the command.  In many circumstances it is not alwa
+- The topic configured in the **mqtt out** node specifies the device to receive the command.
 
 ### Step 4 - Send MQTT Commands using the **MQTT Out** Node
 
@@ -70,9 +62,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the replacement ESP8266 program.
 
-<p align="center">
-  <strong>Get the Code: <a href="../../IoTWorkshop.ino/IoTWorkshop.ino.ino">IoT Workshop Arduino Program</strong></a>
-</p>
+IoT Workshop Arduino Program : [Get the Code](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/IoTWorkshop.ino/IoTWorkshop.ino.ino)
 
 - Return to the Arduino IDE
 - Record your Watson IoT connection details from the top of your version of the existing IoTWorkshop.ino you created in Part 2.
@@ -90,9 +80,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 - Click on the **SUBMIT** button.
 - The button will trigger the flow to send the new value to the ESP8266 over MQTT.
 
-<p align="center">
-<img height="247" width="417" src="screenshots/NRD-ReportingIntervalForm.png">
-</p>
+![Reporting interval form](screenshots/NRD-ReportingIntervalForm.png)
 
 ### Step 7 - Arduino Serial Monitor
 
@@ -102,9 +90,3 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 - In this screenshot the Reporting Interval was changed from 10 to 5 to 2 and the frequency that the environmental data was sent increased.
 
 ![Arduino Serial Monitor](screenshots/ArduinoSerialMonitor.png)
-
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [**Control Interval**](INTERVAL.md) - [Control LED](LED.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)

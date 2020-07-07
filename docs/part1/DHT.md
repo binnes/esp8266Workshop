@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [**DHT**](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-
 # Reading the DHT Sensor from the ESP8266
 
 The DHT11 or DHT22 sensors add the ability to sense temperature and humidity.  The DHT22 is a more accurate version of the DHT11.
@@ -64,9 +58,3 @@ To add the DHT sensor to your own application you need to do the following:
     - `dht.readTemperature()`
     - `dht.readTemperature(bool isFahrenheit)`
     - `dht.readHumidity()`
-
-***
-*Quick links :*  
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [**DHT**](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

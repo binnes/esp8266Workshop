@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [**Cloud**](IOTCLOUD.md)
-***
-
 # Deploying an application to the IBM Cloud
 
 ## Lab Objectives
@@ -18,15 +12,24 @@ In this lab you will learn how to deploy a starter application to the IBM Cloud.
 
 ## Introduction
 
-Before finishing part 1 you should deploy the starter application as we will be using in Part 2, as this can take a few minutes to deploy and become available.
+Before finishing part 1 you should deploy the Internet of Things Platform on the IBM Cloud as we will be using it in Part 2.
 
 Before starting these steps it is assumed you have completed the steps in the [prerequisite section](PREREQ.md) and have an active IBM Cloud account.
+
+<!-- Allow spaces inside emphasis markers (MD037) -->
+<!-- markdownlint-disable MD037 -->
+## **Internet of Things Platform ** on the IBM Cloud
+<!-- markdownlint-enable MD037 -->
+
+The IBM Watson IoT Platform solution provides a set of IBM Cloud services as a single IBM-managed Software as a Service (SaaS) offering that enables you to collect and analyze IoT data.
+
+In this workshop your ESP8266 device will be sending data to the IBM IoT Platform, so you need to deploy an instance of the IoT Platform service in your cloud account.
 
 ### Step 1 - Accessing the cloud and selecting an appropriate space
 
 [Login](https://cloud.ibm.com) to your cloud account.
 
-If you haven't previously used any of the Cloud Foundry locations you will need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  Click to **Add a space** then select the region and provide a name for the space.
+If you haven't previously used any of the Cloud Foundry locations you may need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  If there are no spaces showing, or you have a paid account and want to work in a new region, then click to **Add a space** then select the region and provide a name for the space.
 
 If you are working in a lite account you are restricted to a single Cloud Foundry space and are unable to create additional spaces in different regions unless you upgrade your account.
 
@@ -85,9 +88,3 @@ On the overview page you should see:
 ![App Overview](../images/appOverview.png)
 
 You now have the cloud application deployed, so you are now ready to move to the [next section](../part2/README.md) of the workshop to setup secured communications between the ESP8266 device and the IBM Cloud IOT service
-
-***
-*Quick links :*  
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [**Cloud**](IOTCLOUD.md)
-***
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

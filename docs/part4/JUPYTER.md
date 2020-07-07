@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
-***
-
 # Run a Jupyter Notebook in Watson Studio
 
 ## Lab Objectives
@@ -44,19 +38,27 @@ When using the lite account on the IBM Cloud there are some restrictions on serv
 - Return to the Watson Studio browser tab and open the **IoT Sensor Analytics** notebook. ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
 
 - Make certain you are in **Edit** mode by clicking on the Pencil icon. ![Watson Studio Edit mode](screenshots/WatsonStudio-Notebook-edit.png)
+
 - Copy the following code into the first cell in the notebook.
+
 ```python
 import pixiedust
 pixiedust.installPackage("org.apache.bahir:spark-sql-cloudant_2.11:0")
+
 ```
+
 - In the second and third cells, we will initialize the Spark session.
+
 ```python
 from pyspark.sql import SparkSession
 ```
+
 and
+
 ```python
 spark = SparkSession.builder.getOrCreate()
 ```
+
 - Update the credentials with the values from your cloudant database credentials (created in **step 1**).  The values are from the host, username and password properties in the credentials:
 
 ```python
@@ -108,6 +110,7 @@ df_cleaned = df \
 df_cleaned.createOrReplaceTempView('df_cleaned')
 df_cleaned.select('temp', 'humidity').distinct().show()
 ```
+
 - Now we will create a new data frame for each training class.  In the next cell enter then run the following:
 
 ```python
@@ -239,9 +242,3 @@ There is a sample solution for this part provided in the [notebooks](notebooks) 
   ![Import solution](screenshots/WatsonStudio-import-solution.png)
 
 Alternatively, you can select to import from URL and set the URL to : [https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/en/part4/notebooks/IoT%20Sensor%20Analytics.ipynb)
-
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [**Notebooks**](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

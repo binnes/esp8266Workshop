@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 1** - [Setup](PREREQ.md) - [**First App**](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-
 # Your first ESP8266 application
 
 ## Lab Objectives
@@ -65,9 +59,3 @@ The Arduino IDE and runtime take care of the work needed to setup the runtime fo
 There is no operating system running under the Arduino application, the code you enter in setup and loop is all that is running on the ESP8266 CPU.
 
 This example sketch initialises the Serial connection in the **setup()** function then retrieves and prints information about the flash memory to the Serial console in the **loop()** function.  At the end of the **loop()** function there is a delay for 5 seconds (5000 milliseconds).  After the delay the **loop()** function ends, but is immediately called again.
-
-***
-*Quick links :*  
-**Part 1** - [Setup](PREREQ.md) - [**First App**](FIRSTAPP.md) - [WIFI](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

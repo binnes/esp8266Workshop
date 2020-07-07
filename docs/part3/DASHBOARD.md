@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [**Plot Data**](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-
 # Node-RED Dashboard Charts - Plot Environmental Sensor Data
 
 ## Lab Objectives
@@ -23,9 +17,7 @@ In this section you will learn about Node-RED Dashboard Charts and then create a
 
 Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button. Finally, click on the red **Deploy** button in the upper right corner.
 
-<p align="center">
-  <strong>Get the Code: <a href="flows/NRD-Charts-DHTSensorData.json">Node-RED Dashboard Charts</strong></a>
-</p>
+Node-RED Dashboard Charts : [Get the Code](flows/NRD-Charts-DHTSensorData.json)
 
 ### Step 2 - Learn about various Node-RED Dashboard Chart types
 
@@ -34,9 +26,7 @@ Open the “Get the Code” github URL listed below, mark or Ctrl-A to select al
  ![Node-RED Chart Intro](screenshots/Node-RED-ChartIntro-flow.png)
 - For illustration, the **Fill Single Chart Array** function node above fills an array of static sample data and sends the data to the **Chart** node to visualize.
 
-<p align="center">
-<img height="296" width="340" src="screenshots/NRD-Charts-Intro-Flow-LineChartArray.png">
-</p>
+![Line chart array](screenshots/NRD-Charts-Intro-Flow-LineChartArray.png)
 
 - The Node-RED flow is not nearly as interesting as the charts that it renders.  To launch the Node-RED Dashboard, in the Node-RED sidebar, turn to the **dashboard** tab and click on the **Launch** button (1) [See two pictures above].
  ![Node-RED Chart Intro](screenshots/Node-RED-ChartIntro-dashboard.png)
@@ -44,7 +34,9 @@ Open the “Get the Code” github URL listed below, mark or Ctrl-A to select al
 ### Step 3 – Generating and Displaying data in Node-RED Dashboards
 
 The next Node-RED flow - **Dashboard Intro** - uses a variety of UI widgets to display data in the Node-RED Dashboard.  There is a Switch node that turns On/Off a random number generator function node.  The simple random numbers are sent to a line Chart node, a Gauge node, a Slider node, a Text node and, if the number exceeds a threshold, will display an alert notification message.
+
  ![Node-RED Dashboard Intro](screenshots/Node-RED-Dashboard-Intro-flow.png)
+
 - Turn to the Node-RED Dashboard browser tab that you launched in Step 2, click on the menu tab (2) in the upper left corner, and select the Introduction tab.
 - On the Introduction dashboard, turn on the **Switch** (3) to start the data visualization.
 - Experiment with / observe the Dashboard controls.
@@ -61,9 +53,7 @@ Now that you have learned about Node-RED Dashboard and Chart types, you are read
  ![NRD ESP8266 DHT chart flow](screenshots/Node-RED-Dashboard-DHT-flow.png)
 - Turn to the Node-RED Dashboard browser tab that you launched in Step 2, click on the tab in the upper left corner, and select the **ESP8266 Workshop** tab.
 
-<p align="center">
-<img height="395" width="282" src="screenshots/NRD-ESP8266-DHT-TempHum-Chart.png">
-</p>
+![Temperature and Humidity chart](screenshots/NRD-ESP8266-DHT-TempHum-Chart.png)
 
 ### Step 5 - Trigger Alerts when Real-Time Sensor Data Exceeds a Threshold Value
 
@@ -79,12 +69,4 @@ Often IoT devices and sensors are deployed so that alerts can be triggered when 
 
 - Return to the Node-RED Dashboard **ESP8266 Workshop** tab and increase the temperature of your DHT sensor above 30C.
 
- <p align="center">
- <img height="395" width="282" src="screenshots/NRD-ESP8266-DHT-TempHum-ChartAlert.png">
- </p>
-
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [**Plot Data**](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
+![Temperature and Humidity chart](screenshots/NRD-ESP8266-DHT-TempHum-ChartAlert.png)

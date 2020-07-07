@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 2** - [Device Registration](DEVICE.md) - [**Application**](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
-***
-
 # Creating the sensing application for the ESP8266
 
 ## Lab Objectives
@@ -173,9 +167,3 @@ JSON format is widely used for APIs and data exchange between systems.  The abov
 The **serializeJson()** function converts the JSON object to a string and writes it into the provided buffer, so it can be used as a c-string.
 
 See the library [documentation](https://arduinojson.org/v6/doc/) for additional functionality.
-
-***
-**Part 2** - [Device Registration](DEVICE.md) - [**Application**](APP.md) - [MQTT](MQTT.md) - [Server Certificate](CERT1.md) - [Client Certificate](CERT2.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [**Part 2**](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [**LED**](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-
 # Controlling the RGB LED from the ESP8266
 
 ## Lab Objectives
@@ -141,9 +135,3 @@ To add the NeoPixel to your own application you need to do the following:
 For any library installed with the Arduino Library Manager you can get to the documentation for the library using the **More info** link in the Library Manager:
 
 ![ModeMCU LED Wiring](../images/LibraryManagerInfo.png)
-
-***
-*Quick links :*  
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [WIFI](WIFI.md) - [**LED**](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

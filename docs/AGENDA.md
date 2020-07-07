@@ -1,7 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](part1/README.md) - [Part 2](part2/README.md) - [Part 3](part3/README.md) - [Part 4](part4/README.md)
-***
-
 # Agenda for Workshop
 
 The workshop will take all day, split into 4 parts.  The timings are shown below:
@@ -19,6 +15,4 @@ The workshop will take all day, split into 4 parts.  The timings are shown below
 | 15:30 | [Part 4](part4/README.md) |
 | 17:00 | Closing remarks            |
 
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](part1/README.md) - [Part 2](part2/README.md) - [Part 3](part3/README.md) - [Part 4](part4/README.md)
+To start the workshop navigate to the [introduction](part1/README.md).

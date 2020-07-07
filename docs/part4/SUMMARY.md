@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md) - [**Summary**](SUMMARY.md)
-***
-
 # Workshop Summary
 
 You have now completed the workshop.  I hope you enjoyed working through the various sections building up to the final solution.
@@ -37,15 +31,10 @@ IBM has created a number of courses on the Coursera learning platform.  These co
   
 There is a Data Science specialisation, which comprises of 3 courses and a capstone project:
 
-- Data Science - [Advanced Data Science with IBM Specialization](https://www.coursera.org/specializations/advanced-data-science-ibm)
-  - [Fundamentals of Scalable Data Science](https://www.coursera.org/learn/ds)
-  - [Advanced Machine Learning and Signal Processing](https://www.coursera.org/learn/advanced-machine-learning-signal-processing)
-  - [Applied AI with DeepLearning](https://www.coursera.org/learn/ai)
+[Advanced Data Science with IBM Specialization](https://www.coursera.org/specializations/advanced-data-science-ibm)
 
-To go beyond the basics of Node-RED there is additional material available on the [Node-RED website](https://nodered.ord) and there is a [workshop](https://github.com/binnes/moreNodeRedWorkshop) to learn more about Node-RED features
+- [Fundamentals of Scalable Data Science](https://www.coursera.org/learn/ds)
+- [Advanced Machine Learning and Signal Processing](https://www.coursera.org/learn/advanced-machine-learning-signal-processing)
+- [Applied AI with DeepLearning](https://www.coursera.org/learn/ai)
 
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [Training Data](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md) - [**Summary**](SUMMARY.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
+To go beyond the basics of Node-RED there is additional material available on the [Node-RED website](https://nodered.org) and there is a [workshop](https://github.com/binnes/moreNodeRedWorkshop) to learn more about Node-RED features

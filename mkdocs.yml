@@ -1,6 +1,6 @@
 site_name: ESP8266 IoT Workshop
-#site_url: https://pages.github.ibm.com/BINNES/workshop/
-#repo_url: https://github.com/binnes/esp8266Workshop
+site_url: https://binnes.github.io/esp8266Workshop/
+repo_url: https://github.com/binnes/esp8266Workshop
 theme:
     name: mkdocs
 #    name: readthedocs
@@ -14,7 +14,7 @@ nav:
   - Home: index.md
   - Part 1: 
     - Intro: part1/README.md
-    - Overview of the Workshop: part1/PREREQ.md
+    - Setup for the Workshop: part1/PREREQ.md
     - Intro to ESP8266: part1/FIRSTAPP.md
     - ESP8266 WiFi: part1/WIFI.md
     - LED Light: part1/LED.md

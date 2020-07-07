@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [**Store Data**](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-
 # Store Data in Cloud Storage for Historical Data Analytics
 
 ## Lab Objectives
@@ -22,9 +16,7 @@ While real-time charts of sensor data and threshold alerts are useful, the power
 
 Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.
 
-<p align="center">
-  <strong>Get the Code: <a href="flows/NR-Cloudant-DHTSensorData.json">Node-RED Cloud Storage Flow</strong></a>
-</p>
+Node-RED Cloud Storage Flow : [Get the Code](flows/NR-Cloudant-DHTSensorData.json)
 
 You will need to verify the configuration of the **mqtt in** node to use your configuration, as you did in the previous section.
 
@@ -53,9 +45,3 @@ In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT
  ![Cloudant NoSQL Databases](screenshots/CloudantNoSQLDatabases.png)
 - Click on historicaldata1 and then observe the **Table** view of temperature, humidity and timestamp data:
  ![Cloudant NoSQL Historian Data](screenshots/CloudantNoSQLHistorianDB.png)
-
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [**Store Data**](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)

@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [**Receive Sensor Data**](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-
 # Receive Device Environmental Sensor Data in Node-RED
 
 ## Lab Objectives
@@ -119,9 +113,3 @@ If you have a custom server certificate configured on the IoT platform then you 
   - The **mqtt in** node should show status **Connected**
   - Observe the DHT sensor data in the **debug** tab of the Node-RED right sidebar.  You can expand the twisties to expose the JSON object information. Hover over a debug message in the right sidebar and the node that generated the message will be outlined in orange.
   ![Receive DHT Data](screenshots/ESP8266-ReceiveDHTdata-Deploy.png)
-
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [**Receive Sensor Data**](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [Historical Data](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)

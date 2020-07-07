@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [**WIFI**](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-
 # Connecting the ESP8266 to a WiFi network
 
 ## Lab Objectives
@@ -51,9 +45,3 @@ Now you have seen 2 different example sketches using both Serial and WiFi connec
 - In the **loop()** function access features of the library
 
 *Note*: *If you finish early jump back to step 3 to add the additional functionality
-
-***
-*Quick links :*  
-**Part 1** - [Setup](PREREQ.md) - [First App](FIRSTAPP.md) - [**WIFI**](WIFI.md) - [LED](LED.md) - [DHT](DHT.md) - [Cloud](IOTCLOUD.md)
-***
-[Home](/README.md) - [**Part 1**](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

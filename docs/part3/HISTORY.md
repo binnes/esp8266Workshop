@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [**Historical Data**](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-
 # Node-RED Charts of Historical Sensor Data
 
 ## Lab Objectives
@@ -21,9 +15,7 @@ The previous section stored the Device environment sensor data into a Cloudant D
 
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.
 
-<p align="center">
-  <strong>Get the Code: <a href="flows/NRD-DHTSensorData-HistorianChart.json">Node-RED Historian Chart Flow</strong></a>
-</p>
+Node-RED Historian Chart Flow : [Get the Code](flows/NRD-DHTSensorData-HistorianChart.json)
 
 - Click on the **Cloudant** node on the Historical Chart flow to confirm that it is configured to your IoT Platform Cloudant service instance.
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
@@ -43,9 +35,3 @@ The previous section stored the Device environment sensor data into a Cloudant D
 - The Chart Array is passed to the Node-RED Chart node to render the graph.
 
 ![Node-RED Historian Flow](screenshots/NRD-ESP8266-DHT-TempHistorian-Chart.png)
-
-***
-**Part 3** - [Intro to Node-RED](NODERED.md) - [Receive Sensor Data](DHTDATA.md) - [Plot Data](DASHBOARD.md) - [Store Data](CLOUDANT.md) - [**Historical Data**](HISTORY.md) - [Control Interval](INTERVAL.md) - [Control LED](LED.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [**Part 3**](../part3/README.md) - [Part 4](../part4/README.md)

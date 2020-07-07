@@ -1,9 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [**Training Data**](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
-***
-
 ## Lab Objectives
 
 In this section we will create the training data needed to train a model.  You will learn:
@@ -80,7 +74,7 @@ To create the training data you may want to use the interval dashboard to set th
 
 ## Reset the training database
 
-**Don't do this unless you have invalid data in your training database**
+Note : **Don't do this unless you have invalid data in your training database**
 
 It is important that you have clean training data, so if you need to restart recording the training database you can easily delete the database from cloudant:
 
@@ -94,8 +88,3 @@ It is important that you have clean training data, so if you need to restart rec
 You can now start creating the training data again - the database is automatically created when the Node-RED flow is next deployed
 
 Once you have your training data recorded you can move to the [next section](JUPYTER.md)
-***
-**Part 4** - [Watson Studio](STUDIO.md) - [**Training Data**](TRAINING.md) - [Notebooks](JUPYTER.md) - [ESP8266 model](MODEL.md) - [Summary](SUMMARY.md)
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [**Part 4**](../part4/README.md)

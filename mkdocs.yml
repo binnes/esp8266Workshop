@@ -3,20 +3,24 @@ site_description: >-
   IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud.
 site_url: https://binnes.github.io/esp8266Workshop/
 site_author: Brian Innes
+repo_name: binnes/esp8266Workshop
 repo_url: https://github.com/binnes/esp8266Workshop
 theme:
     name: mkdocs
 #    name: readthedocs
     nav_style: dark
     highlightjs: true
+use_directory_urls: false
 plugins:
   - search
   - with-pdf:
-      cover_subtitle: Workshop documentation from Markdown
+      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
 markdown_extensions:
   - attr_list
   - admonition
-  - toc
+  - toc:
+      permalink: true
+      toc_depth: 3
 extra_css:
     - css/extra.css
     - css/pdf-print.css
@@ -54,4 +58,3 @@ nav:
     - Run model on device: part4/MODEL.md
     - Workshop Summary : part4/SUMMARY.md
 google_analytics: ['UA-172132667-1', 'binnes.github.io/esp8266Workshop']
-

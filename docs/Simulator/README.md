@@ -1,7 +1,3 @@
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)
-***
-
 # The Watson IoT Platform Device Simulator
 
 The IBM Watson Internet of Things Platform contains a device simulator that can be used to post data without a real device being connected.  The simulator can be used to create data for multiple devices and device types, it can also post data for a real, registered device.
@@ -190,7 +186,3 @@ The Simulator is still an experimental feature on the IoT Platform, so there are
 This guide has shown you how to enable the device simulator and setup simulators to create device data.  The device simulator is a great tool to be able to test error or failure conditions that are difficult to create using live data from a real device.
 
 Remember to turn off simulators when not needed to ensure you do not use up free limits on the IBM Cloud or incur additional expense if on a paid plan.
-
-***
-*Quick links :*
-[Home](/README.md) - [Part 1](../part1/README.md) - [Part 2](../part2/README.md) - [Part 3](../part3/README.md) - [Part 4](../part4/README.md)

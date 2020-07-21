@@ -57,4 +57,8 @@ nav:
     - Jupyter Notebooks: part4/JUPYTER.md
     - Run model on device: part4/MODEL.md
     - Workshop Summary : part4/SUMMARY.md
+  - Additional:
+    - Agenda: AGENDA.md
+    - Resources: RESOURCES.md
+    - Simulator: Simulator/README.md
 google_analytics: ['UA-172132667-1', 'binnes.github.io/esp8266Workshop']

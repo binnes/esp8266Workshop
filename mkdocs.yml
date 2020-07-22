@@ -6,11 +6,7 @@ site_author: Brian Innes
 repo_name: binnes/esp8266Workshop
 repo_url: https://github.com/binnes/esp8266Workshop
 theme:
-#    name: mkdocs
-#    name: readthedocs
     name: material
-    nav_style: dark
-#    highlightjs: true
 use_directory_urls: false
 plugins:
   - search

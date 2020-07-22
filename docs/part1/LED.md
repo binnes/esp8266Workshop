@@ -38,7 +38,7 @@ So, with the shortest pin on the left and the flat side on the right the pinout 
 
 You need to connect the Data In, +'ve voltage and ground to the ESP8266 board as shown in the diagram.  Take care to ensure that the connections are as shown, as connecting the wrong pins can damage the ESP8266 board and/or the LED:
 
-![ModeMCU LED Wiring](../images/NodeMCU_LED_Wiring.jpg)
+![ModeMCU LED Wiring](../images/NodeMCU_LED_Wiring.jpg){style="width: 50%" .center}
 
 ### Step 3 - Load an example sketch
 

@@ -4,6 +4,8 @@ IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED
 
 For the workshop instructions please visit this site : [https://binnes.github.io/esp8266Workshop/](https://binnes.github.io/esp8266Workshop/)
 
+There is also a downloadable PDF containing the workshop instructions available [here]{https://binnes.github.io/esp8266Workshop/pdf/document.pdf}
+
 ## Updating content
 
 The workshop instructions are hosted on GitHub pages and are automatically generated from the Markdown in the docs folder of this repo.

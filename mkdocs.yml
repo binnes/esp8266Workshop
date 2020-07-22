@@ -6,10 +6,11 @@ site_author: Brian Innes
 repo_name: binnes/esp8266Workshop
 repo_url: https://github.com/binnes/esp8266Workshop
 theme:
-    name: mkdocs
+#    name: mkdocs
 #    name: readthedocs
+    name: material
     nav_style: dark
-    highlightjs: true
+#    highlightjs: true
 use_directory_urls: false
 plugins:
   - search
@@ -21,6 +22,8 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
+  - pymdownx.superfences
+  - pymdownx.highlight
 extra_css:
     - css/extra.css
     - css/pdf-print.css

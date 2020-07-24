@@ -12,7 +12,6 @@ plugins:
   - search
   - with-pdf:
       cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
-      verbose: true
       output_path: pdf/esp8266Workshop.pdf
 markdown_extensions:
   - attr_list

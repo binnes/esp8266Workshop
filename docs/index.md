@@ -18,7 +18,7 @@ To move through the workshop you can use the top menu to select a specific secti
 
 The source for this workshop is hosted on [GitHub](https://github.com/binnes/esp8266Workshop) and this site is automatically generated from the Markdown in the GitHub repository.
 
-There is also a downloadable PDF containing the workshop instructions available [here]{https://binnes.github.io/esp8266Workshop/pdf/document.pdf}
+There is also a downloadable PDF containing the workshop instructions available [here]{https://binnes.github.io/esp8266Workshop/pdf/}
 
 ## Typical agenda for a workshop day
 

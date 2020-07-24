@@ -17,7 +17,7 @@ In this section you will learn about Node-RED Dashboard Charts and then create a
 
 Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button. Finally, click on the red **Deploy** button in the upper right corner.
 
-Node-RED Dashboard Charts : [Get the Code](flows/NRD-Charts-DHTSensorData.json)
+Node-RED Dashboard Charts : [Get the Code](https://binnes.github.io/esp8266Workshop/part3/flows/NRD-Charts-DHTSensorData.json){target=_blank}
 
 ### Step 2 - Learn about various Node-RED Dashboard Chart types
 

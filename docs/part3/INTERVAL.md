@@ -19,7 +19,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.
 
-Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](flows/NRD-ReportingInterval-Form.json)
+Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.github.io/esp8266Workshop/part3/flows/NRD-ReportingInterval-Form.json){target=_blank}
 
 - Turn to the *Set ESP8266 Interval* flow tab.
 - Fix the configuration of the **mqtt in** node

@@ -18,7 +18,7 @@ This section will build a Node-RED flow where you can change the LED color and t
 
 - Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.
 
-Node-RED Set LED Threshold Flow : [Get the Code](flows/NR-SetLED-Threshold.json)
+Node-RED Set LED Threshold Flow : [Get the Code](https://binnes.github.io/esp8266Workshop/part3/flows/NR-SetLED-Threshold.json){target=_blank}
 
 - Fix the **mqtt in** and **mqtt out** node configuration
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.

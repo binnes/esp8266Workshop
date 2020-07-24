@@ -55,7 +55,8 @@ You may need a driver for your OS to be able to communicate with the USB to seri
 
 Select the appropriate one for your OS, download it, unzip it and install it.
 
-- *Note* : Linux should not need a driver installing, as it should already be installed.
+!!! note
+    Linux should not need a driver installing, as it should already be installed.
 
 If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).
 
@@ -78,8 +79,13 @@ When the driver is installed and the NodeMCU module is connected you can test if
 The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software).  Select the version for your OS then download and install it:
 
 - Linux : Your linux distro may have Arduino available in the software package manager catalog, if not you can manually install it:
-  - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh`
-  - *Note: you may need to change the version number if you downloaded a version newer than 1.8.7*.  You some Linux distros you may need to add your user to the tty and dialout groups to be able to use the connection to the device.  You can do this using command `sudo usermod -a -G tty,dialout $USER` you will have to log out and log in again to get the added permissions
+    - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh`
+
+        !!! note
+            you will need to change the version number in the command above if you downloaded a version newer than 1.8.7
+
+    - Some Linux distros you may need to add your user to the tty and dialout groups to be able to use the connection to the device.  You can do this using command `sudo usermod -a -G tty,dialout $USER` you will have to log out and log in again to get the added permissions
+
 - MacOS : simply drag Arduino app into Applications folder after unzipping)
 - Windows : run the downloaded installer application
 
@@ -103,7 +109,10 @@ The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for 
 
 ![tools directory](../images/toolsDirectory.png)
 
- (*Note: you can find the sketch directory location from the preferences panel of the Arduino IDE*).  The default location of the sketch directory is:
+!!! note
+      you can find the sketch directory location from the preferences panel of the Arduino IDE
+
+The default location of the sketch directory is:
 
 - Linux - **/home/< user name >/Arduino/tools/ESP8266LittleFS**
 - MacOS - **/Users/< user name >/Documents/Arduino/tools/ESP8266LittleFS**
@@ -116,7 +125,11 @@ During the workshop you will be generating your own self-signed certificates, so
 - Linux : openssl is installed as part of the OS for most distros, so should have nothing to do here.  If it is not installed then most distros have an openssl package which can be installed using the distro package installer tool.
 - MacOS : openssl is installed as part of the OS, so nothing to do here.
 - Windows : There are 2 options for installing OpenSSL on Windows.  You can install a binary distribution to run on Windows or you can enable the Windows Subsystem for Linux, which provides a Linux environment within Windows:
-  - **Windows Binary**: The openssl official website only provides source.  You can choose to build the binaries from source, but there are links to sites hosting prebuilt binaries, such as [this site](https://slproweb.com/products/Win32OpenSSL.html) for 32 and 64 bit Windows.  You want to select one of the 1.1.x versions.  You only need light version for this workshop, but you can choose the full version if you want the additional developer resources.  When installing, the default install options are OK.  The standard install does **NOT** add the openssl executable to the system PATH, so you will need to specify the full path of the binary when entering commands, unless you add it to the PATH, e.g. `c:\OpenSSL-Win64\bin\openssl.exe`.  Note this method will not provide the xxd binary, but you don't need it for this workshop.  If you get an error saying **MSVCR120.dll** is missing, then you can download the Visual Studio 2013 redistibutable package [here](https://support.microsoft.com/en-us/help/3179560).
+  - **Windows Binary**: The openssl official website only provides source.  You can choose to build the binaries from source, but there are links to sites hosting prebuilt binaries, such as [this site](https://slproweb.com/products/Win32OpenSSL.html) for 32 and 64 bit Windows.  You want to select one of the 1.1.x versions.  You only need light version for this workshop, but you can choose the full version if you want the additional developer resources.  When installing, the default install options are OK.  The standard install does **NOT** add the openssl executable to the system PATH, so you will need to specify the full path of the binary when entering commands, unless you add it to the PATH, e.g. `c:\OpenSSL-Win64\bin\openssl.exe`.  
+  
+    !!! note
+        this method will not provide the xxd binary, but you don't need it for this workshop.  If you get an error saying **MSVCR120.dll** is missing, then you can download the Visual Studio 2013 redistibutable package [here](https://support.microsoft.com/en-us/help/3179560)
+        
   - **Windows Subsystem for Linux**:  This option installs a Linux distribution within Windows, so you get access to all the Linux utilities and can install additional packages, such as openssl. To enable Linux Services for windows follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  Select Debian as the Linux distribution, then when it is installed launch Debian then run the following commands at the Linux command prompt:
 
     ```bash

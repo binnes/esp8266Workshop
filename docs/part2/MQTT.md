@@ -140,7 +140,11 @@ When connecting to the Watson IoT platform there are some requirements on some p
 3. Call **connect()** to connect with the platform, passing in the device ID, a user, which is always the value *use-token-auth* and the token you chose when registering the device.
 4. The **subscribe()** function registers the connection to receive messages published on the given topic.
 5. The **loop()** method must be regularly called to keep the connection alive and get incoming messages.
-6. The **publish()** function sends data on the provided topic - *Note*: On some MQTT Clients this function only queues the message for sending, it is actually sent in the **loop()** function.
+6. The **publish()** function sends data on the provided topic
+
+    !!!Note
+        On some MQTT Client libraries this function only queues the message for sending, it is actually sent in the **loop()** function
+
 7. You can verify the connection status with the **connected()** function.
 
 ### Solution code

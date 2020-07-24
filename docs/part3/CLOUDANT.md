@@ -29,8 +29,12 @@ In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT
 - To associate the **Cloudant** database node with your IBM Cloud instance, double-click on the historical data Cloudant node and press the red Done button. The red error triangle will turn blue.
  ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-config.png)
 
-- The *Format Time Series DB Record* function node recasts the ESP8266 DHT JSON object. As required by any time series dataset, the Node-RED function node adds a timestamp to the record before writing it to the Cloudant storage. Note in the screenshot, the debug sidebar shows a ```msg.payload``` that includes the Epoch timestamp (milliseconds since Jan 1 1970)
- ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-timeseries.png)
+- The *Format Time Series DB Record* function node recasts the ESP8266 DHT JSON object. As required by any time series dataset, the Node-RED function node adds a timestamp to the record before writing it to the Cloudant storage.
+  ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-timeseries.png)
+
+    !!! info
+          in the screenshot, the debug sidebar shows a ```msg.payload``` that includes the Epoch timestamp (milliseconds since Jan 1 1970)
+
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 - The device environmental sensor data is now being recorded in a Cloudant database.
 

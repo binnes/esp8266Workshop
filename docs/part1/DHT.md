@@ -54,7 +54,10 @@ To add the DHT sensor to your own application you need to do the following:
     - the second parameter is the type of sensor
 2. Before using and commands to read the sensor you need to initialise the sensor library using the **begin()** call.  `dht.begin();`  This is usually done in the **setup()** function.
 3. Read the sensor required using one of the library functions:
-    - *Note: by default temp is in C, but you can request to get a Fahrenheit temperature.*
+
+    !!! note
+        by default temp is in C, but you can request to get a Fahrenheit temperature.
+
     - `dht.readTemperature()`
     - `dht.readTemperature(bool isFahrenheit)`
     - `dht.readHumidity()`

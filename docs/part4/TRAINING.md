@@ -74,7 +74,8 @@ To create the training data you may want to use the interval dashboard to set th
 
 ## Reset the training database
 
-Note : **Don't do this unless you have invalid data in your training database**
+!!! warning
+      Only complete the following section if you have invalid data in your training database, as it will clear out all the captured training data
 
 It is important that you have clean training data, so if you need to restart recording the training database you can easily delete the database from cloudant:
 

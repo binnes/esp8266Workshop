@@ -42,7 +42,8 @@ You can now compile the sketch for the ESP8266 by selecting the **Verify** butto
 
 Once the compile has finished you can upload the new application to your ESP8266 using the **upload** button on the command bar (arrow to right icon) or using the *Sketch* -> *Upload* menu option.
 
-*Note*: *you don't need to compile then upload.  Just using upload will compile the application if necessary then upload it to the ESP8266*
+!!! note
+    you don't need to compile then upload.  Just using upload will compile the application if necessary then upload it to the ESP8266
 
 If you try to save the sketch you will be prompted to enter a name/location for the sketch.  This is because the example sketches are read-only, if you want to modify them and save the modification you need to save it to a new location.
 

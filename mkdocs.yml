@@ -10,8 +10,9 @@ theme:
 use_directory_urls: false
 plugins:
   - search
-  - with-pdf:
-      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
+#  - with-pdf:
+#      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
+#      verbose: true
 markdown_extensions:
   - attr_list
   - admonition

@@ -16,7 +16,7 @@ After completing this guide you will be able to:
 
 Before working through this guide you should have a basic knowledge of the Watson Internet of Things platform and understand the relationship between devices and device types.  You also need to have an instance of the Watson IoT Platform deployed on the IBM Cloud.
 
-You can find out about the Watson IoT Platform [here](https://console.bluemix.net/docs/services/IoT/iotplatform_overview.html#about_iotplatform) and learn how to deploy an instance of the platform by following the guide [here](https://developer.ibm.com/code/howtos/create-an-internet-of-things-starter-boilerplate).
+You can find out about the Watson IoT Platform [here](https://console.bluemix.net/docs/services/IoT/iotplatform_overview.html#about_iotplatform) and learn how to deploy an instance of the platform by following the guide [here](https://developer.ibm.com/technologies/iot/tutorials/how-to-create-an-internet-of-things-platform-starter-application/).
 
 ## Estimated time
 

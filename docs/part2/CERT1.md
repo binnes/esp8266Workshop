@@ -20,7 +20,7 @@ The Watson IoT platform does allow you to replace the certificates used for MQTT
 
 The platform [documentation](https://console.bluemix.net/docs/services/IoT/reference/security/set_up_certificates.html#set_up_certificates) provides information about what information must be contained in certificates to work with the platform.
 
-In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files and 2 script files in the [certificates](/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
+In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files and 2 script files in the [certificates](https://github.com/binnes/esp8266Workshop/tree/master/certificates) folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.
 
 The commands are provided to create text (pem) and binary (der) formats of the keys and certificates, as some device libraries require one or the other format.  In this workshop we will only use the text versions of the certificates and keys.
 
@@ -100,7 +100,7 @@ openssl x509 -outform der -in mqttServer_crt.pem -out mqttServer_crt.der
 xxd -i mqttServer_crt.der mqttServer_crt.der.h
 ```
 
-again substituting values for C=, ST=, L=, O=, OU= and CN=, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by **.messaging.internetofthings.ibmcloud.com**, which should also match the **subjectAltName** field in the [srvext.cfg](/certificates/srvext.cfg) file.
+again substituting values for C=, ST=, L=, O=, OU= and CN=, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by **.messaging.internetofthings.ibmcloud.com**, which should also match the **subjectAltName** field in the [srvext.cfg](https://github.com/binnes/esp8266Workshop/blob/master/certificates/srvext.cfg) file.
 
 The commands above generate a new key for the server, creates a certificate request for the server, issues the certificate and signs it with the root CA key, saving it as a pem file.  The certificate is converted from pem to der format and lastly the xxd command creates a header file to embed the certificate in code.
 

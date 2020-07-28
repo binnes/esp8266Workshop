@@ -27,7 +27,7 @@ In this workshop your ESP8266 device will be sending data to the IBM IoT Platfor
 
 ### Step 1 - Accessing the cloud and selecting an appropriate space
 
-[Login](https://cloud.ibm.com) to your cloud account.
+[Login](https://cloud.ibm.com/login) to your cloud account.
 
 If you haven't previously used any of the Cloud Foundry locations you may need to create a **space** to be able to work in the chosen location.  To do this from the top menu select *Manage* -> *Account* -> *Cloud Foundry Orgs* then click on your mail address to configure your organisation.  If there are no spaces showing, or you have a paid account and want to work in a new region, then click to **Add a space** then select the region and provide a name for the space.
 

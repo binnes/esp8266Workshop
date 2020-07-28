@@ -139,4 +139,4 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com) link.  The workshop can be completed using the free, lite account.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com/registration) link.  The workshop can be completed using the free, lite account.

@@ -20,7 +20,7 @@ The steps below will build up the Jupyter notebook, there is a solution notebook
 Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is stored.
 
 - Open a new browser tab.
-- Return to the [IBM Cloud dashboard](https://cloud.ibm.com) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1). ![Cloudant NoSQL Service Connection](../part3/screenshots/CloudantNoSQLServiceConnection.png)
+- Return to the [IBM Cloud dashboard](https://cloud.ibm.com/login) and your IoT Starter application. **Click** on the cloudantNoSQLDB service connection (1). ![Cloudant NoSQL Service Connection](../part3/screenshots/CloudantNoSQLServiceConnection.png)
 - Read about the Cloudant Storage service and click on the **Service credentials** menu item in the left menu bar. ![Cloudant NoSQL Service Instance](screenshots/cloudant-service.png)
 
 - Click on **New credential** ![Cloudant NoSQL Service new](screenshots/cloudant-credential.png)

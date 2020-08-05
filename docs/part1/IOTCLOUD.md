@@ -37,13 +37,13 @@ Lite accounts have resource restrictions, so to be able to deploy the starter ap
 
 ### Step 2 - Deploy a Starter Application
 
-- open up the Catalog using the top menu, then select **Web and Applications** from the left menu
-- select the **Software** tab
-- select the **Node-RED App**
+- open up the Catalog using the top menu
+- in the search bar enter **Node-RED App** and hit the ENTER key
+- select the **Node-RED App** tile
 
 ![Catalog](../images/catalog.png)
 
-- in the screen presented press the **Create app** button
+- in the screen presented press the **Get Started** button
 - in the Create app screen optionally enter an App name (or you can simple accept the name provided) and select a region to deploy the Cloudant NoSQL database to - ideally this should be the same region you have your Cloud Foundry space in.
 - press the **Create** button to create the App definition
 

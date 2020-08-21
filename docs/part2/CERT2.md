@@ -1,4 +1,6 @@
-# Using a Device Certificate to authenticate to the Watson IoT platform
+# Additional Security considerations
+
+<!-- TODO - alter this for CloudAMQP and introduce idea of message payload signing / encryption -->
 
 ## Lab Objectives
 

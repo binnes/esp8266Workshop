@@ -1,17 +1,17 @@
 # Part 2
 
-## Introduction to the IBM Internet of Things Platform
+## Introduction to messaging for IoT Applications
 
-The IBM Internet of Things Platform is a set of services provided on the IBM Cloud to enable you to collect IoT data using MQTT events, we will cover MQTT later in this section.  In addition to data ingest, the IoT platfom provides a number of other services to allow you to capture the IoT data into short term storage in a NoSQL database, monitor and analyze the IoT data and archive the data in Cloud Object Storage.
+In the first part of the workshop we explored the ESP8266 device and sensors, but to make an Internet of Things application we need to be able to connect the ESP8266 to the internet to be able to send and receive data.
 
-Before connecting the ESP8266 device to the IoT Platform you will configure the platform to allow the device to connect then later in this section you will configure connection security to secure communications between the ESP8266 device and IBM Cloud.
+In this part of the workshop we will use the CloudAMQP service we deployed on the IBM Cloud at the end of part 1 to enable you to collect IoT data using MQTT events, we will cover MQTT later in this section.
 
-## Device Type / Device Creation
+## Choosing a broker
 
-This Lab will show you how to register your ESP8266 with the IBM Internet of Things Platform.
+In this section you will learn about the factors to consider when choosing the server, or broker, for your IoT application.
 
-- Estimated duration: 15 min
-- practical [**Create device type and device**](DEVICE.md)
+- Estimated duration:10 min
+- Reading and research [Choosing an MQTT Broker](BROKER.md)
 
 ## Creating the initial application
 
@@ -34,9 +34,9 @@ In this Lab you will modify MQTT to use a secure connection.
 - Estimated duration: 25 min
 - practical [**Securing the MQTT traffic using self-signed certificate**](CERT1.md)
 
-## Adding client certificates
+## Additional security considerations
 
-In this lab you will extend the application by enabling client side certificates.
+In this lab you will look at options for additional security.
 
 - Estimated duration: 10 min
-- practical [**Securing the MQTT traffic using a client certificate**](CERT2.md)
+- practical [**Additional Security considerations**](CERT2.md)

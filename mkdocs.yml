@@ -32,10 +32,11 @@ nav:
     - Intro to ESP8266: part1/FIRSTAPP.md
     - ESP8266 WiFi: part1/WIFI.md
     - LED Light: part1/LED.md
-    - Sensor: part1/DHT.md
+    - DHT Sensor: part1/DHT.md
     - IBM Cloud: part1/IOTCLOUD.md
   - Part 2: 
     - Intro: part2/README.md
+    - MQTT Broker: part2/BROKER.md
     - Device setup on Cloud: part2/DEVICE.md
     - Creating the ESP8266 Application: part2/APP.md
     - Intro to MQTT: part2/MQTT.md

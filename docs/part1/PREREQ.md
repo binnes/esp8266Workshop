@@ -129,7 +129,7 @@ During the workshop you will be generating your own self-signed certificates, so
   
     !!! note
         this method will not provide the xxd binary, but you don't need it for this workshop.  If you get an error saying **MSVCR120.dll** is missing, then you can download the Visual Studio 2013 redistibutable package [here](https://support.microsoft.com/en-us/help/3179560)
-        
+
   - **Windows Subsystem for Linux**:  This option installs a Linux distribution within Windows, so you get access to all the Linux utilities and can install additional packages, such as openssl. To enable Linux Services for windows follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  Select Debian as the Linux distribution, then when it is installed launch Debian then run the following commands at the Linux command prompt:
 
     ```bash
@@ -139,4 +139,6 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com/registration) link.  The workshop can be completed using the free, lite account.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com/registration) link.
+
+The workshop can be completed using the free, lite account.

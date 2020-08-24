@@ -6,9 +6,9 @@ IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysi
 
 ### Stream Environmental Conditions to The Cloud
 
-Learn how to connect an ESP8266 to the **IBM Internet of Things (IoT) Platform** over MQTT and stream environmental data from the sensors to the IBM Cloud.  
+Learn how to connect an ESP8266 to the **IBM Cloud** using MQTT and stream environmental data from the sensors a cloud application and Data Analytic services running on the IBM Cloud.  
 
-Workshop attendees will learn about ESP8266 programming, IoT Security, MQTT, IoT Platform, Node-RED, cloud storage, data analytics and visualisation techniques.
+Workshop attendees will learn about ESP8266 programming, IoT Security, MQTT, IBM Cloud, Node-RED, cloud storage, data analytics and visualisation techniques.
 
 ## Navigation
 
@@ -31,11 +31,11 @@ To help the flow of a face to face event having the [prerequisite](part1/PREREQ.
 ### [Part 1](part1/README.md)
 
 Provides an overview to the course, introduces the hardware, the development tooling and then gets you programming the ESP8266 device to connect to the local WiFi network and be able to control the hardware.
-Part 1 finishes with an overview of the IBM Cloud, the cloud platform used in this workshop and ensures you have a working cloud account with the required resources.
+Part 1 finishes by deploying a starter application on the IBM Cloud, which will be used in the remaining parts of this workshop and ensures you have a working cloud account with the required resources.
 
 ### [Part 2](part2/README.md)
 
-The second part of the workshop looks at the Internet of Things service on the IBM Cloud and how you connect a device to the IBM Cloud using the MQTT protocol.  This section also looks at ensuring you have a secure connection between the device and the Cloud Platform, using SSL/TLS security and certificates.
+The second part of the workshop looks at a messaging service on the IBM Cloud and how you connect a device to the IBM Cloud using the MQTT protocol.  This section also looks at ensuring you have a secure connection between the device and the Cloud service.
 
 ### [Part 3](part3/README.md)
 

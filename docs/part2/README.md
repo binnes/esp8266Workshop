@@ -27,6 +27,13 @@ In this lab you will learn how to add MQTT messaging to an application.
 - Estimated duration: 15 min
 - practical [**Sending data to the Watson IoT platform using MQTT**](MQTT.md)
 
+## Internet Security
+
+In this section you will learn how to protect information being sent over the Internet using standard protocols, such as TLS
+
+- Estimated duration: ???????
+- Reading and research [Internet Security](SECURITY.md)
+
 ## Introduction to IoT Security techniques
 
 In this Lab you will modify MQTT to use a secure connection.

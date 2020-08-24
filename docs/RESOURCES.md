@@ -23,9 +23,8 @@ Some additional links:
 - [IBM Cloud signup/login](https://ibm.biz/BdZaRT)
 - [IBM Cloud Documentation](https://cloud.ibm.com/docs)
 - [Coursera Specialization - Advanced Data Science with IBM](https://www.coursera.org/specializations/advanced-data-science-ibm)
-- [IBM Code IoT content](https://developer.ibm.com/technologies/iot/)
+- [IBM Developer IoT content](https://developer.ibm.com/technologies/iot/)
 
 ## Additional material
 
-- [Securing IoT devices and gateways](https://www.ibm.com/developerworks/library/iot-trs-secure-iot-solutions1/index.html)
 - [Common SSL commands](https://www.sslshopper.com/article-most-common-openssl-commands.html)

@@ -2,9 +2,6 @@
 
 ## Introduction to Node-RED
 
-!!! note
-    All but the last section in this part of the workshop can be completed without a real device using the Watson IoT Platform device simulator.  Instructions on how to use the simulator are included in this project [here](../Simulator/README.md)
-
 - Estimated duration: 10 min
 - practical [**Node-RED Setup**](NODERED.md)
 

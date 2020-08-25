@@ -104,6 +104,6 @@ The last item we need on the IBM Cloud is the MQTT service for the ESP8266 appli
 
 - ensure you have the Lite plan selected then hit the create button
 
-![CloudAMQP Create](../images/CloudAMQPCreate.png)
+![CloudAMQP Create](../images/cloudAMQPCreate.png)
 
 You now have the cloud application deployed, so you are now ready to move to the [next section](../part2/README.md) of the workshop to setup secured communications between the ESP8266 device and the IBM Cloud

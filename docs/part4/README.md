@@ -1,8 +1,5 @@
 # Part 4
 
-!!! note
-    This part of the workshop can be completed without a real device using the Watson IoT Platform device simulator.  Instructions on how to use the simulator are included in this project [here](../Simulator/README.md)
-
 ## Introduction to Watson Studio
 
 This section shows you how to deploy the Watson Studio service and how to create your first Jupyter Notebook.

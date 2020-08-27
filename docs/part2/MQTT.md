@@ -9,15 +9,28 @@ In this lab you will learn how to add MQTT messaging to an application.  You wil
 
 ## Introduction
 
-In the previous lab you built the stand alone sensor application.  Now we want to make it an Internet of Things application by adding in MQTT to send the data to the IoT Platform.
+In the previous lab you built the stand alone sensor application.  Now we want to make it an Internet of Things application by adding in MQTT to send the data to the CloudAMQP service.
 
-We will start by using an unsecured MQTT connection, then in the next section we will secure the connection.  However, the Watson IoT platform is configured to block all unsecured connections by default, so you need to configure your Watson IoT service to allow unsecured connection.
+We will start by using an unsecured MQTT connection, then in the next section we will secure the connection.
 
-### Step 1 - Configure the Watson IoT platform to allow unsecured connections
+### Step 1 - The MQTT configuration
 
-Open up the IoT platform console for the instance connected to your Starter Kit application.  From the dashboard (*≡* -> *Dashboard*) select the application then in the overview section select the IoT platform in the connections panel).
+Before we start writing code we need to gather the information needed to be able to connect to the MQTT service.  We also need to decide what topics the application will use.
 
-Launch the IoT platform console, then switch to the Settings section.  Under Security select Connection Security then press the button **Open Connection Security Policy**.  Press the pencil icon next to Connection Security to edit the settings.  Change the Default Security Level to **TLS Optional**, accept the Warning message by pressing the Ok button, then **Save** the change.  Your IoT platform instance will now accept unsecured MQTT connections.  Leave the browser window showing the IoT Platform console open, as you'll need to get some information when adding the MQTT code to the ESP8266 application.
+To get the connection credentials for the CloudAMQP service:
+
+- Goto the IBM Cloud web console and select Resource list from the top menu
+- Expand the Services section and select the CloudAMQP service
+- In the Manage section click on the MQTT details to reveal the connection details for the service
+- to see the password you need to click on the eye icon
+
+![AMQP connection credentials](../images/AMQPConnectionCredentials.png)
+
+For this workshop the following topics will be used:
+
+- **env/status** : will be used to publish environmental data by the ESP8266
+- **dev01/display** : will be used to send a command to device dev01 to change the LED colour
+- **dev01/interval** : will be used to send a command to device dev01 to change the reporting interval
 
 ### Step 2 - Enhancing the application to send data to the IoT platform
 
@@ -32,22 +45,17 @@ Now add some #define statements to contain that the MQTT code will use.  Add the
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
 // --------------------------------------------------------------------------------------------
 
-// Watson IoT connection details
-#define MQTT_HOST "XXXXXX.messaging.internetofthings.ibmcloud.com"
-#define MQTT_PORT 1883
-#define MQTT_DEVICEID "d:XXXXXX:YYYY:ZZZZ"
-#define MQTT_USER "use-token-auth"
-#define MQTT_TOKEN "PPPPP"
-#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
+// MQTT connection details
+#define MQTT_HOST "******.******.cloudamqp.com" // This is the Hostname from the AMQP MQTT Details
+#define MQTT_PORT 1883 // This is used for unsecured traffic and can be found from the AMQP MQTT Details
+#define MQTT_DEVICEID "dev01" // This is a string representing a specific device, it is just a string
+#define MQTT_USER "********:********" // This is the Username from the AMQP MQTT Details
+#define MQTT_TOKEN "**********************" // This is the Password from the AMQP Details
+#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC_DISPLAY "dev01/display"
 ```
 
 You need to change the values to match your configuration:
-
-- XXXXXX should be the 6 character Organisation ID for your platform.  If you look in the settings section of the IoT Platform console, under identity you will see the value you need to use.
-- YYYY is the device type you used to for the ESP8266 device.  This should be ESP8266, but you can verify by looking in the devices section.  All registered devices are listed here, and you can see the Device Type and Device ID.
-- ZZZZ is the device ID for your ESP8266, in the lab it was suggested to use dev01
-- PPPPP is the token you used when registering the device (hopefully you haven't forgot what you used, if so you need to delete the device and reregister it)
 
 After the configuration block and under the pixel and dht variable declarations you need to add the the following:
 
@@ -131,11 +139,7 @@ Compile and upload the code to your ESP8266 and you should see the ```WiFi Conne
 
 When connecting to the Watson IoT platform there are some requirements on some parameters used when connecting.  The [platform documentation](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) provides full details:
 
-1. The #define statements construct the required parameters:
-   - host : < **org id** >.messaging.internetofthings.ibmcloud.com
-   - device ID : d:< **org id** >:< **device type** >:< **device id** >
-   - topic to publish data : iot-2/evt/< **event id** >/fmt/<  **format string** >
-   - topic to receive commands : iot-2/cmd/< **command id** >/fmt/< **format string** >
+1. The #define statements construct the required parameters to connect and use MQTT
 2. When you initialise the PubSubClient you need to pass in the hostname, the port (1883 for unsecured connections), a callback function and a network connection.  The callback function is called whenever incoming messages are received.
 3. Call **connect()** to connect with the platform, passing in the device ID, a user, which is always the value *use-token-auth* and the token you chose when registering the device.
 4. The **subscribe()** function registers the connection to receive messages published on the given topic.
@@ -162,14 +166,14 @@ The complete ESP8266 application is shown below (you will need to change the con
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
 // --------------------------------------------------------------------------------------------
 
-// Watson IoT connection details
-#define MQTT_HOST "z53u40.messaging.internetofthings.ibmcloud.com"
+// MQTT connection details
+#define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 1883
-#define MQTT_DEVICEID "d:z53u40:ESP8266:dev01"
-#define MQTT_USER "use-token-auth"
-#define MQTT_TOKEN "password"
-#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
+#define MQTT_DEVICEID "dev01"
+#define MQTT_USER "abcdezgf:abcdezgf"
+#define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
+#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC_DISPLAY "dev01/display"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to

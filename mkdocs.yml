@@ -10,9 +10,9 @@ theme:
 use_directory_urls: false
 plugins:
   - search
-  - with-pdf:
-      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
-      output_path: pdf/esp8266Workshop.pdf
+#  - with-pdf:
+#      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
+#      output_path: pdf/esp8266Workshop.pdf
 markdown_extensions:
   - attr_list
   - admonition
@@ -41,7 +41,7 @@ nav:
     - Adding MQTT: part2/MQTT.md
     - Internet Security: part2/SECURITY.md
     - IoT Security: part2/CERT1.md
-    - Additional Security considerations: part2/CERT2.md
+    - Additional Security considerations: part2/SECURITY2.md
   - Part 3:
     - Intro: part3/README.md
     - Node-RED: part3/NODERED.md

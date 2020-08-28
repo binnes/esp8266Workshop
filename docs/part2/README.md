@@ -46,4 +46,4 @@ In this Lab you will modify MQTT to use a secure connection.
 In this lab you will look at options for additional security.
 
 - Estimated duration: 10 min
-- practical [**Additional Security considerations**](CERT2.md)
+- practical [**Additional Security considerations**](SECURITY2.md)

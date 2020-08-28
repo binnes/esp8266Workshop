@@ -96,7 +96,7 @@ Make the following code changes:
   time_t now = time(nullptr);
   Serial.println(ctime(&now));
 
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
   while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
@@ -128,7 +128,7 @@ The application code opens up the certificate files using the **open()** functio
 
 When you have finished with a file it can be closed with the **close()** function.
 
-Further details and the full API can be seen in the [documentation](https://arduino-esp8266.readthedocs.io/en/2.4.1/filesystem.html)
+Further details and the full API can be seen in the [documentation](https://arduino-esp8266.readthedocs.io/en/2.7.4_a/filesystem.html){target=_blank}
 
 ### Solution code
 
@@ -147,14 +147,14 @@ The finished application should look like this:
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
 // --------------------------------------------------------------------------------------------
 
-// Watson IoT connection details
-#define MQTT_HOST "z53u40.messaging.internetofthings.ibmcloud.com"
+// MQTT connection details
+#define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 8883
-#define MQTT_DEVICEID "d:z53u40:ESP8266:dev01"
-#define MQTT_USER "use-token-auth"
-#define MQTT_TOKEN "password"
-#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
+#define MQTT_DEVICEID "dev01"
+#define MQTT_USER "abcdezgf:abcdezgf"
+#define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
+#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC_DISPLAY "dev01/display"
 #define CA_CERT_FILE "/USERTrustRSAAddTrustCA.pem"
 
 // Add GPIO pins used to connect devices
@@ -278,7 +278,7 @@ void setup() {
   time_t now = time(nullptr);
   Serial.println(ctime(&now));
 
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
    while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
       Serial.println("MQTT Connected");
@@ -327,7 +327,7 @@ void loop() {
     pixel.setPixelColor(0, r, g, b);
     pixel.show();
 
-    // Send data to Watson IoT Platform
+    // Publish data to MQTT
     status["temp"] = t;
     status["humidity"] = h;
     serializeJson(jsonDoc, msg, 50);

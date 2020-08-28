@@ -11,7 +11,7 @@
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
 // --------------------------------------------------------------------------------------------
 
-// Watson IoT connection details
+// MQTT connection details
 #define MQTT_HOST "<orgID>.messaging.internetofthings.ibmcloud.com"
 #define MQTT_PORT 8883
 #define MQTT_DEVICEID "d:<orgID>:<type>:<id>"
@@ -221,7 +221,7 @@ void setup() {
   time_t now = time(nullptr);
   Serial.println(ctime(&now));
   
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
    while(! mqtt.connected()){
     if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
 //    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication

@@ -1,6 +1,6 @@
 # Choosing an MQTT Broker
 
-In the previous section you deployed the **CloudAMQP** service, which is the MQTT broker you will be using for the rest of this workshop.  However, there are a number of broker options available.
+At the end of part 1 you deployed the **CloudAMQP** service, which is the MQTT broker you will be using for the rest of this workshop.  However, there are a number of broker options available.
 
 <!-- No trailing punctuation in heading (MD026) -->
 <!-- markdownlint-disable MD026 -->

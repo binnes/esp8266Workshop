@@ -1,11 +1,11 @@
-# Connecting Device to the Watson IoT Platform using MQTT
+# Connecting a device to the Internet using MQTT
 
 ## Lab Objectives
 
 In this lab you will learn how to add MQTT messaging to an application.  You will learn:
 
 - How to connect to a MQTT broker using unsecured connection
-- How to use MQTT to connect to the Watson IoT platform
+- How to use MQTT to connect to the broker service
 
 ## Introduction
 
@@ -55,7 +55,7 @@ Now add some #define statements to contain that the MQTT code will use.  Add the
 #define MQTT_TOPIC_DISPLAY "dev01/display"
 ```
 
-You need to change the values to match your configuration:
+You need to change the values (indicated above with **\*** characters) to match your configuration using the connection values from the AMQP MQTT details information:
 
 After the configuration block and under the pixel and dht variable declarations you need to add the the following:
 
@@ -83,7 +83,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 at the end of the setup() function add the following code to connect the MQTT client to the IoT Platform:
 
 ```C++
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
   if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
@@ -133,11 +133,20 @@ Finally, replace the 10 second ```delay(10000)``` to call the mqtt **loop()** fu
 
 ### Step 3 - Run the application
 
-Compile and upload the code to your ESP8266 and you should see the ```WiFi Connected```, followed by ```Attempting MQTT connection...MQTT Connected```. Every 10 second interval you see the DHT sensor data printed on the console.  The ESP8266 should also be publishing MQTT messages to the Watson IoT Platform.  To verify this, switch to your browser window showing the IoT Platform console, switch to the Devices section.  Click on the esp8266 device to expand it then click **Recent Events**.  You should see the status event messages with the live data appearing every 10 seconds.
+Compile and upload the code to your ESP8266 and you should see the ```WiFi Connected```, followed by ```Attempting MQTT connection...MQTT Connected```. Every 10 second interval you see the DHT sensor data printed on the console.  
+
+The ESP8266 should also be publishing MQTT messages to the cloudAMQP service.  To verify this:
+
+- switch to your browser window showing the IBM Cloud web console
+- from the Resource list, select the cloudAMQP service then select the RabbitMQ Manager
+
+    ![Rabbit MQ Manager](../images/RabbitMQManager.png){style="width: 80%" .center}
+
+- The RabbitMQ console should be showing messages arriving
+
+    ![RabbitMQ Console](../images/RabbitMQConsole.png){style="width: 80%" .center}
 
 ### Step 4 - How it works
-
-When connecting to the Watson IoT platform there are some requirements on some parameters used when connecting.  The [platform documentation](https://console.bluemix.net/docs/services/IoT/reference/security/connect_devices_apps_gw.html#connect_devices_apps_gw) provides full details:
 
 1. The #define statements construct the required parameters to connect and use MQTT
 2. When you initialise the PubSubClient you need to pass in the hostname, the port (1883 for unsecured connections), a callback function and a network connection.  The callback function is called whenever incoming messages are received.
@@ -252,7 +261,7 @@ void setup() {
   dht.begin();
   pixel.begin();
 
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
   if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
@@ -292,7 +301,7 @@ void loop() {
     pixel.setPixelColor(0, r, g, b);
     pixel.show();
 
-    // Send data to Watson IoT Platform
+    // Publish data to MQTT
     status["temp"] = t;
     status["humidity"] = h;
     serializeJson(jsonDoc, msg, 50);

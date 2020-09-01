@@ -61,4 +61,5 @@ nav:
   - Additional:
     - Agenda: AGENDA.md
     - Resources: RESOURCES.md
+    - Mosquitto Broker : mosquitto/README.md
 google_analytics: ['UA-172132667-1', 'binnes.github.io/esp8266Workshop']

@@ -27,4 +27,5 @@ Some additional links:
 
 ## Additional material
 
+- [Setting up a Mosquitto Broker](mosquitto/README.md)
 - [Common SSL commands](https://www.sslshopper.com/article-most-common-openssl-commands.html)

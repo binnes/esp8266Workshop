@@ -16,7 +16,7 @@ If a device is stolen or can be accessed in place, then the security of device s
 
 The ESP8266 is an inexpensive device that lacks features to secure internal storage, such as secure boot, encrypted or protected flash memory, application code verification/encryption.  If you have physical access to an ESP8266 device you can read the memory of the device, so can access anything on a filesystem and the application binary.  You can also replace the application code running on the device.  This is a big security exposure, so whilst good to learn about IoT and use it for hobby projects the ESP8266 is probably not a good choice for a commercial solution.
 
-There are a number of devices and components available on the market that have security built in to provide an enhanced level of security to prevent local attacks.  If the device is physically accessed then the content of memory and storage is protected and code cannot be read or replaced without having the appropriate security keys.  Examples of device security can be seen from [Texas Instruments](https://www.ti.com/technologies/security/overview.html) and [STMicroelectronics](https://www.st.com/content/st_com/en/stm32trust.html).
+There are a number of devices and components available on the market that have security built in to provide an enhanced level of security to prevent local attacks.  If the device is physically accessed then the content of memory and storage is protected and code cannot be read or replaced without having the appropriate security keys.  Examples of device security can be seen from [Texas Instruments](https://www.ti.com/technologies/security/overview.html){target=_blank} and [STMicroelectronics](https://www.st.com/content/st_com/en/stm32trust.html){target=_blank}.
 
 ## Client Validation
 
@@ -36,7 +36,7 @@ In addition to the features offered by brokers, it is also possible to add encry
 
 ## Additional content
 
-If you want to explore security features available in the Apache Mosquitto broker, then there is a section in the [Additional Resources]() section, where you are taken through:
+If you want to explore security features available in the Mosquitto broker, then there is a section in the [Additional Resources](../mosquitto/README.md){target=_blank} section, where you are taken through:
 
 - Deploying the Mosquitto broker on a local system using Docker
 - Creating a local, self-signed Certificate Authority using OpenSSL

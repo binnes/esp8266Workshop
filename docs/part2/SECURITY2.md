@@ -32,7 +32,7 @@ Some of the options for managing client access to MQTT brokers are:
 - client certificates.  This adds client certificates to the TLS handshake, where the client must also present a X.509 certificate, signed by a trusted authority.  The client certificate should contain a unique identifier for the client
 - client permissions.  Some brokers allow access controls to be configured, to restrict the topics a client can publish or subscribe to.  This can help limit the exposure in case of a security breach
 
-In addition to the features offered by brokers, it is also possible to add encryption to the message content.  You can use the same asymmetric encryption algorithms to sign or encrypt messages being sent over a MQTT connection.  The server can then be assured that the device sending the message has access to the private key for the client.  However, this requires the private key to be secure, even when a device is stolen or someone has gained physical access to the device.
+In addition to the features offered by brokers, it is also possible to add encryption to the message content.  You can use the same asymmetric encryption algorithms to sign or encrypt messages being sent over a MQTT connection.  The server can then be assured that the device sending the message has access to the private key for the client.  However, this requires the private key to be secure even when a device is stolen or someone has gained physical access to the device.
 
 ## Additional content
 

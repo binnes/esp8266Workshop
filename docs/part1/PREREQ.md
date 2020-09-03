@@ -27,7 +27,7 @@ There are no incoming ports needed for the workshop, but the ESP8266 needs to be
 You need to purchase the following hardware to work through the workshop.  The workshop instructions uses the DHT11 temperature and humidity sensor.  This can be replaced with the DHT22 sensor, which has the same pinout, but offers a more accurate sensor.  DHT11 is accurate within 2C, whilst the DHT22 is accurate to within 0.5C.
 
 - ESP8266, (search for **NodeMCU ESP8266 v3** or **v2**)
-- NeoPixel RGB LED (or any other chainable RGB/RGBW LED based on ws2812b or sk6812 chips ), such as [this from Adafruit](https://www.adafruit.com/product/1734) (Search for **Neopixel 8mm or 5mm** - often sold in packs of 5)
+- NeoPixel RGB LED (or any other chainable RGB/RGBW LED based on ws2812b or sk6812 chips ), such as [this from Adafruit](https://www.adafruit.com/product/1734){target=_blank} (Search for **Neopixel 8mm or 5mm** - often sold in packs of 5)
 - DHT11 Temperature / Humidity Sensor (search for **DHT11 or DHT22**)
 - 6 x Female to Female jumper wires (search for **dupont cable f2f or f-f** - usually sold in packs of 40 cables)
 - MicroUSB cable (Please ensure it is a data cable, not just a power cable)
@@ -44,23 +44,23 @@ If you are attending an IBM face-to-face workshop, then the boards you will be u
 
 You may need a driver for your OS to be able to communicate with the USB to serial CH340G chip used in the ESP8266 modules.  Do not plugin the device until you have installed the driver on Windows and Mac.  The drivers can be downloaded from :
 
-- [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html) (This is the manufacturers web site, in Chinese, for the USB driver chip on the LoLin NodeNCU board - use Google Chrome to translate, or just click the download link to access the macOS driver).  **After installing goto System Preferences -> Security and Privacy to allow the driver to be loaded.**
-  - Alternatively if you use [homebrew](https://brew.sh) you can install the driver using command
+- [MacOS](http://www.wch.cn/download/CH341SER_MAC_ZIP.html){target=_blank} (This is the manufacturers web site, in Chinese, for the USB driver chip on the LoLin NodeNCU board - use Google Chrome to translate, or just click the download link to access the macOS driver).  **After installing goto System Preferences -> Security and Privacy to allow the driver to be loaded.**
+  - Alternatively if you use [homebrew](https://brew.sh){target=_blank} you can install the driver using command
 
     ```bash
     brew cask install homebrew/cask-drivers/wch-ch34x-usb-serial-driver
     ```
 
-- [**Win/Linux**](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers)
+- [**Win/Linux**](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers){target=_blank}
 
 Select the appropriate one for your OS, download it, unzip it and install it.
 
 !!! note
     Linux should not need a driver installing, as it should already be installed.
 
-If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).
+If you have your own ESP8266 module then it may not use the CH340G USB to serial chip.  Another very popular chip is the CP2102, which is used in Amica branded boards.  The drivers for this chip can be found [**here**](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers){target=_blank}.
 
-If you are a Mac user and use [homebrew](https://brew.sh) then the driver can be installed using command:
+If you are a Mac user and use [homebrew](https://brew.sh){target=_blank} then the driver can be installed using command:
 
 ```bash
 brew cask install homebrew/cask-drivers/silicon-labs-vcp-driver
@@ -76,7 +76,7 @@ When the driver is installed and the NodeMCU module is connected you can test if
 
 ### Step 2 - Install the Arduino IDE
 
-The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software).  Select the version for your OS then download and install it:
+The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software){target=_blank}.  Select the version for your OS then download and install it:
 
 - Linux : Your linux distro may have Arduino available in the software package manager catalog, if not you can manually install it:
     - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh`
@@ -105,7 +105,7 @@ Select *Tools* -> *Board:* -> *Board Manager...* from the menu, then enter ESP i
 
 ### Step 4 - Install the filesystem upload tool for ESP8266
 
-The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin/releases).  You need to create a tools directory within the sketch directory then extract the content there.
+The ESP8266 has flash memory that can hold a filesystem.  There is a plugin for Arduino that allows you to generate a populated filesystem and upload it to the ESP8266 board.  The plugin can be downloaded from [**here**](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin/releases){target=_blank}.  You need to create a tools directory within the sketch directory then extract the content there.
 
 ![tools directory](../images/toolsDirectory.png)
 
@@ -125,12 +125,12 @@ During the workshop you will be generating your own self-signed certificates, so
 - Linux : openssl is installed as part of the OS for most distros, so should have nothing to do here.  If it is not installed then most distros have an openssl package which can be installed using the distro package installer tool.
 - MacOS : openssl is installed as part of the OS, so nothing to do here.
 - Windows : There are 2 options for installing OpenSSL on Windows.  You can install a binary distribution to run on Windows or you can enable the Windows Subsystem for Linux, which provides a Linux environment within Windows:
-  - **Windows Binary**: The openssl official website only provides source.  You can choose to build the binaries from source, but there are links to sites hosting prebuilt binaries, such as [this site](https://slproweb.com/products/Win32OpenSSL.html) for 32 and 64 bit Windows.  You want to select one of the 1.1.x versions.  You only need light version for this workshop, but you can choose the full version if you want the additional developer resources.  When installing, the default install options are OK.  The standard install does **NOT** add the openssl executable to the system PATH, so you will need to specify the full path of the binary when entering commands, unless you add it to the PATH, e.g. `c:\OpenSSL-Win64\bin\openssl.exe`.  
+  - **Windows Binary**: The openssl official website only provides source.  You can choose to build the binaries from source, but there are links to sites hosting prebuilt binaries, such as [this site](https://slproweb.com/products/Win32OpenSSL.html){target=_blank} for 32 and 64 bit Windows.  You want to select one of the 1.1.x versions.  You only need light version for this workshop, but you can choose the full version if you want the additional developer resources.  When installing, the default install options are OK.  The standard install does **NOT** add the openssl executable to the system PATH, so you will need to specify the full path of the binary when entering commands, unless you add it to the PATH, e.g. `c:\OpenSSL-Win64\bin\openssl.exe`.  
   
     !!! note
-        this method will not provide the xxd binary, but you don't need it for this workshop.  If you get an error saying **MSVCR120.dll** is missing, then you can download the Visual Studio 2013 redistibutable package [here](https://support.microsoft.com/en-us/help/3179560)
+        this method will not provide the xxd binary, but you don't need it for this workshop.  If you get an error saying **MSVCR120.dll** is missing, then you can download the Visual Studio 2013 redistibutable package [here](https://support.microsoft.com/en-us/help/3179560){target=_blank}
 
-  - **Windows Subsystem for Linux**:  This option installs a Linux distribution within Windows, so you get access to all the Linux utilities and can install additional packages, such as openssl. To enable Linux Services for windows follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  Select Debian as the Linux distribution, then when it is installed launch Debian then run the following commands at the Linux command prompt:
+  - **Windows Subsystem for Linux**:  This option installs a Linux distribution within Windows, so you get access to all the Linux utilities and can install additional packages, such as openssl. To enable Linux Services for windows follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10){target=_blank}.  Select Debian as the Linux distribution, then when it is installed launch Debian then run the following commands at the Linux command prompt:
 
     ```bash
     sudo apt-get update ; sudo apt-get upgrade
@@ -139,6 +139,30 @@ During the workshop you will be generating your own self-signed certificates, so
 
 ## Ensure you have a working IBM Cloud account
 
-The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com/registration) link.
+The workshop will use services hosted on the IBM Cloud, so you need to ensure you have a working account. If not you can sign up for free, without needing to input any credit card details, by following [**this**](https://cloud.ibm.com/registration){target=_blank} link.
 
 The workshop can be completed using the free, lite account.
+
+## Optional content prerequisite
+
+If you want to look at the additional resources content, which deploys a local MQTT broker, you will also need to have [Docker](https://www.docker.com){target=_blank} installed on your local system.  This could be your laptop or a small device, such as a Raspberry Pi.
+
+### Installing Docker on a laptop
+
+Follow the **Get Started with Docker** links for Docker Desktop on [this page](https://www.docker.com/products/docker-desktop){target=_blank}.  Select your operating system from the dropdown
+
+### Installing Docker on a Raspberry Pi
+
+To install docker on a Raspberry Pi, ensure you are running the latest version of Raspberry Pi OS, then open a terminal to your Pi (using the terminal application on the desktop or over an SSH connection) and run the following commands:
+
+```sh
+sudo apt update
+sudo apt upgrade -y
+curl -sSL https://get.docker.com | sh
+sudo usermod -aG docker pi
+logout
+```
+
+You need to log back into the pi to use Docker.
+
+To test Docker is running properly issue the following command ```docker run hello-world``` and you should see a welcome message showing Docker is working.s

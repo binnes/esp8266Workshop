@@ -10,9 +10,9 @@ theme:
 use_directory_urls: false
 plugins:
   - search
-#  - with-pdf:
-#      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
-#      output_path: pdf/esp8266Workshop.pdf
+  - with-pdf:
+      cover_subtitle: using a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud
+      output_path: pdf/esp8266Workshop.pdf
 markdown_extensions:
   - attr_list
   - admonition
@@ -61,5 +61,10 @@ nav:
   - Additional:
     - Agenda: AGENDA.md
     - Resources: RESOURCES.md
-    - Mosquitto Broker : mosquitto/README.md
+    - Mosquitto Broker : 
+      - Mosquitto setup : mosquitto/README.md
+      - User management : mosquitto/USERS.md
+      - Server Certificate : mosquitto/CERT1.md
+      - Client Certificate : mosquitto/CERT2.md
+      - Topic security : mosquitto/TOPIC.md
 google_analytics: ['UA-172132667-1', 'binnes.github.io/esp8266Workshop']

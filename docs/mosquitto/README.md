@@ -10,7 +10,7 @@ To run the mqtt broker and test it locally we will setup a Docker network.  This
 
 To setup the network enter command ```docker network create mqtt```
 
-To start Mosquitto, open a terminal or command window and enter the command ```docker run -itd -p 1883:1883 -p 9001:9001 --network mqtt --name mosquitto eclipse-mosquitto```
+To start Mosquitto, open a terminal or command window and enter the command ```docker run -itd -p 1883:1883 --network mqtt --name mosquitto eclipse-mosquitto```
 
 To test it you can also run Node-RED locally in Docker.  To ensure the Node-RED flows are retained when if the Node-RED container is restarted, then a local directory will be mapped into the Node-RED container, so we need to create a local directory to map into the Node-RED container.
 
@@ -46,7 +46,6 @@ To test it you can also run Node-RED locally in Docker.  To ensure the Node-RED 
         --name : this names the container instance, so the name can be used in docker commands rather than having to use the container ID.  The name is also used to provide network name resolution when --network is used  
         The **\`pwd\`**, **%cd%** or **$PWD** part of the local directory is expanded to represent the fully qualified path of the current directory by the command line interpreter  
         **Note** the **\` \`** characters around pwd are not standard single quotes, they are backward single quotes
-
 
 You can now access Node-RED from a browser, running on the same system as the Node-RED Docker container, using address [http://localhost:1880](http://localhost:1880){target=_blank}.  Once the Node-RED web user interface is displayed, use the Node-RED top menu to import a Node-RED flow then copy and paste the flow below:
 
@@ -88,7 +87,7 @@ To see what containers are running you use the ```docker ps -a``` command.  You 
 ``` text
 docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                                            NAMES
-6f36d09be224        eclipse-mosquitto   "/docker-entrypoint.…"   28 minutes ago      Up 28 minutes             0.0.0.0:1883->1883/tcp, 0.0.0.0:9001->9001/tcp   mosquitto
+6f36d09be224        eclipse-mosquitto   "/docker-entrypoint.…"   28 minutes ago      Up 28 minutes             0.0.0.0:1883->1883/tcp                           mosquitto
 0e3e15a37dc9        nodered/node-red    "npm start --cache /…"   29 minutes ago      Up 29 minutes (healthy)   0.0.0.0:1880->1880/tcp                           nodered
 ```
 
@@ -106,14 +105,14 @@ This stops the container, but doesn't remove it.  To remove a container use the 
 docker rm mosquitto
 ```
 
-When using named containers there can only be a single container with a name.  So you need to remove any previous container before creating a new one.
+When using named containers there can only be a single container with a given name.  So you need to remove any previous container using the name before creating a new one.
 
 To start the container using the config and local storage ensure you are in the directory containing the config, data and log folder then use command:
 
 - Linux and Mac:
 
     ``` sh
-    docker run -itd -p 1883:1883 -p 9001:9001 -v `pwd`/config:/mosquitto/config -v `pwd`/data:/mosquitto/data -v `pwd`/log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
+    docker run -itd -p 1883:1883 -v `pwd`/config:/mosquitto/config -v `pwd`/data:/mosquitto/data -v `pwd`/log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
     ```
 
     !!! Info
@@ -122,11 +121,11 @@ To start the container using the config and local storage ensure you are in the 
 - Windows Command prompt:
 
     ``` bat
-    docker run -itd -p 1883:1883 -p 9001:9001 -v %cd%\config:/mosquitto/config -v %cd%\data:/mosquitto/data -v %cd%\log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
+    docker run -itd -p 1883:1883 -v %cd%\config:/mosquitto/config -v %cd%\data:/mosquitto/data -v %cd%\log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
     ```
 
 - Windows Power shell
 
     ``` powershell
-    docker run -itd -p 1883:1883 -p 9001:9001 -v $PWD\config:/mosquitto/config -v $PWD\data:/mosquitto/data -v $PWD\log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
+    docker run -itd -p 1883:1883 -v $PWD\config:/mosquitto/config -v $PWD\data:/mosquitto/data -v $PWD\log:/mosquitto/log --network mqtt --name mosquitto eclipse-mosquitto
     ```

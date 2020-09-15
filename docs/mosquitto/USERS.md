@@ -46,7 +46,9 @@ mosquitto_passwd -b /mosquitto/config/passwd dev01 devpwd
 !!! Warning
     Specifying a password on the command line is considered bad practice, as the password will be visible on any system monitoring tools showing commands being currently run, such as the linux **ps** command.
 
-You can also call the mosquitto_passwd command without having to first launch the command shell from within the container by specifying the command in the docker exec command.  Leave the interactive command prompt within the container by entering the ```exit``` command.
+Leave the interactive command prompt within the container by entering the ```exit``` command.
+
+You can also call the mosquitto_passwd command without having to first launch the command shell from within the container by specifying the command in the docker exec command.  
 
 Ensure you are at your local system prompt (not within the container) then enter the following command:
 

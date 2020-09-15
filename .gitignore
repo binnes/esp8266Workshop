@@ -1,6 +1,7 @@
 *.der
 *.pem
 *.csr
+*.key
 *der.h
 .DS_Store
 *.code-workspace

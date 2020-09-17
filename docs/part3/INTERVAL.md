@@ -22,7 +22,7 @@ This section will build a Node-RED Dashboard Form where you can enter a new repo
 Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.github.io/esp8266Workshop/part3/flows/NRD-ReportingInterval-Form.json){target=_blank}
 
 - Turn to the *Set ESP8266 Interval* flow tab.
-- Fix the configuration of the **mqtt in** node
+- Fix the configuration of the **mqtt out** node
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
 ![Node-RED Dashboard Form flow screenshot](screenshots/NRD-ReportingIntervalForm-flow.png)
@@ -52,8 +52,7 @@ Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.g
 ### Step 4 - Send MQTT Commands using the **MQTT Out** Node
 
 - Double-click on the IBM IoT node (4). An **Edit mqtt out node** sidebar will open.
-- The **mqtt out** node is configured to send a **Device Command** (5) to your ESP8266 Device Id by using the appropriate topic.  The target device is identified as part of the topic
-- The **Command Type** will be named *interval* and is also set in the topic
+- The **mqtt out** node is configured to send a **Device Command** (5) to your ESP8266 Client Id by using the appropriate topic.  For this example the target device is hardcoded into the flow as part of the topic, but ideally this should be provided from the dashboard form, so multiple devices can be configured.
 - Press the red Done button.
 
 ![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-mqttnode.png)
@@ -65,12 +64,12 @@ Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.g
 IoT Workshop Arduino Program : [Get the Code](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/IoTWorkshop.ino/IoTWorkshop.ino.ino)
 
 - Return to the Arduino IDE
-- Record your Watson IoT connection details from the top of your version of the existing IoTWorkshop.ino you created in Part 2.
+- Record your MQTT Broker connection details from the top of your version of the existing IoTWorkshop.ino you created in Part 2.
 - Replace the source code with the above.
 - This version registers a callback and subscribes to MQTT Device Commands.
 - The program loops but polls for MQTT incoming Commands.
 - If a Interval command is sent, it updates how long it should sleep before sending the next DHT environmental sensor data.
-- Merge in your Watson IoT connection details.
+- Merge in your CloudAMQP connection details.
 - Compile and Flash this updated program to the ESP8266
 
 ### Step 6 - Node-RED Dashboard Reporting Interval Form

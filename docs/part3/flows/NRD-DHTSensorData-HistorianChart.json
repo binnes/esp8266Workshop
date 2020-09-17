@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": "572a4fbb.49dd48",
         "type": "tab",
         "label": "Historical Chart",
@@ -65,7 +64,7 @@
         "type": "function",
         "z": "572a4fbb.49dd48",
         "name": "Create a Chart Array for Chart.js",
-        "func": "// This function reformats the timeseries data into an array that \n// Chart.js (See http://www.chartjs.org/ ) will plot\n// The node-red-dashboard Chart node uses Chart.js \n\nvar starttime = flow.get(\"start-time\");\nvar endtime = flow.get(\"end-time\");\n\nif( msg.payload.length === 0 ) {\n    // The historical database does not contain values for this date range \n    // Reset the chart with a blank array\n    msg.payload = [] ;\n    return msg;\n}\n\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Data\"],\n                   \"data\":[[{\"x\":msg.payload[0].time,\"y\":msg.payload[0].temp}]],\n                   \"labels\":[\"Data\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.length; i++ ) {\n    if( (msg.payload[i].time >= starttime) && (msg.payload[i].time <= endtime) ) {\n        // This temperature reading is within the Date Range\n        ChartData[0].data[0].push( { \"x\":msg.payload[i].time,\"y\":msg.payload[i].temp } );\n    }    \n}\n// Now we need to sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "func": "// This function reformats the timeseries data into an array that \n// Chart.js (See http://www.chartjs.org/ ) will plot\n// The node-red-dashboard Chart node uses Chart.js \n\nvar starttime = flow.get(\"start-time\");\nvar endtime = flow.get(\"end-time\");\n\nif( msg.payload.length === 0 ) {\n    // The historical database does not contain values for this date range \n    // Reset the chart with a blank array\n    msg.payload = [] ;\n    return msg;\n}\n\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Data\"],\n                   \"data\":[[{\"x\":msg.payload[0].time,\"y\":msg.payload[0].tmp}]],\n                   \"labels\":[\"Data\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.length; i++ ) {\n    if( (msg.payload[i].time >= starttime) && (msg.payload[i].time <= endtime) ) {\n        // This temperature reading is within the Date Range\n        ChartData[0].data[0].push( { \"x\":msg.payload[i].time,\"y\":msg.payload[i].tmp } );\n    }    \n}\n// Now we need to sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 630,
@@ -163,15 +162,13 @@
         "type": "change",
         "z": "572a4fbb.49dd48",
         "name": "Query Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"query\":\"OrderId:'1801'\",\"limit\":100}",
-                "tot": "json"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "{\"query\":\"OrderId:'1801'\",\"limit\":100}",
+            "tot": "json"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -301,15 +298,13 @@
         "type": "change",
         "z": "572a4fbb.49dd48",
         "name": "Start Date",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "1451624400000",
-                "tot": "num"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "1451624400000",
+            "tot": "num"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -328,15 +323,13 @@
         "type": "change",
         "z": "572a4fbb.49dd48",
         "name": "End Date",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "1577750401000",
-                "tot": "num"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "1577750401000",
+            "tot": "num"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -355,15 +348,13 @@
         "type": "change",
         "z": "572a4fbb.49dd48",
         "name": "Start Time Range",
-        "rules": [
-            {
-                "t": "set",
-                "p": "start-time",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "start-time",
+            "pt": "flow",
+            "to": "payload",
+            "tot": "msg"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -382,15 +373,13 @@
         "type": "change",
         "z": "572a4fbb.49dd48",
         "name": "End Time Range",
-        "rules": [
-            {
-                "t": "set",
-                "p": "end-time",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "end-time",
+            "pt": "flow",
+            "to": "payload",
+            "tot": "msg"
+        }],
         "action": "",
         "property": "",
         "from": "",

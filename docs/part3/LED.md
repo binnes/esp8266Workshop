@@ -50,7 +50,7 @@ Node-RED Set LED Threshold Flow : [Get the Code](https://binnes.github.io/esp826
 - Press the red Done button to close the **mqtt out** sidebar.
 - Double-click the set msg.topic change node to open the **Edit change node** sidebar
 - click the **...** after the to input box to open the JSONata editor
-- See how the topic is created by extracting the device type and device id from the incoming topic
+- See how the topic is created by extracting the device type and client id from the incoming topic
 - The **Command Type** will be named *display*.
   ![Node-RED Set LED JSONata](screenshots/Node-RED-SetLED-JSONata.png)
 - Press the red Done button and then the red Done button again to close the side bars.

@@ -1,4 +1,4 @@
-# Adding secure communication between the device and IoT Platform using SSL/TLS
+# Adding secure communication between the device and MQTT broker using SSL/TLS
 
 ## Lab Objectives
 
@@ -44,7 +44,7 @@ Part of the certificate verification process checks that the certificate is in d
 
 You have already uploaded the CA certificate to the ESP8266, so now the code needs to be updated to load the certificate from the flash file system and switch to using a SSL/TLS connection.
 
-Make the following code changes:
+Make the following code changes, modifying the TZ_OFFSET and TZ_DST values to represent your local timezone shift (in hours) from Greenwich Mean Time (GMT/UTC) and daylight savings time shift (in minutes):
 
 - Add an include at the top of the file to access the file system : `#include <LittleFS.h>`
 - Add an include after the **ESP8266WiFi.h** include to add time : `#include <time.h>`
@@ -98,7 +98,7 @@ Make the following code changes:
 
   // Connect to MQTT
   while(! mqtt.connected()){
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
@@ -111,10 +111,6 @@ Make the following code changes:
     }
   }
 ```
-
-Save, compile and upload the code and now you should have a secure connection.  If you look at the IoT Platform console, in the devices section you should now see the connection state, in the Identity section when selecting the device, is connected with **SecureToken**.  Previous the status would have shown **Insecure**.
-
-You should now go into the IoT Platform settings section and update the connection security policy from **TLS Optional** to **TLS with Token Authentication** then **Save** the change.
 
 ### Step 5 - How the LittleFS file system works
 
@@ -150,10 +146,10 @@ The finished application should look like this:
 // MQTT connection details
 #define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 8883
-#define MQTT_DEVICEID "dev01"
+#define MQTT_CLIENT_ID "dev01"
 #define MQTT_USER "abcdezgf:abcdezgf"
 #define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
-#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC "dev01/status"
 #define MQTT_TOPIC_DISPLAY "dev01/display"
 #define CA_CERT_FILE "/USERTrustRSAAddTrustCA.pem"
 
@@ -280,7 +276,7 @@ void setup() {
 
   // Connect to MQTT
    while(! mqtt.connected()){
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
     } else {
@@ -299,7 +295,7 @@ void loop() {
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
      mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
@@ -328,8 +324,8 @@ void loop() {
     pixel.show();
 
     // Publish data to MQTT
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
     if (!mqtt.publish(MQTT_TOPIC, msg)) {

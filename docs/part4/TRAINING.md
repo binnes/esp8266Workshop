@@ -36,7 +36,7 @@ To create the flow, open up the Node-RED editor running on the IBM Cloud (as use
 2. Connect the **mqtt in** node to the **change** node and then the **change** node to the **debug** node.  DO NOT connect the **cloudant out** node yet.
 3. Configure the **mqtt in** node to use the previously defined server configuration and set the topic to listen to all JSON data from all devices `iot-2/type/+/id/+/evt/+/fmt/json` as shown: ![nodered ibmiot node config](screenshots/nr-mqtt-config.png)
 4. Configure the **change** node to have 2 set rules.  The first rule reformats the data received from the IoT platform, to flatten it and add a timestamp.  The second rule adds the class property and initially sets it to class 0:
-   - set msg.payload to JSONata expression ```msg.payload.{"time" : $millis(),"temp" : d.temp, "humidity" : d.humidity}```
+   - set msg.payload to JSONata expression ```msg.payload.{"time" : $millis(),"tmp" : d.tmp, "hmdty" : d.hmdty}```
    - set msg.payload.class to number 0  
    as shown : ![nodered change node config](screenshots/nr-change-config.png)
 5. Configure the **cloudant out** node to use the cloud service and set the database name to training and ensure the operation is set to insert and to only store msg.payload object as shown: ![nodered cloudant out node config](screenshots/nr-cloudant-config.png)
@@ -46,7 +46,7 @@ You should have a flow that looks like this: ![nodered flow](screenshots/nr-flow
 If your flow is not working then you can import the sample flow, which is also available in the [flows](flows) folder in part4 of the repo :
 
 ```JSON
-[{"id":"332d48ae.1555b","type":"change","z":"46c77ae0.25061c","name":"","rules":[{"t":"set","p":"payload","pt":"msg","to":"msg.payload.{\"time\" : $millis(), \"temp\" : d.temp, \"humidity\" : d.humidity} ","tot":"jsonata"},{"t":"set","p":"payload.class","pt":"msg","to":"0","tot":"num"}],"action":"","property":"","from":"","to":"","reg":false,"x":1040,"y":260,"wires":[["c5369a33.c87e08"]]},{"id":"c5369a33.c87e08","type":"debug","z":"46c77ae0.25061c","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":1210,"y":300,"wires":[]},{"id":"95115355.458a9","type":"cloudant out","z":"46c77ae0.25061c","name":"","cloudant":"","database":"training","service":"","payonly":true,"operation":"insert","x":1220,"y":260,"wires":[]},{"id":"b1eeaccd.78ca6","type":"mqtt in","z":"46c77ae0.25061c","name":"","topic":"iot-2/type/+/id/+/evt/+/fmt/json","qos":"2","datatype":"json","broker":"","x":790,"y":260,"wires":[["332d48ae.1555b"]]}]
+[{"id":"332d48ae.1555b","type":"change","z":"46c77ae0.25061c","name":"","rules":[{"t":"set","p":"payload","pt":"msg","to":"msg.payload.{\"time\" : $millis(), \"tmp\" : d.tmp, \"hmdty\" : d.hmdty} ","tot":"jsonata"},{"t":"set","p":"payload.class","pt":"msg","to":"0","tot":"num"}],"action":"","property":"","from":"","to":"","reg":false,"x":1040,"y":260,"wires":[["c5369a33.c87e08"]]},{"id":"c5369a33.c87e08","type":"debug","z":"46c77ae0.25061c","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":1210,"y":300,"wires":[]},{"id":"95115355.458a9","type":"cloudant out","z":"46c77ae0.25061c","name":"","cloudant":"","database":"training","service":"","payonly":true,"operation":"insert","x":1220,"y":260,"wires":[]},{"id":"b1eeaccd.78ca6","type":"mqtt in","z":"46c77ae0.25061c","name":"","topic":"iot-2/type/+/id/+/evt/+/fmt/json","qos":"2","datatype":"json","broker":"","x":790,"y":260,"wires":[["332d48ae.1555b"]]}]
 ```
 
 This flow creates the following output, which we will write to the database:
@@ -54,8 +54,8 @@ This flow creates the following output, which we will write to the database:
 ```JSON
 {
     "time":1546969694969,
-    "temp":20,
-    "humidity":51,
+    "tmp":20,
+    "hmdty":51,
     "class":0
 }
 ```

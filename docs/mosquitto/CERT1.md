@@ -18,7 +18,8 @@ Modify the top section of the appropriate script file (.bat file if you are work
 - **COUNTRY_CODE** - is the country code where you are (for information purposes in cert - can leave at GB or you can find a list of valid ISO alpha-2 country codes [here](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes))
 - **COUNTY_STATE** - is the county, state or district where you are (for information purposes in cert - can leave at DOR, which is for Dorset, an English county)
 - **TOWN** - is the city, town or village where you are (for information purposes in cert - can leave at Bournemouth)
-- **DEVICE_ID** - us the device id for your device, **dev01** is the default value in the file.
+- **CLIENT_ID_1** - us the client id for your ESP8266 device, **dev01** is the default value in the file.
+- **CLIENT_ID_2** - us the client id for your Node-RED application, **dev02** is the default value in the file.
 
 Do not make any modifications below the comment in the script file.
 
@@ -28,7 +29,7 @@ The sample file shows how to define both DNS names and IP addresses.  As we are 
 
 However, if you want to change the ESP8266 from using the cloud based broker to use your local Mosquitto broker then you need to ensure the hostname of the system where the Mosquitto container is running is included in the **[alt_names]** section.  To find the hostname of your computer use the command ```hostname```, which should work on all Operating Systems.  You want to use the value returned up to the first **.** character, then add **.local** to the end.
 
-E.g. if hostname returned **win10** then ensure **win10.local** is in the **[alt_names]** section of the **srvext.cfg** file : ```DNS.3 = win10.local```
+E.g. if ```hostname``` returned **win10** or **win10.acme.inc** then ensure **win10.local** is in the **[alt_names]** section of the **srvext.cfg** file : ```DNS.3 = win10.local```
 
 *Instructions for connecting the ESP8266 to the Mosquitto broker are provided in the next section*
 
@@ -76,9 +77,9 @@ This generates the key and protects it with a password.  A public certificate is
 
 After generation the Root Certificate Authority key and certificate, the script generates the key and certificate for the MQTT server.  It does this by generating a key, then creating a certificate request file.  The x509 takes the certificate request and the CA root certificate and key then generates the MQTT server certificate, which is signed by the CA root certificate.
 
-The MQTT server certificate must includes the DNS name of the server.  This is used as part of the verification process at connection time, to ensure that the client is talking to the intended server.  The script generates the **srvext_custom.cfg** file with the correct DNS address for your instance of the Watson IoT platform.
+The MQTT server certificate must includes the DNS name of the server.  This is used as part of the verification process at connection time, to ensure that the client is talking to the intended server.  The script generates the **srvext_custom.cfg** file with the correct DNS address for your instance of the MQTT Broker.
 
-To generate a certificate for the IoT platform the script runs the following commands:
+To generate a certificate for the Mosquitto Broker the script runs the following commands:
 
 ```bash
 openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem 2048

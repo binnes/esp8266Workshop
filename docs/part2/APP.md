@@ -10,13 +10,13 @@ In this lab you will pull together all the information from part 1 into a single
 
 ## Introduction
 
-In part 1 you looked at a number of example sketches to see how the WiFi, NeoPixel LED and DHT sensors work with Arduino.  Now you will create an application combining all the features then as we work through the remainder of this part you will connect the device to the IoT platform and add code to send data to the platform and receive commands from the platform.  Initially you will use unsecured MQTT connections, then at the end of this section you will add SSL/TLS and certificate verification to secure the communication.
+In part 1 you looked at a number of example sketches to see how the WiFi, NeoPixel LED and DHT sensors work with Arduino.  Now you will create an application combining all the features then as we work through the remainder of this part you will connect the device to the cloudAMQP MQTT Broker and add code to send data to the MQTT broker and receive commands from the MQTT broker.  Initially you will use unsecured MQTT connections, then at the end of this section you will add SSL/TLS and certificate verification to secure the communication.
 
 ### Step 1 - Create a new sketch
 
 Create a new sketch in the Arduino IDE using *File* -> *New* or the icon in the tool bar.  The save the sketch *File* -> *Save* and name the sketch, suggested name **esp8266Workshop**.
 
-You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the IoT Platform the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for **ArduinoJson** and install the latest version of the library.  
+You need to add 1 more library to the Arduino IDE to provide functions to handle the JSON data format.  When we start sending and receiving data from the MQTT broker the JSON data format will be used, so we can start using JSON now.  In the Library Manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for **ArduinoJson** and install the latest version of the library.  
 
 !!! warning
     You must have the latest version (6.x or higher) as the API changed from v5 to v6, so this code will not compile with v5 or earlier
@@ -130,8 +130,8 @@ void loop()
     pixel.show();
 
     // Print Message to console in JSON format
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
   }
@@ -163,8 +163,8 @@ JSON format is widely used for APIs and data exchange between systems.  The abov
 
     ```C++
     JsonObject status = payload.createNestedObject("d");
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     ```
 
 The **serializeJson()** function converts the JSON object to a string and writes it into the provided buffer, so it can be used as a c-string.

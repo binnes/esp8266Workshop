@@ -9,12 +9,11 @@ Hopefully you now have a good understanding of some of the work needed to create
   - Connected to local WiFi network
   - Handled communication with the connected DHT sensor and LED
   - Obtained the current time using NTP server
-  - Connected securely to the Watson IoT platform
+  - Connected securely to the cloudAMQP MQTT Broker
   - Sent and received JSON messages over MQTT
   - Implemented the Logistic Regression function with the parameters from the trained model
-- Created SSL certificates to secure communication between the Watson IoT platorm and the ESP8266 board
 - Deployed an application and services on the IBM Cloud
-- Configured the Watson IoT service to securely communicate with your ESP8266 board
+- Configured the CloudAMQP MQTT Broker to securely communicate with your ESP8266 board and Node-RED application
 - Implemented Node-RED flows to work with IoT data, store data in a Cloudant NoSQL database and send commands to the ESP8266 board
 - Implemented a dashboard in Node-RED to visualise the IoT data and configure behaviour of the ESP8266 board
 - Worked in Watson Studio to access database records, containing data from the ESP8266 device

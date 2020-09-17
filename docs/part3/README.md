@@ -7,7 +7,7 @@
 
 ## Receive Environmental Sensor Data in Node-RED
 
-In this lab you will set up Node-RED in your Watson IoT Starter application created at the end of Part 1 and learn about low code programming with Node-RED.
+In this lab you will set up Node-RED in your IBM Cloud Starter application created at the end of Part 1 and learn about low code programming with Node-RED.
 
 - Estimated duration: 10 min
 - practical [**Environmental Sensor Data**](DHTDATA.md)

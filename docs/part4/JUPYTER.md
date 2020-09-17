@@ -104,18 +104,18 @@ df.createOrReplaceTempView('df')
 from pyspark.sql.functions import translate, col
 
 df_cleaned = df \
-    .withColumn("temp", df.temp.cast('double')) \
-    .withColumn("humidity", df.humidity.cast('double')) \
+    .withColumn("tmp", df.tmp.cast('double')) \
+    .withColumn("hmdty", df.hmdty.cast('double')) \
 
 df_cleaned.createOrReplaceTempView('df_cleaned')
-df_cleaned.select('temp', 'humidity').distinct().show()
+df_cleaned.select('tmp', 'hmdty').distinct().show()
 ```
 
 - Now we will create a new data frame for each training class.  In the next cell enter then run the following:
 
 ```python
-df_class_0 = spark.sql('select time, temp, humidity, class from df_cleaned where class = 0')
-df_class_1 = spark.sql('select time, temp, humidity, class from df_cleaned where class = 1')
+df_class_0 = spark.sql('select time, tmp, hmdty, class from df_cleaned where class = 0')
+df_class_1 = spark.sql('select time, tmp, hmdty, class from df_cleaned where class = 1')
 df_class_0.createOrReplaceTempView('df_class_0')
 df_class_1.createOrReplaceTempView('df_class_1')
 ```
@@ -126,7 +126,7 @@ For the rest of this section feel free to explore the different options availabl
 
 ```python
 # examine the data
-df_class_0.select('temp', 'humidity').distinct().show()
+df_class_0.select('tmp', 'hmdty').distinct().show()
 ```
 
 - You can verify the database schema:
@@ -179,7 +179,7 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 ```python
 # create binary classifier model
-vectorAssembler = VectorAssembler(inputCols=["humidity","temp"],
+vectorAssembler = VectorAssembler(inputCols=["hmdty","tmp"],
                                   outputCol="features")
 lr = LogisticRegression(maxIter=1000).setLabelCol("class")
 pipeline = Pipeline(stages=[vectorAssembler, lr ])
@@ -216,14 +216,14 @@ binEval.evaluate(result)
 # re-read data from cloudant
 new_df = readDataFrameFromCloudant('training')
 new_df_cleaned = new_df \
-    .withColumn("temp", new_df.temp.cast('double')) \
-    .withColumn("humidity", new_df.humidity.cast('double')) \
+    .withColumn("tmp", new_df.tmp.cast('double')) \
+    .withColumn("hmdty", new_df.hmdty.cast('double')) \
 
 new_df_cleaned.createOrReplaceTempView('df_cleaned')
 
 result = model.transform(new_df_cleaned)
 result.createOrReplaceTempView('result')
-spark.sql("select humidity, temp, class, prediction from result").show(50)
+spark.sql("select hmdty, tmp, class, prediction from result").show(50)
 ```
 
 (Optionally) If you want to test your model try recording another set of data without the class property - the historic data you are collecting is in the correct format for this.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
@@ -233,7 +233,7 @@ spark.sql("select humidity, temp, class, prediction from result").show(50)
 new_df = readDataFrameFromCloudant('historicaldata1')
 result = model.transform(new_df)
 result.createOrReplaceTempView('result')
-spark.sql("select humidity, temp, prediction from result").show(50)
+spark.sql("select hmdty, tmp, prediction from result").show(50)
 ```
 
 ## Sample solution

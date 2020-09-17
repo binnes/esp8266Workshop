@@ -18,7 +18,7 @@ openssl rsa -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_
 openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
 ```
 
-You will notice that the client certificate contains the device ID in the CN property of the certificate subject field.  This is how the certificate identifies the client to the server.
+You will notice that the client certificate contains the client ID in the CN property of the certificate subject field.  This is how the certificate identifies the client to the server.
 
 There are 2 client devices created in the make certificate script.  Only a single device can connect using a client ID, so we need to have unique certificates for each connection to the broker.
 
@@ -77,6 +77,19 @@ Your MQTT nodes should once again be connected.
     Note, the connection is no longer using the **Username** and **Password** properties configured on the Security tab of the MQTT server configuration panel within the MQTT node config.  The username and client ID are now being set from the CN property within the client certificate.
 
 ## Updating the ESP8266 Application to use Client Certificates with the Mosquitto Broker
+
+In this section you you will learn how to access the broker over a local network connection.  However, network connectivity does add some additional requirements, especially where TLS and secure connections are used.
+
+### Name Resolution
+
+To allow the external device to be able to connect to your broker it needs to be able to find the system running Docker over the network.  To do this a technology called mDNS (multicast DNS), also referred to as ZeroConf or Bonjour, will be used.  This simply allows machines on a local network to communicate to be able to discover each other.  You simply use the **.local** domain to use this service.
+
+MacOS and the latest version of Windows 10 have this built in.  Some Linux distributions also have this service enabled by default.
+
+- Older versions of Windows need additional software installed to enabled mDNS.  The easiest way to add the service is to install [Bonjour Print Services for Windows](https://support.apple.com/kb/dl999)
+- Some Linux distributions may need an additional package installed to enable mDNS.  Linux uses [avahi](https://www.avahi.org) to add mDNS services to Linux.  There is usually an **avahi** or **avahi-daemon** package available to add the required software.
+
+### Enable the ESP8266 to work with a local Mosquitto broker
 
 If you want to use the Mosquitto broker with the ESP8266 application developed in the workshop, then some additional code is needed to enable the use of client certificates, but first the certificates need to be uploaded to the device.
 
@@ -174,14 +187,26 @@ then update the code within the setup() function to load the additional key and 
   wifiClient.setClientRSACert(clientCert, clientKey);
 ```
 
-### Step 3 - Run the application
+### Step 3 - Update the broker hostname
+
+To allow the ESP8266 to find the broker you need to use the hostname of the system running Docker.  When you generated the certificates in the previous section you used the ```hostname``` command, then added the .local domain to form a DNS entry in the server certificate using the **srvext.cfg** file.  
+
+This will use mDNS on your local home network to enable the ESP8266 to discover the Mosquitto broker.  It also allows the TLS connection to verify the server certificate, as the hostname connecting to will match the entry in the certificate.
+
+You need to modify the ESP8266 application to use the hostname, by updating the #define near to top of the application.  If the hostname returned from the ```hostname``` command was **win10** or **win10.acme.inc**, then MQTT_HOST should be defined as:
+
+```C
+#define MQTT_HOST "win10.local"
+```
+
+### Step 4 - Run the application
 
 Save, compile and upload the sketch to the device and verify the device connects.
 
 Password Authentication is not being used with the configuration being used, so the **connect()** function call can be changed to omit the user and password information:
 
-- with password authentication : `if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {`
-- without password authentication : `if (mqtt.connect(MQTT_DEVICEID)) {`
+- with password authentication : `if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {`
+- without password authentication : `if (mqtt.connect(MQTT_CLIENT_ID)) {`
 
 ### Solution Code
 
@@ -204,8 +229,8 @@ The finished application should look like this, when the Mosquitto broker is run
 // MQTT connection details
 #define MQTT_HOST "win10.local"
 #define MQTT_PORT 8883
-#define MQTT_DEVICEID "dev01"
-#define MQTT_TOPIC "env/status"
+#define MQTT_CLIENT_ID "dev01"
+#define MQTT_TOPIC "dev01/status"
 #define MQTT_TOPIC_DISPLAY "dev01/display"
 #define MQTT_TOPIC_INTERVAL "dev01/interval"
 #define CA_CERT_FILE "/rootCA_certificate.pem"
@@ -341,9 +366,6 @@ void setup() {
   // Start connected devices
   dht.begin();
   pixel.begin();
-
-  // Set Device ID in JSON message content
-  payload["id"] = MQTT_DEVICEID;
   
   // Get cert(s) from file system
   LittleFS.begin();
@@ -415,10 +437,10 @@ void setup() {
   time_t now = time(nullptr);
   Serial.println(ctime(&now));
   
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
    while(! mqtt.connected()){
-//    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Password Authentication
-    if (mqtt.connect(MQTT_DEVICEID)) { // No Password Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Password Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Password Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);
@@ -439,8 +461,8 @@ void loop() {
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-//    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);

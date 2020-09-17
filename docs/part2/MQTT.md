@@ -28,11 +28,11 @@ To get the connection credentials for the CloudAMQP service:
 
 For this workshop the following topics will be used:
 
-- **env/status** : will be used to publish environmental data by the ESP8266
+- **dev01/status** : will be used to publish environmental data by the ESP8266
 - **dev01/display** : will be used to send a command to device dev01 to change the LED colour
 - **dev01/interval** : will be used to send a command to device dev01 to change the reporting interval
 
-### Step 2 - Enhancing the application to send data to the IoT platform
+### Step 2 - Enhancing the application to send data to the cloudAMQP MQTT Broker
 
 In the Arduino IDE you need to add the MQTT code, but before adding the MQTT code you need to install the library.  In the library manager (*Sketch* -> *Include Library* -> *Manage Libraries...*) search for and install the PubSubClient.  Then add the include to the top of the application, below the existing include files
 
@@ -48,10 +48,10 @@ Now add some #define statements to contain that the MQTT code will use.  Add the
 // MQTT connection details
 #define MQTT_HOST "******.******.cloudamqp.com" // This is the Hostname from the AMQP MQTT Details
 #define MQTT_PORT 1883 // This is used for unsecured traffic and can be found from the AMQP MQTT Details
-#define MQTT_DEVICEID "dev01" // This is a string representing a specific device, it is just a string
+#define MQTT_CLIENT_ID "dev01" // This is a string representing a specific device, it is just a string
 #define MQTT_USER "********:********" // This is the Username from the AMQP MQTT Details
 #define MQTT_TOKEN "**********************" // This is the Password from the AMQP Details
-#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC "dev01/status"
 #define MQTT_TOPIC_DISPLAY "dev01/display"
 ```
 
@@ -80,11 +80,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 ```
 
-at the end of the setup() function add the following code to connect the MQTT client to the IoT Platform:
+at the end of the setup() function add the following code to connect the MQTT client to the cloudAMQP MQTT broker:
 
 ```C++
   // Connect to MQTT
-  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+  if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
 
@@ -101,7 +101,7 @@ at the top of the loop() function add the following code to verify the mqtt conn
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
@@ -112,7 +112,7 @@ at the top of the loop() function add the following code to verify the mqtt conn
   }
 ```
 
-Lastly add the code to send the data to the IoT Platform.  We already have the data formatted as a JSON string, so we can now add the following code after it is printed to the console in the **loop()** function:
+Lastly add the code to send the data to the cloudAMQP MQTT broker.  We already have the data formatted as a JSON string, so we can now add the following code after it is printed to the console in the **loop()** function:
 
 ```C++
     Serial.println(msg);
@@ -150,7 +150,7 @@ The ESP8266 should also be publishing MQTT messages to the cloudAMQP service.  T
 
 1. The #define statements construct the required parameters to connect and use MQTT
 2. When you initialise the PubSubClient you need to pass in the hostname, the port (1883 for unsecured connections), a callback function and a network connection.  The callback function is called whenever incoming messages are received.
-3. Call **connect()** to connect with the platform, passing in the device ID, a user, which is always the value *use-token-auth* and the token you chose when registering the device.
+3. Call **connect()** to connect with the platform, passing in the client ID, a user, which is always the value *use-token-auth* and the token you chose when registering the device.
 4. The **subscribe()** function registers the connection to receive messages published on the given topic.
 5. The **loop()** method must be regularly called to keep the connection alive and get incoming messages.
 6. The **publish()** function sends data on the provided topic
@@ -178,10 +178,10 @@ The complete ESP8266 application is shown below (you will need to change the con
 // MQTT connection details
 #define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 1883
-#define MQTT_DEVICEID "dev01"
+#define MQTT_CLIENT_ID "dev01"
 #define MQTT_USER "abcdezgf:abcdezgf"
 #define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
-#define MQTT_TOPIC "env/status"
+#define MQTT_TOPIC "dev01/status"
 #define MQTT_TOPIC_DISPLAY "dev01/display"
 
 // Add GPIO pins used to connect devices
@@ -262,7 +262,7 @@ void setup() {
   pixel.begin();
 
   // Connect to MQTT
-  if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+  if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
     Serial.println("MQTT Connected");
     mqtt.subscribe(MQTT_TOPIC_DISPLAY);
 
@@ -277,7 +277,7 @@ void loop() {
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) {
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.loop();
@@ -302,8 +302,8 @@ void loop() {
     pixel.show();
 
     // Publish data to MQTT
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     serializeJson(jsonDoc, msg, 50);
     Serial.println(msg);
     if (!mqtt.publish(MQTT_TOPIC, msg)) {

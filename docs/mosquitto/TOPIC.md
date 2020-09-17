@@ -21,7 +21,7 @@ E.g ```device/%c/status``` is valid, but ```device_%c/status``` is not valid.
 
 ## Enabling topic access control
 
-To enable access control you simply configure a file to contain the access control definitions in the Mosquitto configuration file:
+To enable access control you simply configure a file to contain the access control definitions in the Mosquitto configuration file : **config/mosquitto.conf**:
 
 ```text
 acl_file /mosquitto/config/acl.cfg
@@ -50,14 +50,14 @@ then all rules after this line will be for the specified user until another **us
 When using one of the %u or %c substitutions then the configuration changes to use the **pattern** action.  Patterns are not user specific and will apply to all connections, even if defined after a user rule:
 
 ```text
-pattern [read|write|readwrite] <topic contining substitution>
+pattern [read|write|readwrite] <topic containing substitution>
 ```
 
 You can add comments to the configuration file using a **#** character as the first character on a line
 
 ## Sample access control configuration
 
-To demonstrate how topic access control be used we will alter the ESP8266 application to publish environmental data to topic ```dev01/status```, so the 3 topics the application uses are:
+To demonstrate how topic access control be used we will secure the ESP8266 application to ensure that one device cannot publish data or receive data impersonating a different device, so the 3 topics the application uses for a device with client ID of **dev01** are:
 
 ```C
 #define MQTT_TOPIC "dev01/status"
@@ -89,3 +89,11 @@ topic write +/interval
 
 !!! Info
     As we have tied the username and the client ID in the broker config the access control rules can use either %u or %c, as both values are the same for all broker connections to our broker.
+
+After modifying the **mosquitto.conf** file and creating the **acl.cfg** file you need to restart the Mosquitto container to make the new config live : ```docker restart mosquitto`
+
+Going to the Node-RED application you should now notice that the time messages published to the **test** topic are no longer being received.  This is because there are no rules to allow any client to read or write to the ***test*** topic.
+
+You will also notice that there are no errors generated.  The access control in Mosquitto doesn't report errors.  When there is no rule allowing a client to read or write a message it is simply dropped.  This prevents a hacker being able to discover valid topics used by an application.
+
+The Node-RED flow subscribes to topic **#**, which covers all topics, showing it is possible to subscribe to topics that you don't have access to.  When using wildcards (+ or #) you will only receive messages that have access rules allowing read access.

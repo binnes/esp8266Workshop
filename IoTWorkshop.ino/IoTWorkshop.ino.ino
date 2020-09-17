@@ -12,17 +12,14 @@
 // --------------------------------------------------------------------------------------------
 
 // MQTT connection details
-#define MQTT_HOST "<orgID>.messaging.internetofthings.ibmcloud.com"
+#define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 8883
-#define MQTT_DEVICEID "d:<orgID>:<type>:<id>"
-#define MQTT_USER "use-token-auth"
-#define MQTT_TOKEN "<token>"
-#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
-#define MQTT_TOPIC_INTERVAL "iot-2/cmd/interval/fmt/json"
-#define CA_CERT_FILE "/rootCA_certificate.pem"
-#define KEY_FILE "/SecuredDev01_key_nopass.pem"
-#define CERT_FILE "/SecuredDev01_crt.pem"
+#define MQTT_CLIENT_ID "dev01"
+#define MQTT_USER "abcdezgf:abcdezgf"
+#define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
+#define MQTT_TOPIC "dev01/status"
+#define MQTT_TOPIC_DISPLAY "dev01/display"
+#define CA_CERT_FILE "/USERTrustRSAAddTrustCA.pem"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
@@ -66,8 +63,6 @@ BearSSL::WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
 BearSSL::X509List *rootCert;
-BearSSL::X509List *clientCert;
-BearSSL::PrivateKey *clientKey;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -127,8 +122,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void setup() {
   char *ca_cert = nullptr;
-  char *client_cert = nullptr;
-  char *client_key = nullptr;
   
   // Start serial console
   Serial.begin(115200);
@@ -169,40 +162,6 @@ void setup() {
     free(ca_cert);
     ca.close();
   }
-  
-  File key = LittleFS.open(KEY_FILE, "r");
-  if(!key) {
-    Serial.println("Couldn't load key");
-  } else {
-    size_t keySize = key.size();
-    client_key = (char *)malloc(keySize);
-    if (keySize != key.readBytes(client_key, keySize)) {
-      Serial.println("Loading key failed");
-    } else {
-      Serial.println("Loaded key");
-      clientKey = new BearSSL::PrivateKey(client_key);
-    }
-    free(client_key);
-    key.close();
-  }
-  
-  File cert = LittleFS.open(CERT_FILE, "r");
-  if(!cert) {
-    Serial.println("Couldn't load cert");
-  } else {
-    size_t certSize = cert.size();
-    client_cert = (char *)malloc(certSize);
-    if (certSize != cert.readBytes(client_cert, certSize)) {
-      Serial.println("Loading client cert failed");
-    } else {
-      Serial.println("Loaded client cert");
-      clientCert = new BearSSL::X509List(client_cert);
-    }
-    free(client_cert);
-    cert.close();
-  }
-  
-  wifiClient.setClientRSACert(clientCert, clientKey);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "1.pool.ntp.org", "0.pool.ntp.org");
@@ -223,8 +182,8 @@ void setup() {
   
   // Connect to MQTT
    while(! mqtt.connected()){
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);
@@ -245,8 +204,8 @@ void loop() {
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);
@@ -282,8 +241,8 @@ void loop() {
     float modelPrediction = applyModel(h, t);
 
     // Print Message to console in JSON format
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     Serial.print("Model output = ");
     Serial.println(modelPrediction);
     status["class"] = modelPrediction < 0.5 ? 0 : 1;

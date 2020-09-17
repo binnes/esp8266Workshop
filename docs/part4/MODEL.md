@@ -8,17 +8,17 @@ In this section you will learn how to take the model parameters generated in the
 
 The algorithm at the heart of the model we generated is [Logistic Regression](https://en.wikipedia.org/wiki/Logistic_regression), which uses the Logit function (long-odds) then applies the Logistic sigmoid function:
 
-Logit function for 2 predictor values h and t (humidity and temp) is: ```C + w1*h + w2*t``` where C is a constant and w1 and w2 are weighting values for the predictors.
+Logit function for 2 predictor values h and t (hmdty and tmp) is: ```C + w1*h + w2*t``` where C is a constant and w1 and w2 are weighting values for the predictors.
 
 The values of C, w1 and w2 are the values from the Jupyter Notebook in the previous section: ![model output](screenshots/WatsonStudio-model-parameters.png)
 
 Here the coefficients are w1 and w2 and the intercept is the constant C.  Note the order of the weightings was specified by the order of the properties fed into the Vector Assembler:
 
 ```python
-vectorAssembler = VectorAssembler(inputCols=["humidity","temp"], outputCol="features")
+vectorAssembler = VectorAssembler(inputCols=["hmdty","tmp"], outputCol="features")
 ```
 
-so the first coefficient is the weighting for the humidity property and the second coefficient is the weighting for the temperature property.
+so the first coefficient is the weighting for the hmdty property and the second coefficient is the weighting for the tmp property.
 
 The sigmoid function is: ```f(x) = 1/(1+e^-x)```
 
@@ -72,18 +72,15 @@ The completed ESP8266 application should now look like:
 //        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT
 // --------------------------------------------------------------------------------------------
 
-// Watson IoT connection details
-#define MQTT_HOST "<orgID>.messaging.internetofthings.ibmcloud.com"
+// MQTT connection details
+#define MQTT_HOST "hostname.rmq.cloudamqp.com"
 #define MQTT_PORT 8883
-#define MQTT_DEVICEID "d:<orgID>:<type>:<id>"
-#define MQTT_USER "use-token-auth"
-#define MQTT_TOKEN "<token>"
-#define MQTT_TOPIC "iot-2/evt/status/fmt/json"
-#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"
-#define MQTT_TOPIC_INTERVAL "iot-2/cmd/interval/fmt/json"
-#define CA_CERT_FILE "/rootCA_certificate.pem"
-#define KEY_FILE "/SecuredDev01_key_nopass.pem"
-#define CERT_FILE "/SecuredDev01_crt.pem"
+#define MQTT_CLIENT_ID "dev01"
+#define MQTT_USER "abcdezgf:abcdezgf"
+#define MQTT_TOKEN "abxyz-jhdjdhfjkskhdjfSQNeH2pq9s_UlGy"
+#define MQTT_TOPIC "dev01/status"
+#define MQTT_TOPIC_DISPLAY "dev01/display"
+#define CA_CERT_FILE "/USERTrustRSAAddTrustCA.pem"
 
 // Add GPIO pins used to connect devices
 #define RGB_PIN 5 // GPIO pin the data line of RGB LED is connected to
@@ -126,8 +123,6 @@ BearSSL::WiFiClientSecure wifiClient;
 PubSubClient mqtt(MQTT_HOST, MQTT_PORT, callback, wifiClient);
 
 BearSSL::X509List *rootCert;
-BearSSL::X509List *clientCert;
-BearSSL::PrivateKey *clientKey;
 
 // variables to hold data
 StaticJsonDocument<100> jsonDoc;
@@ -230,40 +225,6 @@ void setup() {
     free(ca_cert);
     ca.close();
   }
-  
-  File key = LittleFS.open(KEY_FILE, "r");
-  if(!key) {
-    Serial.println("Couldn't load key");
-  } else {
-    size_t keySize = key.size();
-    client_key = (char *)malloc(keySize);
-    if (keySize != key.readBytes(client_key, keySize)) {
-      Serial.println("Loading key failed");
-    } else {
-      Serial.println("Loaded key");
-      clientKey = new BearSSL::PrivateKey(client_key);
-    }
-    free(client_key);
-    key.close();
-  }
-  
-  File cert = LittleFS.open(CERT_FILE, "r");
-  if(!cert) {
-    Serial.println("Couldn't load cert");
-  } else {
-    size_t certSize = cert.size();
-    client_cert = (char *)malloc(certSize);
-    if (certSize != cert.readBytes(client_cert, certSize)) {
-      Serial.println("Loading client cert failed");
-    } else {
-      Serial.println("Loaded client cert");
-      clientCert = new BearSSL::X509List(client_cert);
-    }
-    free(client_cert);
-    cert.close();
-  }
-  
-  wifiClient.setClientRSACert(clientCert, clientKey);
 
   // Set time from NTP servers
   configTime(TZ_OFFSET * 3600, TZ_DST * 60, "1.pool.ntp.org", "0.pool.ntp.org");
@@ -282,10 +243,10 @@ void setup() {
   time_t now = time(nullptr);
   Serial.println(ctime(&now));
   
-  // Connect to MQTT - IBM Watson IoT Platform
+  // Connect to MQTT
    while(! mqtt.connected()){
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);
@@ -306,8 +267,8 @@ void loop() {
   while (!mqtt.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
-//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication
+    if (mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_TOKEN)) { // Token Authentication
+//    if (mqtt.connect(MQTT_CLIENT_ID)) { // No Token Authentication
       Serial.println("MQTT Connected");
       mqtt.subscribe(MQTT_TOPIC_DISPLAY);
       mqtt.subscribe(MQTT_TOPIC_INTERVAL);
@@ -343,8 +304,8 @@ void loop() {
     float modelPrediction = applyModel(h, t);
 
     // Print Message to console in JSON format
-    status["temp"] = t;
-    status["humidity"] = h;
+    status["tmp"] = t;
+    status["hmdty"] = h;
     Serial.print("Model output = ");
     Serial.println(modelPrediction);
     status["class"] = modelPrediction < 0.5 ? 0 : 1;

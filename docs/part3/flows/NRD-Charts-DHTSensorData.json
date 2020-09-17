@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": "12c413b5.585494",
         "type": "tab",
         "label": "Chart Intro",
@@ -518,13 +517,11 @@
         "name": "Warn on High Values",
         "property": "payload",
         "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "90",
-                "vt": "num"
-            }
-        ],
+        "rules": [{
+            "t": "gt",
+            "v": "90",
+            "vt": "num"
+        }],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
@@ -606,15 +603,13 @@
         "type": "change",
         "z": "4ce6f98c.254bf",
         "name": "Chart Temperature",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.d.temp",
-                "tot": "msg"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "payload.d.tmp",
+            "tot": "msg"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -633,15 +628,13 @@
         "type": "change",
         "z": "4ce6f98c.254bf",
         "name": "Chart Humidity",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.d.humidity",
-                "tot": "msg"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "payload.d.hmdty",
+            "tot": "msg"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -660,15 +653,13 @@
         "type": "switch",
         "z": "4ce6f98c.254bf",
         "name": "Warn on High Values",
-        "property": "payload.d.temp",
+        "property": "payload.d.tmp",
         "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "30",
-                "vt": "num"
-            }
-        ],
+        "rules": [{
+            "t": "gt",
+            "v": "30",
+            "vt": "num"
+        }],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
@@ -689,7 +680,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "Alert : Critical Value Detected {{payload.d.temp}}",
+        "template": "Alert : Critical Value Detected {{payload.d.tmp}}",
         "output": "str",
         "x": 640,
         "y": 200,
@@ -1356,7 +1347,7 @@
         "type": "mqtt in",
         "z": "4ce6f98c.254bf",
         "name": "",
-        "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
+        "topic": "+/status",
         "qos": "2",
         "datatype": "json",
         "broker": "",
@@ -1371,4 +1362,4 @@
             ]
         ]
     }
-]◊
+]

@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": "6bad8bb6.70a5d4",
         "type": "tab",
         "label": "Set ESP8266 Interval",
@@ -16,14 +15,12 @@
         "order": 0,
         "width": "10",
         "height": "6",
-        "options": [
-            {
-                "label": "Reporting Interval (seconds)",
-                "value": "Seconds",
-                "type": "number",
-                "required": true
-            }
-        ],
+        "options": [{
+            "label": "Reporting Interval (seconds)",
+            "value": "Seconds",
+            "type": "number",
+            "required": true
+        }],
         "formValue": {
             "Seconds": ""
         },
@@ -46,13 +43,11 @@
         "name": "Secs >= 0",
         "property": "payload.Seconds",
         "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gte",
-                "v": "0",
-                "vt": "num"
-            }
-        ],
+        "rules": [{
+            "t": "gte",
+            "v": "0",
+            "vt": "num"
+        }],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
@@ -69,15 +64,13 @@
         "type": "change",
         "z": "6bad8bb6.70a5d4",
         "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"Interval\":msg.payload.Seconds}",
-                "tot": "jsonata"
-            }
-        ],
+        "rules": [{
+            "t": "set",
+            "p": "payload",
+            "pt": "msg",
+            "to": "{\"Interval\":msg.payload.Seconds}",
+            "tot": "jsonata"
+        }],
         "action": "",
         "property": "",
         "from": "",
@@ -111,7 +104,7 @@
         "type": "mqtt out",
         "z": "6bad8bb6.70a5d4",
         "name": "",
-        "topic": "iot-2/type/ESP8266/id/dev01/cmd/interval/fmt/json",
+        "topic": "dev01/interval",
         "qos": "",
         "retain": "",
         "broker": "",

@@ -25,7 +25,7 @@ Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.g
 - Fix the configuration of the **mqtt out** node
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
-![Node-RED Dashboard Form flow screenshot](screenshots/NRD-ReportingIntervalForm-flow.png)
+![Node-RED Dashboard Form flow screenshot](screenshots/NRD-ReportingIntervalForm-flow.png){style="width: 80%" .center}
 
 ### Step 2 - Node-RED Dashboard Form node
 
@@ -36,7 +36,7 @@ Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.g
 - This form only has one element (2). It asks in a field labelled *Reporting Interval* for a numeric value. This value will be stored in a variable named *Seconds*
 - You might experiment by adding additional elements (3) that could prompt for Text, Numbers, validated email addresses, Passwords (which will be masked when input as * ), Checkmarks or Switches.
 
-![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-formnode.png)
+![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-formnode.png){style="width: 80%" .center}
 
 - Press the Cancel button when you have finished experimenting with the form node.
 
@@ -55,7 +55,7 @@ Node-RED Dashboard Reporting Interval Form Flow [Get the Code:](https://binnes.g
 - The **mqtt out** node is configured to send a **Device Command** (5) to your ESP8266 Client Id by using the appropriate topic.  For this example the target device is hardcoded into the flow as part of the topic, but ideally this should be provided from the dashboard form, so multiple devices can be configured.
 - Press the red Done button.
 
-![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-mqttnode.png)
+![Node-RED Dashboard Form flow node](screenshots/NRD-ReportingIntervalForm-mqttnode.png){style="width: 50%" .center}
 
 ### Step 5 - Reprogram the ESP8266 to subscribe to MQTT Commands
 
@@ -79,7 +79,7 @@ IoT Workshop Arduino Program : [Get the Code](https://raw.githubusercontent.com/
 - Click on the **SUBMIT** button.
 - The button will trigger the flow to send the new value to the ESP8266 over MQTT.
 
-![Reporting interval form](screenshots/NRD-ReportingIntervalForm.png)
+![Reporting interval form](screenshots/NRD-ReportingIntervalForm.png){style="width: 50%" .center}
 
 ### Step 7 - Arduino Serial Monitor
 
@@ -88,4 +88,4 @@ IoT Workshop Arduino Program : [Get the Code](https://raw.githubusercontent.com/
 - Change the reporting frequency in the Node-RED Dashboard Form.
 - In this screenshot the Reporting Interval was changed from 10 to 5 to 2 and the frequency that the environmental data was sent increased.
 
-![Arduino Serial Monitor](screenshots/ArduinoSerialMonitor.png)
+![Arduino Serial Monitor](screenshots/ArduinoSerialMonitor.png){style="width: 75%" .center}

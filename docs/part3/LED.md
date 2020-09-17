@@ -23,7 +23,7 @@ Node-RED Set LED Threshold Flow : [Get the Code](https://binnes.github.io/esp826
 - Fix the **mqtt in** and **mqtt out** node configuration
 - Click the **Deploy** button on the top of menu bar to deploy the Node-RED flow.
 
-![Node-RED Set LED flow screenshot](screenshots/Node-RED-SetLED-flow.png)
+![Node-RED Set LED flow screenshot](screenshots/Node-RED-SetLED-flow.png){style="width: 80%" .center}
 
 ### Step 2 - Node-RED Set LED flow
 
@@ -38,7 +38,7 @@ Node-RED Set LED Threshold Flow : [Get the Code](https://binnes.github.io/esp826
 - Double-click on the Switch node. An **Edit switch node** sidebar will open.
 - The **Switch** node checks the temperature and depending on the value, chooses the Threshold color.
 
-![Node-RED Set LED switch node](screenshots/Node-RED-SetLED-Switchnode.png)
+![Node-RED Set LED switch node](screenshots/Node-RED-SetLED-Switchnode.png){style="width: 50%" .center}
 
 - Press the Cancel button when you have finished reviewing the switch node.
 
@@ -46,13 +46,13 @@ Node-RED Set LED Threshold Flow : [Get the Code](https://binnes.github.io/esp826
 
 - Double-click on the **mqtt out** node. An **Edit mqtt out node** sidebar will open.
 - The **mqtt out** node has no topic configured as it is sent in with the incoming message.
-  ![Node-RED Set LED mqtt out node](screenshots/Node-RED-SetLED-mqtt-node.png)
+  ![Node-RED Set LED mqtt out node](screenshots/Node-RED-SetLED-mqtt-node.png){style="width: 50%" .center}
 - Press the red Done button to close the **mqtt out** sidebar.
 - Double-click the set msg.topic change node to open the **Edit change node** sidebar
 - click the **...** after the to input box to open the JSONata editor
 - See how the topic is created by extracting the device type and client id from the incoming topic
 - The **Command Type** will be named *display*.
-  ![Node-RED Set LED JSONata](screenshots/Node-RED-SetLED-JSONata.png)
+  ![Node-RED Set LED JSONata](screenshots/Node-RED-SetLED-JSONata.png){style="width: 50%" .center}
 - Press the red Done button and then the red Done button again to close the side bars.
 
 ### Step 5 - Inspect ESP8266 program which handles Display Device Commands

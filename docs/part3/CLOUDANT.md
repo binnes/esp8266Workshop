@@ -25,12 +25,12 @@ You will need to verify the configuration of the **mqtt in** node to use your co
 In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT environmental sensors in a Cloudant database.
 
 - When the flow is imported there will be a misconfigured Cloudant node – indicated by a red triangle.
- ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-cropped.png)
+ ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-cropped.png){style="width: 30%" .center}
 - To associate the **Cloudant** database node with your IBM Cloud instance, double-click on the historical data Cloudant node and press the red Done button. The red error triangle will turn blue.
- ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-config.png)
+ ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-config.png){style="width: 80%" .center}
 
 - The *Format Time Series DB Record* change node recasts the ESP8266 DHT JSON object. As required by any time series dataset, the Node-RED node adds a timestamp to the record before writing it to the Cloudant storage.  A data manipulation language called [JSONata](https://jsonata.org){target=_blank} is used in the node to do the formatting.
-  ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-timeseries.png)
+  ![Node-RED Cloudant Flow cropped](screenshots/Node-RED-Cloudant-flow-timeseries.png){style="width: 80%" .center}
 
     !!! info
           in the screenshot, the debug sidebar shows a ```msg.payload``` that includes the Epoch timestamp (milliseconds since Jan 1 1970)
@@ -41,11 +41,11 @@ In this Step you will use Node-RED to store IoT Sensor data from the ESP8266 DHT
 ### Step 3 - Observe Sensor Data being added to the Cloudant database
 
 - Return to the [IBM Cloud dashboard](https://cloud.ibm.com/login) and your ESP8266 application. **Click** on the cloudantNoSQLDB service connection:
- ![Cloudant NoSQL Service Connection](screenshots/CloudantNoSQLServiceConnection.png)
-- The database linked to your application is an alias link to the actual database instance, so select the link to get to the actual database instance: ![Database alias link](screenshots/CloudantNoSQLServiceAlias.png)
+ ![Cloudant NoSQL Service Connection](screenshots/CloudantNoSQLServiceConnection.png){style="width: 80%" .center}
+- The database linked to your application is an alias link to the actual database instance, so select the link to get to the actual database instance: ![Database alias link](screenshots/CloudantNoSQLServiceAlias.png){style="width: 80%" .center}
 - Read about the Cloudant Storage service and press the **Launch** button:
- ![Cloudant NoSQL Service Instance](screenshots/CloudantNoSQLServiceInstance.png)
+ ![Cloudant NoSQL Service Instance](screenshots/CloudantNoSQLServiceInstance.png){style="width: 80%" .center}
 - The IoT Sensor device data is stored in the Cloudant service.  Click on the Database icon to show the available databases
- ![Cloudant NoSQL Databases](screenshots/CloudantNoSQLDatabases.png)
+ ![Cloudant NoSQL Databases](screenshots/CloudantNoSQLDatabases.png){style="width: 80%" .center}
 - Click on historicaldata1 and then observe the **Table** view of temperature, humidity and timestamp data:
- ![Cloudant NoSQL Historian Data](screenshots/CloudantNoSQLHistorianDB.png)
+ ![Cloudant NoSQL Historian Data](screenshots/CloudantNoSQLHistorianDB.png){style="width: 80%" .center}

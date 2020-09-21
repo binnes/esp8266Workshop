@@ -12,7 +12,7 @@ In this lab you will build a flow that receives Device environmental temperature
 
 In just a few nodes, Node-RED can receive the data that was transmitted from the device over MQTT to the cloudAMQP MQTT Broker.  This simple exercise will be the foundation for the next several sections that plot the data in a dashboard, trigger Real Time threshold alerts, store the data in Cloud Storage and allow for data analytics and anomaly detection.
 
-In part 2 you connected the ESP8266 application to the cloudAMQP broker using an MQTT client.  In this section you will connect a Node-RED application to the cloudAMQP broker. 
+In part 2 you connected the ESP8266 application to the cloudAMQP broker using an MQTT client.  In this section you will connect a Node-RED application to the cloudAMQP broker.
 
 ## Create the Node-RED flow to receive device events
 

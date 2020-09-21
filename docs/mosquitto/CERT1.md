@@ -4,6 +4,8 @@ To encrypt the MQTT traffic between clients and the broker we need to enable TLS
 
 For web traffic, where browsers need to validate servers there needs to be a series of trusted certificate authorities to establish trust.  In an IoT solution there is often a closed eco-system, where the brokers and clients are all controlled by a single organisation.  Having a closed eco-system does give the option have self-issued certificates and avoid the need to purchase certificates from a trusted certificate authority.  The OpenSSL application you installed as part of the prerequisites allows you to create and manipulate X.509 certificates.
 
+## Creating certificates to secure communications
+
 In this section we will create a root certificate authority to sign certificates.  Then we will create a certificate for the Mosquitto broker and eventually create client certificates.
 
 ### Step 1 - Generating the Certificates
@@ -31,7 +33,8 @@ However, if you want to change the ESP8266 from using the cloud based broker to 
 
 E.g. if ```hostname``` returned **win10** or **win10.acme.inc** then ensure **win10.local** is in the **[alt_names]** section of the **srvext.cfg** file : ```DNS.3 = win10.local```
 
-*Instructions for connecting the ESP8266 to the Mosquitto broker are provided in the next section*
+!!! Info
+    Instructions for connecting the ESP8266 to the Mosquitto broker are provided in the next section
 
 !!! Warning
     The SSL library the ESP8266 uses will not validate the TLS connection using an IP address as the hostname.  The system hostname must be used.
@@ -103,7 +106,7 @@ The commands above generate a new key for the server, creates a certificate requ
 
 To get the Mosquitto broker to use the certificates you generated in the last step you need to copy the appropriate files to the **config** directory (which is mapped into the running Mosquitto container), then you need to update the broker configuration file:
 
-1. Create a new directory in the **config** folder, which is mapped to the **/mosquitto/config** directory in the running Mosquittp container.  ```mkdir config/cert``` on Linux or MacOS or ```mkdir config\cert``` if on windows
+1. Create a new directory in the **config** folder, which is mapped to the **/mosquitto/config** directory in the running Mosquitto container.  ```mkdir config/cert``` on Linux or MacOS or ```mkdir config\cert``` if on windows
 2. Copy the Root CA public key (**rootCA_certificate.pem**) and the mosquitto server public and private key (**mqttServer_crt.pem** and **mqttServer_key_nopass.pem**), from the folder where you ran the makeCertificates scripts, into the config/cert folder you created in the previous step
 3. Edit the Mosquitto configuration file adding the following lines:
 

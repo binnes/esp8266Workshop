@@ -301,7 +301,7 @@ unsigned char b = 0; // LED Blue value
 int32_t ReportingInterval = 10;  // Reporting Interval seconds
 
 float applyModel(float h, float t) {
-  // apply regression formula w1 + w2x + w3y 
+  // apply regression formula w1 + w2x + w3y
   float regression = MODEL_INTERCEPT + MODEL_HUM_COEF * h + MODEL_TEMP_COEF * t;
   // return sigmoid logistic function on regression result
   return  1/(1 + exp(0.0 - (double)regression));
@@ -317,7 +317,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println((char *)payload);
   DeserializationError err = deserializeJson(jsonReceiveDoc, (char *)payload);
   if (err) {
-    Serial.print(F("deserializeJson() failed with code ")); 
+    Serial.print(F("deserializeJson() failed with code "));
     Serial.println(err.c_str());
   } else {
     JsonObject cmdData = jsonReceiveDoc.as<JsonObject>();

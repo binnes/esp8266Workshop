@@ -79,6 +79,7 @@ When the driver is installed and the NodeMCU module is connected you can test if
 The workshop will use the Arduino IDE to create applications for the ESP8266 module.   You need to have an up to date version of the Arduino IDE, available from [**here**](https://www.arduino.cc/en/Main/Software){target=_blank}.  Select the version for your OS then download and install it:
 
 - Linux : Your linux distro may have Arduino available in the software package manager catalog, if not you can manually install it:
+
     - unarchive it, move it to /opt or /usr/local (`sudo mv arduino-1.8.7 /opt`) then run `/opt/arduino-1.8.7/install.sh`
 
         !!! note
@@ -165,4 +166,4 @@ logout
 
 You need to log back into the pi to use Docker.
 
-To test Docker is running properly issue the following command ```docker run hello-world``` and you should see a welcome message showing Docker is working.s
+To test Docker is running properly issue the following command ```docker run hello-world``` and you should see a welcome message showing Docker is working.

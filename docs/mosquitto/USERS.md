@@ -90,4 +90,4 @@ Select the **Update** then **Done** buttons to save the config, then hit the Dep
 
 This section looked at configuring the Mosquitto broker to require a client to logon to the broker using a username and password that was created using the mosquitto_pwd tool.  In a future section we will cover using client certificates to authenticate clients.
 
-It is also worth noting that it is possible to configure Mosquitto to use plugins to take user information from other repositories, such as a database.  See the [Mosquittp documentation](https://mosquitto.org/man/mosquitto-conf-5.html) for details and other configuration options.
+It is also worth noting that it is possible to configure Mosquitto to use plugins to take user information from other repositories, such as a database.  See the [Mosquitto documentation](https://mosquitto.org/man/mosquitto-conf-5.html) for details and other configuration options.

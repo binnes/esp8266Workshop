@@ -6,6 +6,13 @@ For the workshop instructions please visit this site : [https://binnes.github.io
 
 There is also a downloadable PDF containing the workshop instructions available [here](https://binnes.github.io/esp8266Workshop/pdf/esp8266Workshop.pdf)
 
+## Previous version of the workshop
+
+This workshop initially used the IBM IoT Platform as the MQTT broker.  If you want to access that version of the workshop it is available [here](https://github.com/binnes/esp8266Workshop/tree/watson-iot-broker).
+
+    **Warning**
+    The previous version of the workshop is no longer being maintained, so cannot be guaranteed to be fully working.
+
 ## Updating content
 
 The workshop instructions are hosted on GitHub pages and are automatically generated from the Markdown in the docs folder of this repo.

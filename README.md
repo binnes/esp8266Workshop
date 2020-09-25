@@ -2,9 +2,9 @@
 
 IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED
 
-For the workshop instructions please visit this site : [https://binnes.github.io/esp8266Workshop/](https://binnes.github.io/esp8266Workshop/)
+This version of the workshop uses the IBM Cloud IoT Platform as the MQTT broker.  The workshop has since been upgraded to use a different MQTT service.
 
-There is also a downloadable PDF containing the workshop instructions available [here](https://binnes.github.io/esp8266Workshop/pdf/esp8266Workshop.pdf)
+There is also a downloadable PDF containing the instructions for this version of the workshop [here](https://binnes.github.io/esp8266Workshop/pdf/esp8266Workshop.pdf)
 
 ## Updating content
 

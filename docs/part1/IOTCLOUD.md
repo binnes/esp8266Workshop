@@ -61,10 +61,13 @@ Lite accounts have resource restrictions, so to be able to deploy the starter ap
 - press **New** to create an IBM Cloud API key, accept the defaults in the popup and press **OK**
 - select the Memory allocation per instance to 256 MB
 - ensure the host name is valid, if not modify it until any errors are cleared
-- select the region closest to you to deploy the toolchain
-- press **Create** to generate the toolchain for your application
+- select the region closest to you to application
+- press **Next** to get the options for deploying a toolchain
 
 ![App Details](../images/appDetails.png)
+
+- select the region closest to you as the location you want the toolchain to be deployed to
+- press **Create** to deploy the toolchain
 
 The Starter Application is now deploying by running the newly created toolchain.
 

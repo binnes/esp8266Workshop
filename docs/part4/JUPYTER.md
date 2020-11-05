@@ -215,7 +215,7 @@ logreg.fit(X_train,y_train)
 
 Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accuracy over the training data.
 
-- calculate the class from the 25% of the training data that were set aside to test the model
+- calculate the classification from the model for the 25% of the training data that was set aside to test the model
 
 ```python
 # generate the predictions from the test subset

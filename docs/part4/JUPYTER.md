@@ -15,6 +15,8 @@ Jupyter Notebooks are a web-based computational environment for interactive data
 
 The steps below will build up the Jupyter notebook, there is a solution notebook at the end to use if you need assistance to complete any step.
 
+There are a number of ways of getting data into a Jupyter notebook.  The User interface provides a way to upload files and create connections to data providerts. For this example we will connect to the Cloudant data where the training data was stored using a Cloudant python library.
+
 ## Step 1 - Cloudant Credentials
 
 Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is stored.
@@ -48,14 +50,17 @@ credentials_1 = {
 }
 
 ```
+- Once you have updated the credentials and URL then you can run the cell by pressing the Run button.  This will execute the code in the cell and create a new cell.
 
-- in the next cell add code to import the cloudant package
+![Run cell](screenshots/WatsonStudio-run.png)
+
+- in the next cell add code to import the cloudant package and run the cell
 
 ```python
 !pip install cloudant
 ```
 
-- The next cell will create the connection to Cloudant
+- The next cell will create the connection to Cloudant, so enter the code and run the cell.  Note this uses the credential information created in the first cell.  This shows that data is retained within the Jupyter environment, so you can access variables created in previous cells.
 
 ```python
 from cloudant import Cloudant
@@ -65,7 +70,7 @@ a = credentials_1['username']
 client = Cloudant(u, p, account=a, connect=True, auto_renew=True)
 ```
 
-then open the training database and get the number of documents available in the database
+- then open the training database and get the number of documents available in the database.  When you run this cell you should see the number of documents in the training database output below the cell
 
 ```python
 eventstore = 'training'
@@ -73,17 +78,18 @@ db = client[eventstore]
 db.doc_count()
 ```
 
-Now you have a number of cells in the notebook you can run the cells to connect to the database and verify you get the number of records in the database returned.
+![Database record count](screenshots/WatsonStudio-count.png)
 
-To run a cell simply ensure it is highlighted then press the run button.  The cell will run, any output generated will be shown below the cell and the highlight will move to the next cell in the notebook.
+!!!Info
+    If you want to clear out the data created by previously run steps then you can use the **Kernel** menu option to clear out and restart the notebook, or clear out and run all steps:
 
-If you want to clear out the data created by previously run steps then you can use the **Kernel** menu option to clear out and restart the notebook, or clear out and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
+    ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
 
-If you clear output then you can select the first cell and press run, which will run the cell then move to the next cell in the notebook.  Keep pressing run to run each cell in turn, ensure you wait for each cell to complete (At the left side of the cell the indicator **[*]** turns to **[n]**, where n is a number) before running the next step.
+    If you clear output then you can select the first cell and press run, which will run the cell then move to the next cell in the notebook.  Keep pressing run to run each cell in turn, ensure you wait for each cell to complete (At the left side of the cell the indicator **[*]** turns to **[n]**, where n is a number) before running the next step.
 
 ## Step 3 - Work with the training data
 
-Within the notebook you are able to manipulate the data. In this section we will use SQL to create the data frames needed to verify and visualise the training data.  You usually need to examine the training data and maybe clean it up before creating the model.  This section shows some of the techniques available.
+Within the notebook you are able to manipulate the data. You usually need to examine the training data and maybe clean it up before creating the model.
 
 - Read a subset of the records available -- if the event store holds many thousands of entries, there may be insufficient memory available to load them all
 - The include_docs=True is necessary, otherwise all that is returned is the list of document ids.
@@ -100,7 +106,7 @@ len(alldocs['rows'])
 alldocs['rows'][0]
 ```
 
-- In this case, the features of interest are temperature,humidity, and class - the timestamp ts is going to be useful for spotting trends, time-based anomalies etc.
+- In this case, the features of interest are temperature,humidity - the timestamp ts is going to be useful for spotting trends, time-based anomalies etc.  The class property provides the expected classification given the temperature and humidity readings, which will be used to train the model.
 - Iterate the returned documents into an array of events with common schema
 
 ```python
@@ -141,7 +147,7 @@ plt.scatter(df['timestamp'],df['humidity'])
 
 Once you are confident you have the correct training data available you can proceed to creating the model.
 
-- we will use the SciKitLearn package to build the model
+- we will use the popular [scikit-learn](https://scikit-learn.org/stable/){target=_blank} and [pandas](https://pandas.pydata.org){target=_blank} packages to build the model
 
 ```python
 from sklearn import linear_model

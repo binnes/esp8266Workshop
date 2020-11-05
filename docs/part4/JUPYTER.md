@@ -179,7 +179,7 @@ display(X)
 # split X and y into training and testing sets
 from sklearn.model_selection import train_test_split
 
-#fraction of input data to hold for testing -- excluded from the training 
+#fraction of input data to hold for testing -- excluded from the training
 testsplit = 0.25
 
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=testsplit,random_state=0)

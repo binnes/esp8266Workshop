@@ -68,7 +68,7 @@ Projects are your workspace to organize your resources, such as assets like data
 - From the top menu, select **Add to project**, and then **Notebook**
 - Select **Blank**
 - Give the notebook a name : **IoT Sensor Analytics**
-- Scroll down to the **Select runtime** dropdown and choose **Default Spark Python 3.6 XS (Driver with 1 vCPU and 4 GB RAM, 2 executors with 1 vCPU and 4 GB RAM each** runtime
+- Scroll down to the **Select runtime** dropdown and choose the default Python 3.7 runtime
 
 ![Watson Studio New notebook screenshot](screenshots/WatsonStudio-NewNotebook.png)
 

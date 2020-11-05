@@ -33,55 +33,49 @@ Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter 
 
 ### Step 2 - Loading Cloudant data into the Jupyter notebook
 
-When using the lite account on the IBM Cloud there are some restrictions on services.  One restriction is a limit on the number of requests that can be run in a second (5 database actions per second).  To overcome this we need to ensure that data is extracted from Cloudant at a suitable rate, not to hit this limit.  The code below uses the **Apache Bahir** package to ensure this limit is not exceeded.
-
 - Return to the Watson Studio browser tab and open the **IoT Sensor Analytics** notebook. ![Watson Studio Assets](screenshots/WatsonStudio-Notebook-ESP8266.png)
 
-- Make certain you are in **Edit** mode by clicking on the Pencil icon. ![Watson Studio Edit mode](screenshots/WatsonStudio-Notebook-edit.png)
+- Make certain you are in **Edit** mode by clicking on the Pencil icon if it is showing. ![Watson Studio Edit mode](screenshots/WatsonStudio-Notebook-edit.png)
 
-- Copy the following code into the first cell in the notebook.
+- Copy the following code into the first cell in the notebook, replacing **\<Cloudant Username>**, **\<Cloudant Password>** and **\<Cloudant URL>** with values obtained in the previous step
 
 ```python
-import pixiedust
-pixiedust.installPackage("org.apache.bahir:spark-sql-cloudant_2.11:0")
+credentials_1 = {
+    'username': '<Cloudant Username>',
+    'password': """<Cloudant Password>""",
+    'custom_url': '<Cloudant URL>',
+    'port': '50000',
+}
 
 ```
 
-- In the second and third cells, we will initialize the Spark session.
+- in the next cell add code to import the cloudant package
 
 ```python
-from pyspark.sql import SparkSession
+!pip install cloudant
 ```
 
-and
+- The next cell will create the connection to Cloudant
 
 ```python
-spark = SparkSession.builder.getOrCreate()
+from cloudant import Cloudant
+u = credentials_1['username']
+p = credentials_1['password']
+a = credentials_1['username']
+client = Cloudant(u, p, account=a, connect=True, auto_renew=True)
 ```
 
-- Update the credentials with the values from your cloudant database credentials (created in **step 1**).  The values are from the host, username and password properties in the credentials:
+then open the training database and get the number of documents available in the database
 
 ```python
-### TODO Please provide your Cloudant credentials in this cell
-def readDataFrameFromCloudant(database):
-
-  cloudantdata = spark.read.format("org.apache.bahir.cloudant")\
-    .option("cloudant.host",'XXXX-bluemix.cloudant.com')\
-    .option("cloudant.username", 'XXXX-bluemix')\
-    .option("cloudant.password",'XXXX')\
-    .load(database)
-
-  return cloudantdata
+eventstore = 'training'
+db = client[eventstore]
+db.doc_count()
 ```
 
-- Press the **Run** button in the toolbar to run the cells ![Run first cell](screenshots/WatsonStudio-cell1.png)
-- Move the focus to the next cell and copy in the following python, which calls the function defined in the cell to load the data from Cloudant training database *(this assumes you used the database name **training** when capturing training data, if not, modify the database name):
+Now you have a number of cells in the notebook you can run the cells to connect to the database and verify you get the number of records in the database returned.
 
-```python
-df=readDataFrameFromCloudant('training')
-```
-
-Run the cell by pressing the run button in the toolbar.  You should see the data from the database.  You can validate that you have the correct data format by checking you have the **class**, **humidity**, **index** and **temperature** columns in the loaded data: ![Load data in to notebook](screenshots/WatsonStudio-cell2.png)
+To run a cell simply ensure it is highlighted then press the run button.  The cell will run, any output generated will be shown below the cell and the highlight will move to the next cell in the notebook.
 
 If you want to clear out the data created by previously run steps then you can use the **Kernel** menu option to clear out and restart the notebook, or clear out and run all steps: ![restarting a notebook](screenshots/WatsonStudio-kernel-options.png)
 
@@ -91,154 +85,176 @@ If you clear output then you can select the first cell and press run, which will
 
 Within the notebook you are able to manipulate the data. In this section we will use SQL to create the data frames needed to verify and visualise the training data.  You usually need to examine the training data and maybe clean it up before creating the model.  This section shows some of the techniques available.
 
-- In the next empty cell enter the following code then run the cell.  This code enables you to use SQL statements to manipulate the data, even though it came from a NoSql database. Those are so-called Apache Spark DataFrames able to wrap SQL, NoSQL and file data sources:
+- Read a subset of the records available -- if the event store holds many thousands of entries, there may be insufficient memory available to load them all
+- The include_docs=True is necessary, otherwise all that is returned is the list of document ids.
 
 ```python
-# Enable SQL on the data frame
-df.createOrReplaceTempView('df')
+loadlimit = 1000
+alldocs =  db.all_docs(limit=loadlimit, include_docs= True)
+len(alldocs['rows'])
 ```
 
-- The temperature and humidity data is imported as strings, so we will convert the columns to doubles.
+- Look at the first event/observation document, and select the features within the "doc" key that you want to include in modelling
 
 ```python
-from pyspark.sql.functions import translate, col
-
-df_cleaned = df \
-    .withColumn("temp", df.temp.cast('double')) \
-    .withColumn("humidity", df.humidity.cast('double')) \
-
-df_cleaned.createOrReplaceTempView('df_cleaned')
-df_cleaned.select('temp', 'humidity').distinct().show()
+alldocs['rows'][0]
 ```
 
-- Now we will create a new data frame for each training class.  In the next cell enter then run the following:
+- In this case, the features of interest are temperature,humidity, and class - the timestamp ts is going to be useful for spotting trends, time-based anomalies etc.
+- Iterate the returned documents into an array of events with common schema
 
 ```python
-df_class_0 = spark.sql('select time, temp, humidity, class from df_cleaned where class = 0')
-df_class_1 = spark.sql('select time, temp, humidity, class from df_cleaned where class = 1')
-df_class_0.createOrReplaceTempView('df_class_0')
-df_class_1.createOrReplaceTempView('df_class_1')
+events = []
+for r in alldocs['rows']:
+    doc = r["doc"]
+    obs = [doc['time'],doc['temp'],doc['humidity'],doc['class']]
+    events.append(obs)
 ```
 
-For the rest of this section feel free to explore the different options available.  Enter each of the code samples in a cell in the notebook then run the cell to see the results.
-
-- You may want to see the contents of the DataFrame:
+- The events are now loaded in a form that can be converted into a dataframe, which will be used for subsequent steps
 
 ```python
-# examine the data
-df_class_0.select('temp', 'humidity').distinct().show()
+import pandas as pd
+df = pd.DataFrame(data=events,columns=["timestamp","temperature","humidity","class"])
+display(df)
 ```
 
-- You can verify the database schema:
+- Let's take a look as some of the features over time. We'll use MatPlotLib for visualisation
 
 ```python
-df_cleaned.printSchema()
+import matplotlib.pyplot as plt
 ```
 
-- You can verify the number of records available for each training class and if necessary correct any skew in the number of records available for each class:
+- visualise temperature over time
 
 ```python
-spark.sql('select class, count(class) from df_cleaned group by class').show()
+plt.scatter(df['timestamp'],df['temperature'])
 ```
 
-If your training data had double the number of entries for class 0 as class 1 then you can create an adjusted data frame to use for training using the following code : ```df_skew_fixed = df_class_0.sample(False, 0.5).union(df_class_1)```, which selects 50% of the records for class 0 and joins them with the records for class 1, so now both classes will have a similar number of records.  However, this should not be necessary as we ensured we captured a similar number of records for each class when training.
-
-- The pixiedust package provides the ability to visualise data in a number of different ways.  Before using the package you need to import it:
+- visualise humidity over time
 
 ```python
-# visualisation package for python
-import pixiedust
-```
-
-- Now you can use the capability of pixiedust to visualise or chart your data:
-
-```python
-display(df_class_0)
+plt.scatter(df['timestamp'],df['humidity'])
 ```
 
 ## Step 4 - Creating the binary classifier model
 
 Once you are confident you have the correct training data available you can proceed to creating the model.
 
-The approach adopted in this exercise is a common approach for machine learning, where a pipeline of operations or algorithms is constructed to implement the required functionality, in our case generating a model to classify data.
-
-- Before we can access the Spark functionality we need to import a number of packages:
+- we will use the SciKitLearn package to build the model
 
 ```python
-# Imports for modelling
-from pyspark.ml.feature import StringIndexer, OneHotEncoder
-from pyspark.ml.linalg import Vectors
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.feature import Normalizer
-from pyspark.ml import Pipeline
-from pyspark.ml.classification import LogisticRegression
-from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from sklearn import linear_model
+import random
+from scipy.special import expit
 ```
 
-- Now we build the pipeline of operations to generate the model.  Here we need to create vectors from our data and pass them through a logistic regression algorithm.  The ```pipeline.fit(...)``` and ```model.transform(...)``` functions run the previously defined pipeline:
+- separate the sensor readings from the classification (class)
 
 ```python
-# create binary classifier model
-vectorAssembler = VectorAssembler(inputCols=["humidity","temp"],
-                                  outputCol="features")
-lr = LogisticRegression(maxIter=1000).setLabelCol("class")
-pipeline = Pipeline(stages=[vectorAssembler, lr ])
-model = pipeline.fit(df_cleaned)
-result = model.transform(df_cleaned)
+aX = []
+aY = []
+for i, row in df.iterrows():
+    t= row["temperature"]
+    h= row["humidity"]
+    c= row["class"]
+    obs = [t,h]
+    aX.append(obs)
+    aY.append([c])
 ```
 
-- Once the model is trained we need to extract the model parameters (coefficients and the intercept values in the case of logistic regression), so we can implement the model on the ESP8266.  You will need these values for the next part of the workshop, so make a note of them now:
-
-```python
-model.stages[1].coefficients
-```
+- build a dataframe containing the training data and display the data frames
 
 ```python
-model.stages[1].intercept
+import pandas as pd
+X = pd.DataFrame(data=aX,columns=["temperature","humidity"])
+y = pd.DataFrame(data=aY,columns=["class"])
+display(y)
+display(X)
 ```
+
+- First we split the training data into 2 groups of 2 subsets.  75% of the data will be used to train the model and 25% will be used to test the model
+
+```python
+# split X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+
+#fraction of input data to hold for testing -- excluded from the training
+testsplit = 0.25
+
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=testsplit,random_state=0)
+```
+
+- look at the data to be used to train the model
+
+```python
+X_train
+```
+
+- Use the default Logistic Regression function to train based on the input observations
+
+```python
+from sklearn.linear_model import LogisticRegression
+# instantiate the model (using the default parameters)
+logreg = LogisticRegression()
+
+# fit the model with data
+logreg.fit(X_train,y_train)
+```
+
+!!! Info
+    You can ignore the warning generated by the above cell
 
 ## Step 5 - Test the model
 
-Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accuracy over the training data:
+Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accuracy over the training data.
+
+- calculate the class from the 25% of the training data that were set aside to test the model
 
 ```python
-#evaluate classification accuracy (1.0 = 100% accurate)
-binEval = MulticlassClassificationEvaluator().setMetricName("accuracy").setPredictionCol("prediction").setLabelCol("class")
-binEval.evaluate(result)
+# generate the predictions from the test subset
+y_pred=logreg.predict(X_test)
 ```
 
-- You can also apply the model to additional data you may have (needs to be in the same format as the training data, but without the class property).  
-
-    The following code shows how to read data from a database and apply the model to it.  The prediction column shows how the model classified the data.  As this example uses the training data, we have the class property available, so you can see that the prediction should line up with the class.
+- Run a comparison between the actual values for the class, and the calculated values - this will generate a "confusion matrix" which shows how well the model can predict classes, and when it gets it wrong (false positives, false negatives)
 
 ```python
-# test the model
-# re-read data from cloudant
-new_df = readDataFrameFromCloudant('training')
-new_df_cleaned = new_df \
-    .withColumn("temp", new_df.temp.cast('double')) \
-    .withColumn("humidity", new_df.humidity.cast('double')) \
-
-new_df_cleaned.createOrReplaceTempView('df_cleaned')
-
-result = model.transform(new_df_cleaned)
-result.createOrReplaceTempView('result')
-spark.sql("select humidity, temp, class, prediction from result").show(50)
+from sklearn import metrics
+cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
+cnf_matrix
 ```
 
-(Optionally) If you want to test your model try recording another set of data without the class property - the historic data you are collecting is in the correct format for this.  Within the dataset have records with the sensor in your hand and records where the sensor is not being held.  See how your model performs, especially in transition cases, where the sensor has just been released or has been held a short amount of time.  *Note: remove **class,** from the select statement if you are using data without the class property*:
+- output the model scores.  1.0 is 100% accurate
 
 ```python
-#read historic data from cloudant
-new_df = readDataFrameFromCloudant('historicaldata1')
-result = model.transform(new_df)
-result.createOrReplaceTempView('result')
-spark.sql("select humidity, temp, prediction from result").show(50)
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print("Precision:",metrics.precision_score(y_test, y_pred))
+print("Recall:",metrics.recall_score(y_test, y_pred))
 ```
+
+- you can access the help for the logistic regression function
+
+```python
+help(logreg)
+```
+
+- Output the parameters of the trained model, so you can implement it on the ESP8266.  Initially the coefficients.  As the temperature was the first column in the training data, the first coefficient is the temperature coefficient and the second value is the humidity
+
+```python
+logreg.coef_
+```
+
+- Output the intercept value
+
+```python
+logreg.intercept_
+```
+
+These values will be used in the next section to implement the trained model on the ESP8266.
 
 ## Sample solution
 
-There is a sample solution for this part provided in the [notebooks](notebooks) folder.  If you have an issue and want to see the solution then within the IoT Sensor Analytics project select to add a new notebook.  Select to create a notebook from file and give the notebook a name - here **IoT Sensor Analytics - solution** has been used.  This assumes you have the file locally on your machine.  Select choose file and locate the **IoT Sensor Analytics.ipynb** file.  Finally ensure you have the Default Spark Python 3.6 XS runtime selected then press **Create Notebook**
+There is a sample solution for this part provided in the [notebooks](notebooks) folder.  If you have an issue and want to see the solution then within the IoT Sensor Analytics project select to add a new notebook.  Select to create a notebook from file and give the notebook a name - here **IoT Sensor Analytics - solution** has been used.  This assumes you have the file locally on your machine.  Select choose file and locate the **IoT Sensor Analytics.ipynb** file.  Finally ensure you have the Default Spark Python 3.7 XS runtime selected then press **Create Notebook**
   ![Import solution](screenshots/WatsonStudio-import-solution.png)
 
 Alternatively, you can select to import from URL and set the URL to : [https://raw.githubusercontent.com/binnes/esp8266Workshop/master/docs/part4/notebooks/IoT%20Sensor%20Analytics.ipynb](https://raw.githubusercontent.com/binnes/esp8266Workshop/master/docs/part4/notebooks/IoT%20Sensor%20Analytics.ipynb)

@@ -1,0 +1,88 @@
+[
+  {
+    "id": "46c77ae0.25061c",
+    "type": "tab",
+    "label": "Flow 2",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "c85b14e6.83be5",
+    "type": "change",
+    "z": "46c77ae0.25061c",
+    "name": "",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "msg.payload.{\"time\" : $millis(), \"temp\" : d.temp, \"humidity\" : d.humidity} ",
+        "tot": "jsonata"
+      },
+      {
+        "t": "set",
+        "p": "payload.class",
+        "pt": "msg",
+        "to": "0",
+        "tot": "num"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1180,
+    "y": 340,
+    "wires": [
+      [
+        "2f9b2fea.38a14"
+      ]
+    ]
+  },
+  {
+    "id": "2f9b2fea.38a14",
+    "type": "debug",
+    "z": "46c77ae0.25061c",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "x": 1350,
+    "y": 380,
+    "wires": []
+  },
+  {
+    "id": "d2b898c9.0efe4",
+    "type": "cloudant out",
+    "z": "46c77ae0.25061c",
+    "name": "",
+    "cloudant": "",
+    "database": "training",
+    "service": "",
+    "payonly": true,
+    "operation": "insert",
+    "x": 1360,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "47441be2.c8faf4",
+    "type": "mqtt in",
+    "z": "46c77ae0.25061c",
+    "name": "",
+    "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
+    "qos": "2",
+    "datatype": "json",
+    "broker": "",
+    "x": 930,
+    "y": 340,
+    "wires": [
+      [
+        "c85b14e6.83be5"
+      ]
+    ]
+  }
+]Z

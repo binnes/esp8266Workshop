@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part2/CERT1.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>IoT Security - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#adding-secure-communication-between-the-device-and-iot-platform-using-ssltls">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              IoT Security
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        IoT Security
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="CERT1.html">
+      IoT Security
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+<nav aria-label="Introduction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-generating-the-certificates">
+    Step 1 - Generating the Certificates
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1a-information-only">
+    Step 1a - INFORMATION ONLY
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-uploading-the-root-ca-certificate-to-the-iot-platform">
+    Step 2 - Uploading the root CA Certificate to the IoT Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-information-only-generating-a-server-key-and-certificate">
+    Step 3 - INFORMATION ONLY - Generating a Server key and certificate
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-add-the-server-certificate-to-the-iot-platform">
+    Step 4 - Add the server certificate to the IoT Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-adding-the-root-ca-certificate-to-the-esp8266">
+    Step 5 - Adding the root CA certificate to the ESP8266
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-adding-the-root-ca-certificate-to-your-os-or-browser">
+    Step 6 - Adding the root CA certificate to your OS or browser
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-updating-the-esp8266-code-to-use-the-certificate-to-establish-a-secure-connection">
+    Step 7 - Updating the ESP8266 code to use the certificate to establish a secure connection
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-8-how-the-littlefs-file-system-works">
+    Step 8 - How the LittleFS file system works
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#solution-code">
+    Solution code
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+<nav aria-label="Introduction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-generating-the-certificates">
+    Step 1 - Generating the Certificates
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1a-information-only">
+    Step 1a - INFORMATION ONLY
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-uploading-the-root-ca-certificate-to-the-iot-platform">
+    Step 2 - Uploading the root CA Certificate to the IoT Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-information-only-generating-a-server-key-and-certificate">
+    Step 3 - INFORMATION ONLY - Generating a Server key and certificate
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-add-the-server-certificate-to-the-iot-platform">
+    Step 4 - Add the server certificate to the IoT Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-adding-the-root-ca-certificate-to-the-esp8266">
+    Step 5 - Adding the root CA certificate to the ESP8266
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-adding-the-root-ca-certificate-to-your-os-or-browser">
+    Step 6 - Adding the root CA certificate to your OS or browser
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-updating-the-esp8266-code-to-use-the-certificate-to-establish-a-secure-connection">
+    Step 7 - Updating the ESP8266 code to use the certificate to establish a secure connection
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-8-how-the-littlefs-file-system-works">
+    Step 8 - How the LittleFS file system works
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#solution-code">
+    Solution code
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part2/CERT1.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="adding-secure-communication-between-the-device-and-iot-platform-using-ssltls">Adding secure communication between the device and IoT Platform using SSL/TLS<a class="headerlink" href="#adding-secure-communication-between-the-device-and-iot-platform-using-ssltls" title="Permanent link">¶</a></h1>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this Lab you will modify MQTT to use a secure connection.  You will learn:</p>
+<ul>
+<li>How to add SSL/TLS capability to the network connection that MQTT uses</li>
+<li>How to generate certificates to enable secure connections using OpenSSL</li>
+<li>How to add the certificates to the IBM Watson IoT Platform</li>
+<li>How to add the certificate to the ESP8266 using part of the flash memory as a file system</li>
+<li>Basic operations of the ESP8266 file system</li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>Having unsecured traffic for an IoT solution is not a good idea, so in this lab you will convert the unsecured MQTT connection into a SSL/TLS connection.</p>
+<p>When using SSL/TLS you can verify the certificate(s) presented by the server if you have the certificate of the Root Certificate Authority used to sign the server certificate.  Your Laptop will have common root CA certificates installed as part of the OS or browser so web traffic can be secured and the padlock on your browser can be shown.  However, you need to add any certificate to IoT devices if you want to verify server certificates.</p>
+<p>The Watson IoT platform does allow you to replace the certificates used for MQTT traffic, so in this exercise you will generate your own self-signed certificates, add them to the Watson IoT platform and the ESP8266 code, to enable a SSL/TLS connection with the server certificate verified against the root CA certificate installed on the ESP8266.</p>
+<p>The platform <a href="https://console.bluemix.net/docs/services/IoT/reference/security/set_up_certificates.html#set_up_certificates">documentation</a> provides information about what information must be contained in certificates to work with the platform.</p>
+<p>In the prerequisite section you installed the OpenSSL tool, which allows you to work with certificates.  I have provided 2 configuration files and 2 script files in the <a href="https://github.com/binnes/esp8266Workshop/tree/master/certificates">certificates</a> folder of this git repo. You need to download them and have them in the directory you will use to generate the certificates.  If you have cloned or downloaded the repo, then I suggest you work in the certificates directory.</p>
+<p>The commands are provided to create text (pem) and binary (der) formats of the keys and certificates, as some device libraries require one or the other format.  In this workshop we will only use the text versions of the certificates and keys.</p>
+<h3 id="step-1-generating-the-certificates">Step 1 - Generating the Certificates<a class="headerlink" href="#step-1-generating-the-certificates" title="Permanent link">¶</a></h3>
+<p>To simplify the creation of the certificates use the provided script files.  You need to modify the top section of the file (.bat file if you are working in a Windows command window, .sh file if you are working on MacOS or in a Linux terminal window):</p>
+<ul>
+<li><strong>OPENSSL_BIN</strong> - needs to contain the openssl command.  The provided value should work for default installs.</li>
+<li><strong>COUNTRY_CODE</strong> - is the country code where you are (for information purposes in cert - can leave at GB or you can find a list of valid ISO alpha-2 country codes <a href="https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes">here</a>)</li>
+<li><strong>COUNTY_STATE</strong> - is the county, state or district where you are (for information purposes in cert - can leave at DOR, which is for Dorset, and English county)</li>
+<li><strong>TOWN</strong> - is the city, town or village where you are (for information purposes in cert - can leave at Bournemouth)</li>
+<li><strong>IOT_ORG</strong> - MUST be the 6 character org id of your instance of the Watson IoT platform</li>
+<li><strong>DEVICE_TYPE</strong> - is the device type for your device, defined in the IoT platform.  <strong>ESP8266</strong> is the default value you were recommended to use in the workshop instructions</li>
+<li>DEVICE_ID - us the device id for your device, defined in the IoT platform.  <strong>dev01</strong> is the default value you were recommended to use in the workshop instructions.</li>
+</ul>
+<p>Do not make any modifications below the comment in the script file.</p>
+<p>Once you have saved your changes you can run the script to generate all the certificates:</p>
+<ul>
+<li>Linux, MacOS:<br/>
+<code>chmod +x makeCertificates.sh</code><br/>
+<code>. ./makeCertificates.sh</code></li>
+<li>Windows:<br/>
+<code>makeCertificates.bat</code></li>
+</ul>
+<h3 id="step-1a-information-only">Step 1a - INFORMATION ONLY<a class="headerlink" href="#step-1a-information-only" title="Permanent link">¶</a></h3>
+<p>The script starts by generating a root CA key and certificate.  This will then be used to sign a server certificate.</p>
+<p>In a command windows enter the following commands, you need to replace some values, so do not just copy and paste the commands as shown, or your certificates will not work!</p>
+<p>The commands run by the script are:</p>
+<div class="highlight"><pre><span></span><code>openssl genrsa -aes256 -passout pass:password123 -out rootCA_key.pem <span class="m">2048</span>
+
+openssl req -new -sha256 -x509 -days <span class="m">3560</span> -subj <span class="s2">"/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=z53u40 Root CA"</span> -extensions v3_ca -set_serial <span class="m">1</span> -passin pass:password123 -key rootCA_key.pem -out rootCA_certificate.pem -config ext.cfg
+
+openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.der
+
+xxd -i rootCA_certificate.der rootCA_certificate.der.h
+</code></pre></div>
+<p>replacing:</p>
+<ul>
+<li>C=GB : GB is an ISO alpha-2 country code</li>
+<li>ST=DOR : DOR is an English county, replace with appropriate state/county/region</li>
+<li>L=Bournemouth : Bournemouth is an English town, replace with appropriate location</li>
+<li>O=z53u40 : z53u40 is the Organisation ID for my IoT Platform</li>
+<li>OU=z53u40 Corporate : z53u40 is the Organisation ID for my IoT Platform</li>
+<li>CN=z53u40 Root CA : z53u40 is the Organisation ID for my IoT Platform</li>
+<li>pass:password123 : password123 is the password that will protect the key - if you change this value do not forget what you entered, as you need it when using the key later.</li>
+</ul>
+<p>This generates the key and protects it with a password.  A public certificate is then generated in pem format, which is then converted to der format.  Finally the xxd command creates a header file which allows the certificate to be embedded in code - this can be useful for devices that don't have a file system.</p>
+<h3 id="step-2-uploading-the-root-ca-certificate-to-the-iot-platform">Step 2 - Uploading the root CA Certificate to the IoT Platform<a class="headerlink" href="#step-2-uploading-the-root-ca-certificate-to-the-iot-platform" title="Permanent link">¶</a></h3>
+<p>You need to load the root CA certificate into the IoT platform using the console.  In the settings section goto to CA Certificates in the Security section.  Select to <strong>Add certificate</strong> then select the rootCA_certificate.pem file you just generated to upload to the platform, then press <strong>Save</strong>.</p>
+<h3 id="step-3-information-only-generating-a-server-key-and-certificate">Step 3 - INFORMATION ONLY - Generating a Server key and certificate<a class="headerlink" href="#step-3-information-only-generating-a-server-key-and-certificate" title="Permanent link">¶</a></h3>
+<p>After generation the Root Certificate Authority key and certificate, the script generates the key and certificate for the MQTT server.  It does this by generating a key, then creating a certificate request file.  The x509 takes the certificate request and the CA root certificate and key then generates the MQTT server certificate, which is signed by the CA root certificate.</p>
+<p>The MQTT server certificate must includes the DNS name of the server.  This is used as part of the verification process at connection time, to ensure that the client is talking to the intended server.  The script generates the <strong>srvext_custom.cfg</strong> file with the correct DNS address for your instance of the Watson IoT platform.</p>
+<p>To generate a certificate for the IoT platform the script runs the following commands:</p>
+<div class="highlight"><pre><span></span><code>openssl genrsa -aes256 -passout pass:password123 -out mqttServer_key.pem <span class="m">2048</span>
+
+openssl req -new -sha256 -subj <span class="s2">"/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40/CN=z53u40.messaging.internetofthings.ibmcloud.com"</span> -passin pass:password123 -key mqttServer_key.pem -out mqttServer_crt.csr
+
+openssl x509 -days <span class="m">3560</span> -in mqttServer_crt.csr -out mqttServer_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -extensions v3_req -extfile srvext.cfg -set_serial <span class="m">11</span>
+
+openssl x509 -outform der -in mqttServer_crt.pem -out mqttServer_crt.der
+
+xxd -i mqttServer_crt.der mqttServer_crt.der.h
+</code></pre></div>
+<p>again substituting values for C=, ST=, L=, O=, OU= and CN=, but this time it is important that the CN value is the URL of your instance of the IoT messaging URL, which is the Organisation ID followed by <strong>.messaging.internetofthings.ibmcloud.com</strong>, which should also match the <strong>subjectAltName</strong> field in the <a href="https://github.com/binnes/esp8266Workshop/blob/master/certificates/srvext.cfg">srvext.cfg</a> file.</p>
+<p>The commands above generate a new key for the server, creates a certificate request for the server, issues the certificate and signs it with the root CA key, saving it as a pem file.  The certificate is converted from pem to der format and lastly the xxd command creates a header file to embed the certificate in code.</p>
+<h3 id="step-4-add-the-server-certificate-to-the-iot-platform">Step 4 - Add the server certificate to the IoT Platform<a class="headerlink" href="#step-4-add-the-server-certificate-to-the-iot-platform" title="Permanent link">¶</a></h3>
+<p>Now you have the server certificate you can upload to the IoT platform in the settings section of the console in the Messaging Server Certificates section under Security.  Select to <strong>Add Certificate</strong> then upload the certificate (mqttServer_crt.pem) and private key (mqttServer_key.pem).  You need to also provide the password you provided when creating the key (password123).  Once the certificate is uploaded you enable it by setting the Currently Active Certificate to your key.</p>
+<p>Your can test the server certificate by using openssl:</p>
+<div class="highlight"><pre><span></span><code>openssl s_client -CAfile &lt;CA certificate pem file&gt; -showcerts -state  -servername &lt;org ID&gt;.messaging.internetofthings.ibmcloud.com -connect &lt;org ID&gt;.messaging.internetofthings.ibmcloud.com:8883
+</code></pre></div>
+<p>replace <code>&lt;CA certificate pem file&gt;</code> with the name of the CA root certificate and <code>&lt;org ID&gt;</code> with the 6 character org ID for your instance of the IOT Platform.</p>
+<h3 id="step-5-adding-the-root-ca-certificate-to-the-esp8266">Step 5 - Adding the root CA certificate to the ESP8266<a class="headerlink" href="#step-5-adding-the-root-ca-certificate-to-the-esp8266" title="Permanent link">¶</a></h3>
+<p>To allow the ESP8266 to validate the server certificate you need to add the root CA certificate to the ESP8266.  The rootCA_certificate.pem needs to be added to a directory called data in the sketch directory.  You can find out where the sketch directory is by using the <em>sketch</em> -&gt; <em>Show sketch folder</em> in the Arduino menu.  Inside the sketch directory create a new directory called <strong>data</strong> then copy the rootCA_certificate.pem file into the data directory.  You added the data upload tool to the Arduino IDE as part of the prerequisite setup instructions, so you can now run the tool.  Before running the data upload tool ensure the Serial Monitor window is closed, as it will block communication between the device and upload tool.  From the top menu select <em>Tools</em> -&gt; <em>ESP8266 LittleFS Data Upload</em></p>
+<h3 id="step-6-adding-the-root-ca-certificate-to-your-os-or-browser">Step 6 - Adding the root CA certificate to your OS or browser<a class="headerlink" href="#step-6-adding-the-root-ca-certificate-to-your-os-or-browser" title="Permanent link">¶</a></h3>
+<p>Finally you need to add the root CA certificate to your OS or browser, as the IoT Platform console uses a secure connection to get data required to populate and update the console in your browser.  If you don't add the root CA Certificate then the console will not show any data.</p>
+<p>If using Firefox you need to import the rootCA_certificate.pem file, by accessing the security section of the preferences.  On some platform there is an Advanced option before you are able to view certificates, then there is an option to import certificates then trust to identify web sites.</p>
+<p>If using Chrome it depends on the platform.  On some platforms Chrome uses the system certificates, but on others it manages its own certificates and then like Firefox you need to go into the security settings to import the certificate authority certificate and trust it to identify web sites.</p>
+<p>To add the root CA certificate to OS:</p>
+<ul>
+<li><strong>Linux</strong>: Many browsers on Linux do not use the OS certificates but manage their own certificate store, so check before adding the certificate to the OS store.  If you do need to add the rootCA certificate to the OS ca certificate store, then unfortunately there is not a standard way on Linux to achieve this.  Each distro has a slightly different approach, but many want the certificate to be a .crt file, so use the following command to convert the .pem to .crt: <code>openssl x509 -outform der -in rootCA_certificate.pem -out rootCA_certificate.crt</code></li>
+<li>Debian: With admin privileges copy the rootCA_certificate.crt file to /usr/share/ca-certificates then run <code>dpkg-reconfigure ca-certificates</code></li>
+<li>Fedora: Copy the rootCA_certificate.pem file to <strong>/etc/pki/ca-trust/source/anchors/</strong> (using sudo mv or other root access) then run command <code>update-ca-trust extract</code> with admin privileges.</li>
+<li>Ubuntu: Copy the rootCA_certificate.crt to <strong>/usr/local/share/ca-certificates</strong> using admin privileges then run <code>update-ca-certificates</code>.</li>
+<li><strong>MacOS</strong>: Double click the certificate in Finder to open it in the Keychain Access app.  It will automatically show as not trusted.  Double click it to open up the certificate details window and then expand the <strong>Trust</strong> section.  Change the SSL value to <strong>Always Trust</strong>.  Close the certificate window (you will be prompted for your account password to verify the change).</li>
+<li><strong>Windows</strong>: Launch the Microsoft Management Console (enter mmc in the start menu), then select <em>File</em> -&gt;<em>Add/Remove Snap-in...</em>. Highlight Certificates and press <strong>Add</strong>.  Select to manage certificates for <strong>Computer account</strong>, <strong>Local computer</strong> then press <strong>Finish</strong> then <strong>OK</strong>.  Back in the mmc, select the Certificates item in the left column then right-click the <strong>Trusted Root Certificate Authorities</strong> item.  From the popup menu select <em>All Tasks</em> -&gt; <em>Import...</em> to launch the Certificate Import Wizard.  Select the rootCA_certificate pem or der file (may need to alter filter to show all files) and place it in the <strong>Trusted Root Certificate Authorities</strong> store.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are adding a certificate to a browser certificate manager, please ensure you are adding a Certificate Authority certificate.  This should allow you to import a .pem or .der file.  If it is asking for a .p12 file then you are trying to import a certificate and key, so are in the wrong section of the certificate manager.  You want to be adding a <strong>Certificate Authority</strong> certificate or certificate chain</p>
+</div>
+<h3 id="step-7-updating-the-esp8266-code-to-use-the-certificate-to-establish-a-secure-connection">Step 7 - Updating the ESP8266 code to use the certificate to establish a secure connection<a class="headerlink" href="#step-7-updating-the-esp8266-code-to-use-the-certificate-to-establish-a-secure-connection" title="Permanent link">¶</a></h3>
+<p>When a server connects using SSL/TLS it presents its own certificate for verification.  The client uses its local CA certificate store to validate the certificate presented by the server is authentic, by validating that a known CA signed the certificate.</p>
+<p>Part of the certificate verification process checks that the certificate is in data (not before the start time of the certificate and not after certificate expiry time), so the ESP8266 needs to know the correct date/time.  The Network Time Protocol can be used to get the correct time from Internet servers.</p>
+<p>You have already uploaded the CA certificate to the ESP8266, so now the code needs to be updated to load the certificate from the flash file system and switch to using a SSL/TLS connection.</p>
+<p>Make the following code changes:</p>
+<ul>
+<li>Add an include at the top of the file to access the file system : <code>#include &lt;LittleFS.h&gt;</code></li>
+<li>Add an include after the <strong>ESP8266WiFi.h</strong> include to add time : <code>#include &lt;time.h&gt;</code></li>
+<li>Change the MQTT_PORT to use the secure port 8883 : <code>#define MQTT_PORT 8883</code></li>
+<li>Add a new #define to name the CA certificate : <code>#define CA_CERT_FILE "/rootCA_certificate.pem"</code></li>
+<li>Change the wifiClient to use the secure version : <code>BearSSL::WiFiClientSecure wifiClient;</code></li>
+<li>Add a new variable definition below the mqtt variable definition : <code>BearSSL::X509List *rootCert;</code></li>
+<li>Add #define to set timezone offset : <code>#define TZ_OFFSET -5  //Hours timezone offset to GMT (without daylight saving time)</code></li>
+<li>
+<p>Add #define to set day light saving offset : <code>#define TZ_DST    60  //Minutes timezone offset for Daylight saving</code></p>
+</li>
+<li>
+<p>Modify the MQTT connection code in the setup() function to establish a secure connection:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>  <span class="kt">char</span> <span class="o">*</span><span class="n">ca_cert</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+  <span class="c1">// Get certs from file system and load into WiFiSecure client</span>
+  <span class="n">LittleFS</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">File</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CA_CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ca</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load CA cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">ca_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">ca</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading CA cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded CA cert"</span><span class="p">);</span>
+      <span class="n">rootCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+      <span class="n">wifiClient</span><span class="p">.</span><span class="n">setTrustAnchors</span><span class="p">(</span><span class="n">rootCert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+    <span class="n">ca</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Set time from NTP servers</span>
+  <span class="n">configTime</span><span class="p">(</span><span class="n">TZ_OFFSET</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">TZ_DST</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="s">"pool.ntp.org"</span><span class="p">,</span> <span class="s">"0.pool.ntp.org"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Waiting for time"</span><span class="p">);</span>
+  <span class="kt">unsigned</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="n">start</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">2018</span> <span class="o">-</span> <span class="mi">1970</span><span class="p">)</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// Wait for time to fully sync</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Time sync'd"</span><span class="p">);</span>
+  <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ctime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">now</span><span class="p">));</span>
+
+  <span class="c1">// Connect to MQTT - IBM Watson IoT Platform</span>
+  <span class="k">while</span><span class="p">(</span><span class="o">!</span> <span class="n">mqtt</span><span class="p">.</span><span class="n">connected</span><span class="p">()){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">MQTT_DEVICEID</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_TOKEN</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Connected"</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">MQTT_TOPIC_DISPLAY</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"last SSL Error = "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">.</span><span class="n">getLastSSLError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" : "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Failed to connect! ... retrying"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Save, compile and upload the code and now you should have a secure connection.  If you look at the IoT Platform console, in the devices section you should now see the connection state, in the Identity section when selecting the device, is connected with <strong>SecureToken</strong>.  Previous the status would have shown <strong>Insecure</strong>.</p>
+<p>You should now go into the IoT Platform settings section and update the connection security policy from <strong>TLS Optional</strong> to <strong>TLS with Token Authentication</strong> then <strong>Save</strong> the change.</p>
+<h3 id="step-8-how-the-littlefs-file-system-works">Step 8 - How the LittleFS file system works<a class="headerlink" href="#step-8-how-the-littlefs-file-system-works" title="Permanent link">¶</a></h3>
+<p>The ESP8266 allows some of the on board or connected flash memory to be used as a file system.  The Arduino IDE plugin allows you to customise the size of the filesystem (<em>Tools</em> -&gt; <em>Flash Size</em> allows you to specify 1MB or 3MB for the file system when a NodeMCU board is the target device).  The LittleFS filesystem is a very simple file system.  Filenames should not be more than 31 characters.</p>
+<p>The data upload tool allows the content data directory in the sketch folder to be converted to a LittleFS filesystem and uploaded to the device, where the content can then be access from the application.</p>
+<p>The LittleFS filesystem is included in a sketch by including the appropriate header: <code>#include &lt;LittleFS.h&gt;</code> then it is initialised with a <strong>LittleFS.begin()</strong> function call.</p>
+<p>The application code opens up the certificate files using the <strong>open()</strong> function and specifying to only allow read operations.  The <strong>WiFiClientSecure</strong> can load the certificates from the open File handles using the <strong>load()</strong> functions.</p>
+<p>When you have finished with a file it can be closed with the <strong>close()</strong> function.</p>
+<p>Further details and the full API can be seen in the <a href="https://arduino-esp8266.readthedocs.io/en/2.4.1/filesystem.html">documentation</a></p>
+<h3 id="solution-code">Solution code<a class="headerlink" href="#solution-code" title="Permanent link">¶</a></h3>
+<p>The finished application should look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;LittleFS.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;ESP8266WiFi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Adafruit_NeoPixel.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;DHT.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;ArduinoJson.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;PubSubClient.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="c1">//        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT</span>
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+
+<span class="c1">// Watson IoT connection details</span>
+<span class="cp">#define MQTT_HOST "z53u40.messaging.internetofthings.ibmcloud.com"</span>
+<span class="cp">#define MQTT_PORT 8883</span>
+<span class="cp">#define MQTT_DEVICEID "d:z53u40:ESP8266:dev01"</span>
+<span class="cp">#define MQTT_USER "use-token-auth"</span>
+<span class="cp">#define MQTT_TOKEN "password"</span>
+<span class="cp">#define MQTT_TOPIC "iot-2/evt/status/fmt/json"</span>
+<span class="cp">#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"</span>
+<span class="cp">#define CA_CERT_FILE "/rootCA_certificate.pem"</span>
+
+<span class="c1">// Add GPIO pins used to connect devices</span>
+<span class="cp">#define RGB_PIN 5 </span><span class="c1">// GPIO pin the data line of RGB LED is connected to</span>
+<span class="cp">#define DHT_PIN 4 </span><span class="c1">// GPIO pin the data line of the DHT sensor is connected to</span>
+
+<span class="c1">// Specify DHT11 (Blue) or DHT22 (White) sensor</span>
+<span class="cp">#define DHTTYPE DHT11</span>
+<span class="cp">#define NEOPIXEL_TYPE NEO_RGB + NEO_KHZ800</span>
+
+<span class="c1">// Temperatures to set LED by (assume temp in C)</span>
+<span class="cp">#define ALARM_COLD 0.0</span>
+<span class="cp">#define ALARM_HOT 30.0</span>
+<span class="cp">#define WARN_COLD 10.0</span>
+<span class="cp">#define WARN_HOT 25.0</span>
+
+<span class="c1">//Timezone info</span>
+<span class="cp">#define TZ_OFFSET -5  </span><span class="c1">//Hours timezone offset to GMT (without daylight saving time)</span>
+<span class="cp">#define TZ_DST    60  </span><span class="c1">//Minutes timezone offset for Daylight saving</span>
+
+
+<span class="c1">// Add WiFi connection information</span>
+<span class="kt">char</span> <span class="n">ssid</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"SSID"</span><span class="p">;</span>     <span class="c1">//  your network SSID (name)</span>
+<span class="kt">char</span> <span class="n">pass</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"WiFi_password"</span><span class="p">;</span>  <span class="c1">// your network password</span>
+
+
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="c1">//        SHOULD NOT NEED TO CHANGE ANYTHING BELOW THIS LINE</span>
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="n">Adafruit_NeoPixel</span> <span class="n">pixel</span> <span class="o">=</span> <span class="n">Adafruit_NeoPixel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">RGB_PIN</span><span class="p">,</span> <span class="n">NEOPIXEL_TYPE</span><span class="p">);</span>
+<span class="n">DHT</span> <span class="nf">dht</span><span class="p">(</span><span class="n">DHT_PIN</span><span class="p">,</span> <span class="n">DHTTYPE</span><span class="p">);</span>
+
+
+<span class="c1">// MQTT objects</span>
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">);</span>
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">WiFiClientSecure</span> <span class="n">wifiClient</span><span class="p">;</span>
+<span class="n">PubSubClient</span> <span class="nf">mqtt</span><span class="p">(</span><span class="n">MQTT_HOST</span><span class="p">,</span> <span class="n">MQTT_PORT</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">wifiClient</span><span class="p">);</span>
+
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span> <span class="o">*</span><span class="n">rootCert</span><span class="p">;</span>
+
+<span class="c1">// variables to hold data</span>
+<span class="n">StaticJsonDocument</span><span class="o">&lt;</span><span class="mi">100</span><span class="o">&gt;</span> <span class="n">jsonDoc</span><span class="p">;</span>
+<span class="n">JsonObject</span> <span class="n">payload</span> <span class="o">=</span> <span class="n">jsonDoc</span><span class="p">.</span><span class="n">to</span><span class="o">&lt;</span><span class="n">JsonObject</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">JsonObject</span> <span class="n">status</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">createNestedObject</span><span class="p">(</span><span class="s">"d"</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>
+
+<span class="kt">float</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">g</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// handle message arrived</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Message arrived ["</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"] : "</span><span class="p">);</span>
+
+  <span class="n">payload</span><span class="p">[</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// ensure valid content is zero terminated so can treat as c-string</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">ca_cert</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+ <span class="c1">// Start serial console</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"ESP8266 Sensor Application"</span><span class="p">);</span>
+
+  <span class="c1">// Start WiFi connection</span>
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">WIFI_STA</span><span class="p">);</span>
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">pass</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WiFi Connected"</span><span class="p">);</span>
+
+  <span class="c1">// Start connected devices</span>
+  <span class="n">dht</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">pixel</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+
+  <span class="c1">// Get certs from file system and load into WiFiSecure client</span>
+  <span class="n">LittleFS</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">File</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CA_CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ca</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load CA cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">ca_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">ca</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading CA cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded CA cert"</span><span class="p">);</span>
+      <span class="n">rootCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+      <span class="n">wifiClient</span><span class="p">.</span><span class="n">setTrustAnchors</span><span class="p">(</span><span class="n">rootCert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+    <span class="n">ca</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Set time from NTP servers</span>
+  <span class="n">configTime</span><span class="p">(</span><span class="n">TZ_OFFSET</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">TZ_DST</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="s">"pool.ntp.org"</span><span class="p">,</span> <span class="s">"0.pool.ntp.org"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Waiting for time"</span><span class="p">);</span>
+  <span class="kt">unsigned</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="n">start</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">2018</span> <span class="o">-</span> <span class="mi">1970</span><span class="p">)</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// Wait for time to fully sync</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Time sync'd"</span><span class="p">);</span>
+  <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ctime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">now</span><span class="p">));</span>
+
+  <span class="c1">// Connect to MQTT - IBM Watson IoT Platform</span>
+   <span class="k">while</span><span class="p">(</span><span class="o">!</span> <span class="n">mqtt</span><span class="p">.</span><span class="n">connected</span><span class="p">()){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">MQTT_DEVICEID</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_TOKEN</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// Token Authentication</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Connected"</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">MQTT_TOPIC_DISPLAY</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"last SSL Error = "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">.</span><span class="n">getLastSSLError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" : "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Failed to connect! ... retrying"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Attempting MQTT connection..."</span><span class="p">);</span>
+    <span class="c1">// Attempt to connect</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">MQTT_DEVICEID</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_TOKEN</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Connected"</span><span class="p">);</span>
+     <span class="n">mqtt</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">MQTT_TOPIC_DISPLAY</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"last SSL Error = "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">.</span><span class="n">getLastSSLError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" : "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Failed to connect! ... retrying"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readHumidity</span><span class="p">();</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readTemperature</span><span class="p">();</span> <span class="c1">// uncomment this line for centigrade</span>
+  <span class="c1">// t = dht.readTemperature(true); // uncomment this line for Fahrenheit</span>
+
+  <span class="c1">// Check if any reads failed and exit early (to try again).</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isnan</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">||</span> <span class="n">isnan</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Failed to read from DHT sensor!"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Set RGB LED Colour based on temp</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">ALARM_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">WARN_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">ALARM_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">WARN_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">ALARM_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="n">WARN_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">ALARM_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">))</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">pixel</span><span class="p">.</span><span class="n">setPixelColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+    <span class="n">pixel</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+
+    <span class="c1">// Send data to Watson IoT Platform</span>
+    <span class="n">status</span><span class="p">[</span><span class="s">"temp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">status</span><span class="p">[</span><span class="s">"humidity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+    <span class="n">serializeJson</span><span class="p">(</span><span class="n">jsonDoc</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mqtt</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">MQTT_TOPIC</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Publish failed"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// Pause - but keep polling MQTT for incoming messages</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="MQTT.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Intro to MQTT
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="CERT2.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Client Certificates
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

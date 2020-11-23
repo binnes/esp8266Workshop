@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part4/JUPYTER.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Jupyter Notebooks - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#run-a-jupyter-notebook-in-watson-studio">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Jupyter Notebooks
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Jupyter Notebooks
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-cloudant-credentials">
+    Step 1 - Cloudant Credentials
+  </a>
+<nav aria-label="Step 1 - Cloudant Credentials" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-loading-cloudant-data-into-the-jupyter-notebook">
+    Step 2 - Loading Cloudant data into the Jupyter notebook
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-work-with-the-training-data">
+    Step 3 - Work with the training data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-creating-the-binary-classifier-model">
+    Step 4 - Creating the binary classifier model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-test-the-model">
+    Step 5 - Test the model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sample-solution">
+    Sample solution
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-cloudant-credentials">
+    Step 1 - Cloudant Credentials
+  </a>
+<nav aria-label="Step 1 - Cloudant Credentials" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-loading-cloudant-data-into-the-jupyter-notebook">
+    Step 2 - Loading Cloudant data into the Jupyter notebook
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-work-with-the-training-data">
+    Step 3 - Work with the training data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-creating-the-binary-classifier-model">
+    Step 4 - Creating the binary classifier model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-test-the-model">
+    Step 5 - Test the model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sample-solution">
+    Sample solution
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part4/JUPYTER.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="run-a-jupyter-notebook-in-watson-studio">Run a Jupyter Notebook in Watson Studio<a class="headerlink" href="#run-a-jupyter-notebook-in-watson-studio" title="Permanent link">¶</a></h1>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this lab you will read IoT data into a Watson Studio Project Jupyter Notebook and perform some analytics.  You will learn:</p>
+<ul>
+<li>How to use Jupyter Notebooks</li>
+<li>How to read data from a Cloudant DB into Spark</li>
+<li>How to manipulate the data within the notebook environment</li>
+<li>How to create a model to be able to classify the IoT data to determine what is happening.</li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>Jupyter Notebooks are a web-based computational environment for interactive data science and scientific computing. A Jupyter Notebook document is a JSON document, following a versioned schema, and containing an ordered list of input/output cells which can contain code, text (using Markdown), mathematics, plots and rich media, usually ending with the ".ipynb" extension. A Jupyter kernel is a program responsible for handling various types of request (code execution, code completions, inspection), and providing a reply.</p>
+<p>The steps below will build up the Jupyter notebook, there is a solution notebook at the end to use if you need assistance to complete any step.</p>
+<p>There are a number of ways of getting data into a Jupyter notebook.  The User interface provides a way to upload files and create connections to data providerts. For this example we will connect to the Cloudant data where the training data was stored using a Cloudant python library.</p>
+<h2 id="step-1-cloudant-credentials">Step 1 - Cloudant Credentials<a class="headerlink" href="#step-1-cloudant-credentials" title="Permanent link">¶</a></h2>
+<p>Before we can read the ESP8266 IoT temperature and humidity data into a Jupyter notebook we need to create credentials for the Cloudant database where the training data is stored.</p>
+<ul>
+<li>Open a new browser tab.</li>
+<li>Return to the <a href="https://cloud.ibm.com/login">IBM Cloud dashboard</a> and your IoT Starter application. <strong>Click</strong> on the cloudantNoSQLDB service connection (1). <img alt="Cloudant NoSQL Service Connection" src="../part3/screenshots/CloudantNoSQLServiceConnection.png"/></li>
+<li>
+<p>Read about the Cloudant Storage service and click on the <strong>Service credentials</strong> menu item in the left menu bar. <img alt="Cloudant NoSQL Service Instance" src="screenshots/cloudant-service.png"/></p>
+</li>
+<li>
+<p>Click on <strong>New credential</strong> <img alt="Cloudant NoSQL Service new" src="screenshots/cloudant-credential.png"/></p>
+</li>
+<li>
+<p>Give your credential a name: <strong>Credentials-DSX</strong></p>
+</li>
+<li>Click on <strong>Add</strong></li>
+<li>Expand the <strong>View credentials</strong> twistie</li>
+<li>The Cloudant hostname, user and password credentials will be displayed.</li>
+<li>Keep this browser tab open or copy the credentials to your text editor, as you will use these credentials in the next Step.</li>
+</ul>
+<h3 id="step-2-loading-cloudant-data-into-the-jupyter-notebook">Step 2 - Loading Cloudant data into the Jupyter notebook<a class="headerlink" href="#step-2-loading-cloudant-data-into-the-jupyter-notebook" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>Return to the Watson Studio browser tab and open the <strong>IoT Sensor Analytics</strong> notebook. <img alt="Watson Studio Assets" src="screenshots/WatsonStudio-Notebook-ESP8266.png"/></p>
+</li>
+<li>
+<p>Make certain you are in <strong>Edit</strong> mode by clicking on the Pencil icon if it is showing. <img alt="Watson Studio Edit mode" src="screenshots/WatsonStudio-Notebook-edit.png"/></p>
+</li>
+<li>
+<p>Copy the following code into the first cell in the notebook, replacing <strong>\<cloudant username=""></cloudant></strong>, <strong>\<cloudant password=""></cloudant></strong> and <strong>\<cloudant url=""></cloudant></strong> with values obtained in the previous step</p>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="n">credentials_1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'username'</span><span class="p">:</span> <span class="s1">'&lt;Cloudant Username&gt;'</span><span class="p">,</span>
+    <span class="s1">'password'</span><span class="p">:</span> <span class="s2">"""&lt;Cloudant Password&gt;"""</span><span class="p">,</span>
+    <span class="s1">'custom_url'</span><span class="p">:</span> <span class="s1">'&lt;Cloudant URL&gt;'</span><span class="p">,</span>
+    <span class="s1">'port'</span><span class="p">:</span> <span class="s1">'50000'</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+- Once you have updated the credentials and URL then you can run the cell by pressing the Run button.  This will execute the code in the cell and create a new cell.</p>
+<p><img alt="Run cell" src="screenshots/WatsonStudio-run.png"/></p>
+<ul>
+<li>in the next cell add code to import the cloudant package and run the cell</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">cloudant</span>
+</code></pre></div>
+<ul>
+<li>The next cell will create the connection to Cloudant, so enter the code and run the cell.  Note this uses the credential information created in the first cell.  This shows that data is retained within the Jupyter environment, so you can access variables created in previous cells.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cloudant</span> <span class="kn">import</span> <span class="n">Cloudant</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">credentials_1</span><span class="p">[</span><span class="s1">'username'</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">credentials_1</span><span class="p">[</span><span class="s1">'password'</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">credentials_1</span><span class="p">[</span><span class="s1">'username'</span><span class="p">]</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Cloudant</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">account</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">connect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_renew</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>then open the training database and get the number of documents available in the database.  When you run this cell you should see the number of documents in the training database output below the cell</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">eventstore</span> <span class="o">=</span> <span class="s1">'training'</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="n">eventstore</span><span class="p">]</span>
+<span class="n">db</span><span class="o">.</span><span class="n">doc_count</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Database record count" src="screenshots/WatsonStudio-count.png"/></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you want to clear out the data created by previously run steps then you can use the <strong>Kernel</strong> menu option to clear out and restart the notebook, or clear out and run all steps:</p>
+<p><img alt="restarting a notebook" src="screenshots/WatsonStudio-kernel-options.png"/></p>
+<p>If you clear output then you can select the first cell and press run, which will run the cell then move to the next cell in the notebook.  Keep pressing run to run each cell in turn, ensure you wait for each cell to complete (At the left side of the cell the indicator <strong>[*]</strong> turns to <strong>[n]</strong>, where n is a number) before running the next step.</p>
+</div>
+<h2 id="step-3-work-with-the-training-data">Step 3 - Work with the training data<a class="headerlink" href="#step-3-work-with-the-training-data" title="Permanent link">¶</a></h2>
+<p>Within the notebook you are able to manipulate the data. You usually need to examine the training data and maybe clean it up before creating the model.</p>
+<ul>
+<li>Read a subset of the records available -- if the event store holds many thousands of entries, there may be insufficient memory available to load them all</li>
+<li>The include_docs=True is necessary, otherwise all that is returned is the list of document ids.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">loadlimit</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">alldocs</span> <span class="o">=</span>  <span class="n">db</span><span class="o">.</span><span class="n">all_docs</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">loadlimit</span><span class="p">,</span> <span class="n">include_docs</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">alldocs</span><span class="p">[</span><span class="s1">'rows'</span><span class="p">])</span>
+</code></pre></div>
+<ul>
+<li>Look at the first event/observation document, and select the features within the "doc" key that you want to include in modelling</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">alldocs</span><span class="p">[</span><span class="s1">'rows'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>In this case, the features of interest are temperature,humidity - the timestamp ts is going to be useful for spotting trends, time-based anomalies etc.  The class property provides the expected classification given the temperature and humidity readings, which will be used to train the model.</li>
+<li>Iterate the returned documents into an array of events with common schema</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">events</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">alldocs</span><span class="p">[</span><span class="s1">'rows'</span><span class="p">]:</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">"doc"</span><span class="p">]</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="p">[</span><span class="s1">'time'</span><span class="p">],</span><span class="n">doc</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">],</span><span class="n">doc</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">],</span><span class="n">doc</span><span class="p">[</span><span class="s1">'class'</span><span class="p">]]</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>The events are now loaded in a form that can be converted into a dataframe, which will be used for subsequent steps</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">events</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">,</span><span class="s2">"temperature"</span><span class="p">,</span><span class="s2">"humidity"</span><span class="p">,</span><span class="s2">"class"</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Let's take a look as some of the features over time. We'll use MatPlotLib for visualisation</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</code></pre></div>
+<ul>
+<li>visualise temperature over time</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">'temperature'</span><span class="p">])</span>
+</code></pre></div>
+<ul>
+<li>visualise humidity over time</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">])</span>
+</code></pre></div>
+<h2 id="step-4-creating-the-binary-classifier-model">Step 4 - Creating the binary classifier model<a class="headerlink" href="#step-4-creating-the-binary-classifier-model" title="Permanent link">¶</a></h2>
+<p>Once you are confident you have the correct training data available you can proceed to creating the model.</p>
+<ul>
+<li>we will use the popular <a href="https://scikit-learn.org/stable/" target="_blank">scikit-learn</a> and <a href="https://pandas.pydata.org" target="_blank">pandas</a> packages to build the model</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
+</code></pre></div>
+<ul>
+<li>separate the sensor readings from the classification (class)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">aX</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">aY</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">t</span><span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">]</span>
+    <span class="n">h</span><span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"humidity"</span><span class="p">]</span>
+    <span class="n">c</span><span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"class"</span><span class="p">]</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">h</span><span class="p">]</span>
+    <span class="n">aX</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+    <span class="n">aY</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">c</span><span class="p">])</span>
+</code></pre></div>
+<ul>
+<li>build a dataframe containing the training data and display the data frames</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">aX</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">,</span><span class="s2">"humidity"</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">aY</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"class"</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>First we split the training data into 2 groups of 2 subsets.  75% of the data will be used to train the model and 25% will be used to test the model</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># split X and y into training and testing sets</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1">#fraction of input data to hold for testing -- excluded from the training</span>
+<span class="n">testsplit</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="n">testsplit</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>look at the data to be used to train the model</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">X_train</span>
+</code></pre></div>
+<ul>
+<li>Use the default Logistic Regression function to train based on the input observations</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c1"># instantiate the model (using the default parameters)</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+
+<span class="c1"># fit the model with data</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You can ignore the warning generated by the above cell</p>
+</div>
+<h2 id="step-5-test-the-model">Step 5 - Test the model<a class="headerlink" href="#step-5-test-the-model" title="Permanent link">¶</a></h2>
+<p>Once you have built the model you will want to verify how accurate the model is, so there are a number of ways we can do this.  The first one is to use an evaluator to get a measure of how good the model is.  A value of 1.0 represents 100% accuracy over the training data.</p>
+<ul>
+<li>calculate the classification from the model for the 25% of the training data that was set aside to test the model</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># generate the predictions from the test subset</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Run a comparison between the actual values for the class, and the calculated values - this will generate a "confusion matrix" which shows how well the model can predict classes, and when it gets it wrong (false positives, false negatives)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">cnf_matrix</span>
+</code></pre></div>
+<ul>
+<li>output the model scores.  1.0 is 100% accurate</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"Accuracy:"</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Precision:"</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Recall:"</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div>
+<ul>
+<li>you can access the help for the logistic regression function</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">help</span><span class="p">(</span><span class="n">logreg</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Output the parameters of the trained model, so you can implement it on the ESP8266.  Initially the coefficients.  As the temperature was the first column in the training data, the first coefficient is the temperature coefficient and the second value is the humidity</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span>
+</code></pre></div>
+<ul>
+<li>Output the intercept value</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span>
+</code></pre></div>
+<p>These values will be used in the next section to implement the trained model on the ESP8266.</p>
+<h2 id="sample-solution">Sample solution<a class="headerlink" href="#sample-solution" title="Permanent link">¶</a></h2>
+<p>There is a sample solution for this part provided in the <a href="https://github.com/binnes/esp8266Workshop/tree/master/docs/part4/notebooks" target="_blank">notebooks</a> folder.  If you have an issue and want to see the solution then within the IoT Sensor Analytics project select to add a new notebook.  Select to create a notebook from file and give the notebook a name - here <strong>IoT Sensor Analytics - solution</strong> has been used.  This assumes you have the file locally on your machine.  Select choose file and locate the <strong>IoT Sensor Analytics.ipynb</strong> file.  Finally ensure you have the Default Python 3.7 XS runtime selected then press <strong>Create Notebook</strong>
+<img alt="Import solution" src="screenshots/WatsonStudio-import-solution.png"/></p>
+<p>Alternatively, you can select to import from URL and set the URL to : <a href="https://raw.githubusercontent.com/binnes/esp8266Workshop/master/docs/part4/notebooks/IoT%20Sensor%20Analytics.ipynb">https://raw.githubusercontent.com/binnes/esp8266Workshop/master/docs/part4/notebooks/IoT%20Sensor%20Analytics.ipynb</a></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="TRAINING.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Create Training Data
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="MODEL.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Run model on device
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

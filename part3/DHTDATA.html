@@ -1,0 +1,685 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part3/DHTDATA.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Sensor Data - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#receive-device-environmental-sensor-data-in-node-red">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Sensor Data
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Sensor Data
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="DHTDATA.html">
+      Sensor Data
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mqtt-application-connections">
+    MQTT Application connections
+  </a>
+<nav aria-label="MQTT Application connections" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#connection-types">
+    Connection types
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#topics">
+    Topics
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication">
+    Authentication
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-certificates">
+    Custom Certificates
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-node-red-flow-to-receive-device-events">
+    Create the Node-RED flow to receive device events
+  </a>
+<nav aria-label="Create the Node-RED flow to receive device events" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-configure-an-mqtt-in-node">
+    Step 1 - Configure an MQTT in Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-extract-the-temperature-from-the-json-object">
+    Step 2 - Extract the Temperature from the JSON Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-node-red-debug-nodes">
+    Step 3 - Node-RED Debug Nodes
+  </a>
+<nav aria-label="Step 3 - Node-RED Debug Nodes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-wire-the-node-red-nodes-together">
+    Step 4 - Wire the Node-RED nodes together
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mqtt-application-connections">
+    MQTT Application connections
+  </a>
+<nav aria-label="MQTT Application connections" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#connection-types">
+    Connection types
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#topics">
+    Topics
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication">
+    Authentication
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-certificates">
+    Custom Certificates
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-node-red-flow-to-receive-device-events">
+    Create the Node-RED flow to receive device events
+  </a>
+<nav aria-label="Create the Node-RED flow to receive device events" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-configure-an-mqtt-in-node">
+    Step 1 - Configure an MQTT in Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-extract-the-temperature-from-the-json-object">
+    Step 2 - Extract the Temperature from the JSON Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-node-red-debug-nodes">
+    Step 3 - Node-RED Debug Nodes
+  </a>
+<nav aria-label="Step 3 - Node-RED Debug Nodes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-wire-the-node-red-nodes-together">
+    Step 4 - Wire the Node-RED nodes together
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part3/DHTDATA.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="receive-device-environmental-sensor-data-in-node-red">Receive Device Environmental Sensor Data in Node-RED<a class="headerlink" href="#receive-device-environmental-sensor-data-in-node-red" title="Permanent link">¶</a></h1>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this lab you will build a flow that receives Device environmental temperature and humidity sensor data.  You will learn:</p>
+<ul>
+<li>How to create a new Node-RED flow and configure MQTT Nodes</li>
+<li>How to output the Device environmental temperature and humidity data.</li>
+<li>How to work with JSON data and observe the sensor results in the Debug sidebar.</li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>In just a few nodes, Node-RED can receive the data that was transmitted from the device over MQTT to Watson IoT Platform.  This simple exercise will be the foundation for the next several sections that plot the data in a dashboard, trigger Real Time threshold alerts, store the data in Cloud Storage and allow for data analytics and anomaly detection.</p>
+<h2 id="mqtt-application-connections">MQTT Application connections<a class="headerlink" href="#mqtt-application-connections" title="Permanent link">¶</a></h2>
+<p>In part 2 you connected the ESP8266 application to the IoT platform using an MQTT client.  In this section you will connect a Node-RED application to the IoT platform.</p>
+<p>The IoT platform uses the open source MQTT protocol to allow devices an applications to connect to the IoT platform, however, it adds some additional security and restrictions over those defined by the MQTT standard.  </p>
+<h3 id="connection-types">Connection types<a class="headerlink" href="#connection-types" title="Permanent link">¶</a></h3>
+<p>In part 2 you defined a device type and created a device on the platform to represent your ESP8266 board.  The connection was created as a device.  </p>
+<p>In this section you will connect the Node-RED application as an application connection.  Application connections have greater access than a device connection.  Device connections can only produce events and consume commands as the registered device.  Gateways are a special type of device connection with additional privileges that can act on behalf of other devices if they are authorised.</p>
+<p>Application connections can consume events from all devices, publish events on behalf of a devices and send commands to devices.</p>
+<p>The client ID sent as part of the connection request must include a client ID, which is of a fixed format :</p>
+<ul>
+<li>Application : <strong>a:<em>orgId<em>:</em>appId</em></strong></li>
+<li>Scalable application : <strong>A:<em>orgId<em>:</em>appId</em></strong></li>
+<li>Device : <strong>d:<em>orgId<em>:</em>deviceType<em>:</em>deviceId</em></strong></li>
+<li>Gateway : <strong>g:<em>orgId<em>:</em>typeId<em>:</em>deviceId</em></strong></li>
+</ul>
+<h3 id="topics">Topics<a class="headerlink" href="#topics" title="Permanent link">¶</a></h3>
+<p>The IoT platform restricts the topic space used by MQTT.  If you attempt to use an invalid topic your connection will be terminated.  The valid topics are specified in the <a href="https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/applications/mqtt.html">IoT platform documentation</a> but for this section the 2 topics you need to know about are:</p>
+<ul>
+<li>Subscribing to device events : <strong>iot-2/type/<em>device_type<em>/id/</em>device_id<em>/evt/</em>event_id<em>/fmt/</em>format_string</em></strong></li>
+<li>Publishing device commands : <strong>iot-2/type/<em>device_type<em>/id/</em>device_id<em>/cmd/</em>command_id<em>/fmt/</em>format_string</em></strong></li>
+</ul>
+<p>where <em>device_type</em>, <em>device_id</em>, <em>event_id</em>, <em>command_id</em> and <em>format_string</em> are set accordingly.</p>
+<p>When subscribing to topics the wildcard character <strong>+</strong> can be used to subscribe to all events of from any device type, device, event type or format.</p>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h3>
+<p>In part 2 you needed to register your device to get the token to authenticate against.  With an application you need to use and API key and API token to authenticate.</p>
+<p>When the IoT platform is bound to a CloudFoundry application on the IBM Cloud a API key and token are automatically generated and can be seen in the Runtime environment variable section of the application view on the IBM Cloud web user interface <img alt="env vars" src="screenshots/app_IoTCredentials.png"/></p>
+<p>You can use the automatically generated values or create your own from the App section of the IoT Platform web console <img alt="IoT App key" src="screenshots/generateKey.png"/></p>
+<p>If generating your own key you must take a note of the token as, like the device token, once the screen showing the token is closed it is not recoverable.</p>
+<p>The API Key is used as the username when connecting and the API Token is the password.</p>
+<h3 id="custom-certificates">Custom Certificates<a class="headerlink" href="#custom-certificates" title="Permanent link">¶</a></h3>
+<p>If you have a custom server certificate configured on the IoT platform then you must use the SNI (Server Name Indication) extension to the TLS protocol to specify the server name in the connection parameters or the IoT platorm will not use your custom certificate.</p>
+<h2 id="create-the-node-red-flow-to-receive-device-events">Create the Node-RED flow to receive device events<a class="headerlink" href="#create-the-node-red-flow-to-receive-device-events" title="Permanent link">¶</a></h2>
+<h3 id="step-1-configure-an-mqtt-in-node">Step 1 - Configure an MQTT in Node<a class="headerlink" href="#step-1-configure-an-mqtt-in-node" title="Permanent link">¶</a></h3>
+<ul>
+<li>From the Input category of the left Node-RED palette, select an <strong>mqtt in node</strong> and drag it onto your Node-RED flow.</li>
+<li>Double-click on the MQTT node. An <strong>Edit mqtt in node</strong> sidebar will open.</li>
+<li>Click the pencil icon next to the Server property to configure the MQTT server properties - this will open the <strong>mqtt-broker node</strong> sidebar</li>
+<li>Enter the server name in the Server field (<em>orgId</em>.messaging.internetofthings.ibmcloud.com)</li>
+<li>Enter 8883 as the Port</li>
+<li>Enter the Client ID (a:<em>orgId</em>:<em>appId</em>).  The appID can be any unique string</li>
+<li>Enable secure (SSL/TLS) connection then select the pencil next to the TLS configuration to open the <strong>Edit tls-config node</strong> sidebar<ul>
+<li>Upload the rootCA_certificate.pem file you created in part 2 that is enabled on your server as the CA Certificate</li>
+<li>Enable Verify server certificate</li>
+<li>Enter the Server Name (<em>orgId</em>.messaging.internetofthings.ibmcloud.com).  This sets the SNI extension on the TLS connection</li>
+<li>Select Update to close the <strong>Edit tls-config node</strong> <img alt="TLS Config" src="screenshots/TLSconfig.png"/></li>
+</ul>
+</li>
+<li>You have finished on the connection tab <img alt="broker connection" src="screenshots/mqttBrokerConnection.png"/></li>
+<li>Switch to the Security tab and enter the Username and Password - get these from the application runtime environment variables tab of your IBM Cloud application <img alt="mqtt Broker Security" src="screenshots/mqttBrokerSecurity.png"/></li>
+<li>press the Update button to return to the <strong>Edit mqtt in node</strong> sidepanel</li>
+<li>Set the topic field to <strong>iot-2/type/+/id/+/evt/+/fmt/json</strong>.  The wildcard <strong>+</strong> is used to select all events from all devices and all events.  The topic requires that the event contains JSON data.</li>
+<li>Select the output as <strong>a parsed JSON object</strong> <img alt="MQTT in node config" src="screenshots/mqttInNodeConfig.png"/></li>
+<li>Press Done to close the config sidepanel</li>
+</ul>
+<h3 id="step-2-extract-the-temperature-from-the-json-object">Step 2 - Extract the Temperature from the JSON Object<a class="headerlink" href="#step-2-extract-the-temperature-from-the-json-object" title="Permanent link">¶</a></h3>
+<ul>
+<li>Recall that the environmental sensor data was transmitted in a JSON object</li>
+</ul>
+<p><code>{ "d": {"temp":X, "humidity":Y }}</code></p>
+<ul>
+<li>Node-RED passes data from node to node in a <em>msg.payload</em> JSON object.</li>
+<li>The <strong>Change</strong> node can be used to extract a particular value so that it can be directly output or manipulated (for instance in a Dashboard chart which we will take advantage of in the next section).</li>
+<li>From the Function category of the left Node-RED palette, select a <strong>Change</strong> node and drag it onto your Node-RED flow</li>
+<li>Double-click on the Change node. An <strong>Edit change node</strong> sidebar will open</li>
+<li>Configure the "to" AZ dropdown to msg. and set it to <em>payload.d.temp</em></li>
+<li>Click on the red <strong>Done</strong> button</li>
+<li>Wire the node to the MQTT in node by clicking and dragging the connector on the right of the MQTT in node to the connector on the left of the change node
+ <img alt="Receive DHT Data" src="screenshots/ESP8266-ReceiveDHTdata-Changenode.png"/></li>
+</ul>
+<h2 id="step-3-node-red-debug-nodes">Step 3 - Node-RED Debug Nodes<a class="headerlink" href="#step-3-node-red-debug-nodes" title="Permanent link">¶</a></h2>
+<ul>
+<li>Debug nodes can be used to print out JSON object values and help you validate your program.</li>
+<li>From the Output category of the left Node-RED palette, drag two <strong>debug nodes</strong> onto your Node-RED flow (7).</li>
+<li>Double-click on one of them. An <strong>Edit debug node</strong> sidebar will open.</li>
+<li>Configure the Output to print the <em>complete msg object</em> (8).</li>
+<li>Click on the red <strong>Done</strong> button.</li>
+<li>Wire the 2 nodes as shown
+ <img alt="Receive DHT Data" src="screenshots/ESP8266-ReceiveDHTdata-Debugnode.png"/></li>
+</ul>
+<h3 id="step-4-wire-the-node-red-nodes-together">Step 4 - Wire the Node-RED nodes together<a class="headerlink" href="#step-4-wire-the-node-red-nodes-together" title="Permanent link">¶</a></h3>
+<ul>
+<li>Click on the red <strong>Deploy</strong> button in the upper right corner.</li>
+<li>The <strong>mqtt in</strong> node should show status <strong>Connected</strong></li>
+<li>Observe the DHT sensor data in the <strong>debug</strong> tab of the Node-RED right sidebar.  You can expand the twisties to expose the JSON object information. Hover over a debug message in the right sidebar and the node that generated the message will be outlined in orange.
+  <img alt="Receive DHT Data" src="screenshots/ESP8266-ReceiveDHTdata-Deploy.png"/></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="NODERED.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Node-RED
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="DASHBOARD.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Dashboards
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

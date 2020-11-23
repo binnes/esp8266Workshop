@@ -1,0 +1,140 @@
+[
+    {
+        "id": "6bad8bb6.70a5d4",
+        "type": "tab",
+        "label": "Set ESP8266 Interval",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e5ab460d.1ebe28",
+        "type": "ui_form",
+        "z": "6bad8bb6.70a5d4",
+        "name": "Dashboard Form",
+        "label": "",
+        "group": "77bda0c.5155c6",
+        "order": 0,
+        "width": "10",
+        "height": "6",
+        "options": [
+            {
+                "label": "Reporting Interval (seconds)",
+                "value": "Seconds",
+                "type": "number",
+                "required": true
+            }
+        ],
+        "formValue": {
+            "Seconds": ""
+        },
+        "payload": "",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "topic": "",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "4a4e49ab.059b8"
+            ]
+        ]
+    },
+    {
+        "id": "4a4e49ab.059b8",
+        "type": "switch",
+        "z": "6bad8bb6.70a5d4",
+        "name": "Secs >= 0",
+        "property": "payload.Seconds",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "6cb3e759.d0d3e"
+            ]
+        ]
+    },
+    {
+        "id": "6cb3e759.d0d3e",
+        "type": "change",
+        "z": "6bad8bb6.70a5d4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"Interval\":msg.payload.Seconds}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "ff0e210a.d5634",
+                "df4ffabd.cc7a1"
+            ]
+        ]
+    },
+    {
+        "id": "ff0e210a.d5634",
+        "type": "debug",
+        "z": "6bad8bb6.70a5d4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 640,
+        "y": 90,
+        "wires": []
+    },
+    {
+        "id": "df4ffabd.cc7a1",
+        "type": "mqtt out",
+        "z": "6bad8bb6.70a5d4",
+        "name": "",
+        "topic": "iot-2/type/ESP8266/id/dev01/cmd/interval/fmt/json",
+        "qos": "",
+        "retain": "",
+        "broker": "",
+        "x": 750,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "77bda0c.5155c6",
+        "type": "ui_group",
+        "z": "",
+        "name": "Change ESP8266 Reporting Interval",
+        "tab": "1a6939e5.65966e",
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "1a6939e5.65966e",
+        "type": "ui_tab",
+        "z": "",
+        "name": "ESP8266 Interval",
+        "icon": "dashboard",
+        "order": 4
+    }
+]

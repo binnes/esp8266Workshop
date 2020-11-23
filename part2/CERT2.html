@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part2/CERT2.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Client Certificates - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#using-a-device-certificate-to-authenticate-to-the-watson-iot-platform">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Client Certificates
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Client Certificates
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="CERT2.html">
+      Client Certificates
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+<nav aria-label="Lab Objectives" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-information-only-generating-the-key-and-certificate-for-a-device">
+    Step 1 - INFORMATION ONLY - Generating the key and certificate for a device
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-upload-the-certificate-and-key-to-the-esp8266-device">
+    Step 2 - Upload the certificate and key to the ESP8266 device
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-modify-the-application-to-use-the-client-certificate-and-key">
+    Step 3 - Modify the application to use the client certificate and key
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-run-the-application">
+    Step 4 - Run the application
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-configure-the-security-policy-on-the-iot-platform">
+    Step 5 - Configure the security policy on the IoT platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#solution-code">
+    Solution Code
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+<nav aria-label="Lab Objectives" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-information-only-generating-the-key-and-certificate-for-a-device">
+    Step 1 - INFORMATION ONLY - Generating the key and certificate for a device
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-upload-the-certificate-and-key-to-the-esp8266-device">
+    Step 2 - Upload the certificate and key to the ESP8266 device
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-modify-the-application-to-use-the-client-certificate-and-key">
+    Step 3 - Modify the application to use the client certificate and key
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-run-the-application">
+    Step 4 - Run the application
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-configure-the-security-policy-on-the-iot-platform">
+    Step 5 - Configure the security policy on the IoT platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#solution-code">
+    Solution Code
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part2/CERT2.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="using-a-device-certificate-to-authenticate-to-the-watson-iot-platform">Using a Device Certificate to authenticate to the Watson IoT platform<a class="headerlink" href="#using-a-device-certificate-to-authenticate-to-the-watson-iot-platform" title="Permanent link">¶</a></h1>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this lab you will extend the application by enabling client side certificates.  You will learn how to:</p>
+<ul>
+<li>Generate client keys and certificates</li>
+<li>Modify the application to use the client certificates</li>
+<li>Configure the IoT platform connection policy to require tokens and/or certificates</li>
+</ul>
+<h3 id="step-1-information-only-generating-the-key-and-certificate-for-a-device">Step 1 - INFORMATION ONLY - Generating the key and certificate for a device<a class="headerlink" href="#step-1-information-only-generating-the-key-and-certificate-for-a-device" title="Permanent link">¶</a></h3>
+<p>The script file you ran in the previous section has already generated the client certificates for you by running the commands shown below:</p>
+<div class="highlight"><pre><span></span><code>openssl genrsa -aes256 -passout pass:password123 -out SecuredDev01_key.pem <span class="m">2048</span>
+
+openssl req -new -sha256 -subj <span class="s2">"/C=GB/ST=DOR/L=Bournemouth/O=z53u40/OU=z53u40 Corporate/CN=d:ESP8266:dev01"</span> -passin pass:password123 -key SecuredDev01_key.pem -out SecuredDev01_crt.csr
+
+openssl x509 -days <span class="m">3650</span> -in SecuredDev01_crt.csr -out SecuredDev01_crt.pem -req -sha256 -CA rootCA_certificate.pem -passin pass:password123 -CAkey rootCA_key.pem -set_serial <span class="m">131</span>
+
+openssl rsa -outform der -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_key.key
+
+openssl rsa -in SecuredDev01_key.pem -passin pass:password123 -out SecuredDev01_key_nopass.pem
+
+openssl x509 -outform der -in SecuredDev01_crt.pem -out SecuredDev01_crt.der
+</code></pre></div>
+<p>You will notice that the client certificate contains the client ID in the CN property of the certificate subject field.  This is how the certificate identifies the client to the server.  The Watson IoT platform requires the Client ID to be in the form of d:[<em>device type</em>]:[<em>device ID</em>].</p>
+<h3 id="step-2-upload-the-certificate-and-key-to-the-esp8266-device">Step 2 - Upload the certificate and key to the ESP8266 device<a class="headerlink" href="#step-2-upload-the-certificate-and-key-to-the-esp8266-device" title="Permanent link">¶</a></h3>
+<p>You need to add the private key (SecuredDev01_key_nopass.pem) and the certificate (SecuredDev01_crt.pem) to the data folder inside the sketch folder then run the data uploader tool (<em>Tools</em> -&gt; <em>ESP8266 LittleFS Data Upload</em>) to install the certificates on the device filesystem.  The SSL library on the ESP does not provide a mechanism to enter a password for the key, so the version of the key without the password needs to be provided.  Remember to close the Serial Monitor window before running the data upload tool.</p>
+<h3 id="step-3-modify-the-application-to-use-the-client-certificate-and-key">Step 3 - Modify the application to use the client certificate and key<a class="headerlink" href="#step-3-modify-the-application-to-use-the-client-certificate-and-key" title="Permanent link">¶</a></h3>
+<p>Now you can modify the code to load the certificates and add them to the connection:</p>
+<p>Add two more #define statements containing the names of the key and certificate:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define KEY_FILE "/SecuredDev01_key_nopass.pem"</span>
+<span class="cp">#define CERT_FILE "/SecuredDev01_crt.pem"</span>
+</code></pre></div>
+<p>Add two more variable declarations to hold the additional certificates:</p>
+<div class="highlight"><pre><span></span><code><span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span> <span class="o">*</span><span class="n">clientCert</span><span class="p">;</span>
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">PrivateKey</span> <span class="o">*</span><span class="n">clientKey</span><span class="p">;</span>
+</code></pre></div>
+<p>then update the code within the setup() function to load the additional key and certificate:</p>
+<div class="highlight"><pre><span></span><code>  <span class="kt">char</span> <span class="o">*</span><span class="n">client_cert</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">client_key</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+  <span class="c1">// Get cert(s) from file system</span>
+  <span class="n">LittleFS</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">File</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CA_CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ca</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load CA cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">ca_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">ca</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading CA cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded CA cert"</span><span class="p">);</span>
+      <span class="n">rootCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+      <span class="n">wifiClient</span><span class="p">.</span><span class="n">setTrustAnchors</span><span class="p">(</span><span class="n">rootCert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+    <span class="n">ca</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">File</span> <span class="n">key</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">KEY_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load key"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">keySize</span> <span class="o">=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">client_key</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">keySize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">keySize</span> <span class="o">!=</span> <span class="n">key</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">client_key</span><span class="p">,</span> <span class="n">keySize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading key failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded key"</span><span class="p">);</span>
+      <span class="n">clientKey</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">PrivateKey</span><span class="p">(</span><span class="n">client_key</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">client_key</span><span class="p">);</span>
+    <span class="n">key</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">File</span> <span class="n">cert</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">cert</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">cert</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">client_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">cert</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">client_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading client cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded client cert"</span><span class="p">);</span>
+      <span class="n">clientCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">client_cert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">client_cert</span><span class="p">);</span>
+    <span class="n">cert</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">wifiClient</span><span class="p">.</span><span class="n">setClientRSACert</span><span class="p">(</span><span class="n">clientCert</span><span class="p">,</span> <span class="n">clientKey</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="step-4-run-the-application">Step 4 - Run the application<a class="headerlink" href="#step-4-run-the-application" title="Permanent link">¶</a></h3>
+<p>Save, compile and upload the sketch to the device and verify the device connects.</p>
+<h3 id="step-5-configure-the-security-policy-on-the-iot-platform">Step 5 - Configure the security policy on the IoT platform<a class="headerlink" href="#step-5-configure-the-security-policy-on-the-iot-platform" title="Permanent link">¶</a></h3>
+<p>You now have client certificates working with the device, so can now choose how you want devices to be verified.  If you open the IoT Platform console and got to the settings section then the Connection Security section and Open Connection Security Policy you see you have a number of options:</p>
+<ul>
+<li>TLS Optional</li>
+<li>TLS with Token Authentication</li>
+<li>TLS with Client Certificate Authentication</li>
+<li>TLS with Client Certificate AND Token Authentication</li>
+<li>TLS with Client Certificate OR Token Authentication</li>
+</ul>
+<p>You can now decide what policy you want.  If you don't want to use Token Authentication then change the <strong>connect()</strong> function call and omit the user and token information:</p>
+<ul>
+<li>with token authentication : <code>if (mqtt.connect(MQTT_DEVICEID, MQTT_USER, MQTT_TOKEN)) {</code></li>
+<li>without token authentication : <code>if (mqtt.connect(MQTT_DEVICEID)) {</code></li>
+</ul>
+<p>You will also see that you can create Custom Rules in addition to the Default Rule.  This allows different device types to have a different policy . If a device type doesn't match a custom rule then the default rule is used.</p>
+<h3 id="solution-code">Solution Code<a class="headerlink" href="#solution-code" title="Permanent link">¶</a></h3>
+<p>The finished application should look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;LittleFS.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;ESP8266WiFi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Adafruit_NeoPixel.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;DHT.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;ArduinoJson.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;PubSubClient.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="c1">//        UPDATE CONFIGURATION TO MATCH YOUR ENVIRONMENT</span>
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+
+<span class="c1">// Watson IoT connection details</span>
+<span class="cp">#define MQTT_HOST "z53u40.messaging.internetofthings.ibmcloud.com"</span>
+<span class="cp">#define MQTT_PORT 8883</span>
+<span class="cp">#define MQTT_DEVICEID "d:z53u40:ESP8266:dev01"</span>
+<span class="cp">#define MQTT_USER "use-token-auth"</span>
+<span class="cp">#define MQTT_TOKEN "password"</span>
+<span class="cp">#define MQTT_TOPIC "iot-2/evt/status/fmt/json"</span>
+<span class="cp">#define MQTT_TOPIC_DISPLAY "iot-2/cmd/display/fmt/json"</span>
+<span class="cp">#define CA_CERT_FILE "/rootCA_certificate.pem"</span>
+<span class="cp">#define KEY_FILE "/SecuredDev01_key_nopass.pem"</span>
+<span class="cp">#define CERT_FILE "/SecuredDev01_crt.pem"</span>
+
+<span class="c1">// Add GPIO pins used to connect devices</span>
+<span class="cp">#define RGB_PIN 5 </span><span class="c1">// GPIO pin the data line of RGB LED is connected to</span>
+<span class="cp">#define DHT_PIN 4 </span><span class="c1">// GPIO pin the data line of the DHT sensor is connected to</span>
+
+<span class="c1">// Specify DHT11 (Blue) or DHT22 (White) sensor</span>
+<span class="cp">#define DHTTYPE DHT11</span>
+<span class="cp">#define NEOPIXEL_TYPE NEO_RGB + NEO_KHZ800</span>
+
+<span class="c1">// Temperatures to set LED by (assume temp in C)</span>
+<span class="cp">#define ALARM_COLD 0.0</span>
+<span class="cp">#define ALARM_HOT 30.0</span>
+<span class="cp">#define WARN_COLD 10.0</span>
+<span class="cp">#define WARN_HOT 25.0</span>
+
+<span class="c1">//Timezone info</span>
+<span class="cp">#define TZ_OFFSET -5  </span><span class="c1">//Hours timezone offset to GMT (without daylight saving time)</span>
+<span class="cp">#define TZ_DST    60  </span><span class="c1">//Minutes timezone offset for Daylight saving</span>
+
+<span class="c1">// Add WiFi connection information</span>
+<span class="kt">char</span> <span class="n">ssid</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"SSID"</span><span class="p">;</span>     <span class="c1">//  your network SSID (name)</span>
+<span class="kt">char</span> <span class="n">pass</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"WiFi_password"</span><span class="p">;</span>  <span class="c1">// your network password</span>
+
+
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="c1">//        SHOULD NOT NEED TO CHANGE ANYTHING BELOW THIS LINE</span>
+<span class="c1">// --------------------------------------------------------------------------------------------</span>
+<span class="n">Adafruit_NeoPixel</span> <span class="n">pixel</span> <span class="o">=</span> <span class="n">Adafruit_NeoPixel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">RGB_PIN</span><span class="p">,</span> <span class="n">NEOPIXEL_TYPE</span><span class="p">);</span>
+<span class="n">DHT</span> <span class="nf">dht</span><span class="p">(</span><span class="n">DHT_PIN</span><span class="p">,</span> <span class="n">DHTTYPE</span><span class="p">);</span>
+
+
+<span class="c1">// MQTT objects</span>
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">);</span>
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">WiFiClientSecure</span> <span class="n">wifiClient</span><span class="p">;</span>
+<span class="n">PubSubClient</span> <span class="nf">mqtt</span><span class="p">(</span><span class="n">MQTT_HOST</span><span class="p">,</span> <span class="n">MQTT_PORT</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">wifiClient</span><span class="p">);</span>
+
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span> <span class="o">*</span><span class="n">rootCert</span><span class="p">;</span>
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span> <span class="o">*</span><span class="n">clientCert</span><span class="p">;</span>
+<span class="n">BearSSL</span><span class="o">::</span><span class="n">PrivateKey</span> <span class="o">*</span><span class="n">clientKey</span><span class="p">;</span>
+
+<span class="c1">// variables to hold data</span>
+<span class="n">StaticJsonDocument</span><span class="o">&lt;</span><span class="mi">100</span><span class="o">&gt;</span> <span class="n">jsonDoc</span><span class="p">;</span>
+<span class="n">JsonObject</span> <span class="n">payload</span> <span class="o">=</span> <span class="n">jsonDoc</span><span class="p">.</span><span class="n">to</span><span class="o">&lt;</span><span class="n">JsonObject</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">JsonObject</span> <span class="n">status</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">createNestedObject</span><span class="p">(</span><span class="s">"d"</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>
+
+<span class="kt">float</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">g</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// handle message arrived</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Message arrived ["</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"] : "</span><span class="p">);</span>
+
+  <span class="n">payload</span><span class="p">[</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// ensure valid content is zero terminated so can treat as c-string</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">ca_cert</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">client_cert</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">client_key</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+ <span class="c1">// Start serial console</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"ESP8266 Sensor Application"</span><span class="p">);</span>
+
+  <span class="c1">// Start WiFi connection</span>
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">WIFI_STA</span><span class="p">);</span>
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">pass</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WiFi Connected"</span><span class="p">);</span>
+
+  <span class="c1">// Start connected devices</span>
+  <span class="n">dht</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">pixel</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+
+  <span class="c1">// Get certs from file system and load into WiFiSecure client</span>
+  <span class="n">LittleFS</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">File</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CA_CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ca</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load CA cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">ca_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">ca</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading CA cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded CA cert"</span><span class="p">);</span>
+      <span class="n">rootCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+      <span class="n">wifiClient</span><span class="p">.</span><span class="n">setTrustAnchors</span><span class="p">(</span><span class="n">rootCert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">ca_cert</span><span class="p">);</span>
+    <span class="n">ca</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">File</span> <span class="n">key</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">KEY_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load key"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">keySize</span> <span class="o">=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">client_key</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">keySize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">keySize</span> <span class="o">!=</span> <span class="n">key</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">client_key</span><span class="p">,</span> <span class="n">keySize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading key failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded key"</span><span class="p">);</span>
+      <span class="n">clientKey</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">PrivateKey</span><span class="p">(</span><span class="n">client_key</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">client_key</span><span class="p">);</span>
+    <span class="n">key</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">File</span> <span class="n">cert</span> <span class="o">=</span> <span class="n">LittleFS</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">CERT_FILE</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">cert</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Couldn't load cert"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">certSize</span> <span class="o">=</span> <span class="n">cert</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">client_cert</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">certSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">certSize</span> <span class="o">!=</span> <span class="n">cert</span><span class="p">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">client_cert</span><span class="p">,</span> <span class="n">certSize</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loading client cert failed"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Loaded client cert"</span><span class="p">);</span>
+      <span class="n">clientCert</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BearSSL</span><span class="o">::</span><span class="n">X509List</span><span class="p">(</span><span class="n">client_cert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">client_cert</span><span class="p">);</span>
+    <span class="n">cert</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">wifiClient</span><span class="p">.</span><span class="n">setClientRSACert</span><span class="p">(</span><span class="n">clientCert</span><span class="p">,</span> <span class="n">clientKey</span><span class="p">);</span>
+
+  <span class="c1">// Set time from NTP servers</span>
+  <span class="n">configTime</span><span class="p">(</span><span class="n">TZ_OFFSET</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">TZ_DST</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="s">"pool.ntp.org"</span><span class="p">,</span> <span class="s">"0.pool.ntp.org"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Waiting for time"</span><span class="p">);</span>
+  <span class="kt">unsigned</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="n">start</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">2018</span> <span class="o">-</span> <span class="mi">1970</span><span class="p">)</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// Wait for time to fully sync</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Time sync'd"</span><span class="p">);</span>
+  <span class="kt">time_t</span> <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ctime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">now</span><span class="p">));</span>
+
+  <span class="c1">// Connect to MQTT - IBM Watson IoT Platform</span>
+   <span class="k">while</span><span class="p">(</span><span class="o">!</span> <span class="n">mqtt</span><span class="p">.</span><span class="n">connected</span><span class="p">()){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">MQTT_DEVICEID</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_TOKEN</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// Token Authentication</span>
+<span class="c1">//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Connected"</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">MQTT_TOPIC_DISPLAY</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"last SSL Error = "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">.</span><span class="n">getLastSSLError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" : "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Failed to connect! ... retrying"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Attempting MQTT connection..."</span><span class="p">);</span>
+    <span class="c1">// Attempt to connect</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mqtt</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">MQTT_DEVICEID</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_TOKEN</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// Token Authentication</span>
+<span class="c1">//    if (mqtt.connect(MQTT_DEVICEID)) { // No Token Authentication</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Connected"</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">MQTT_TOPIC_DISPLAY</span><span class="p">);</span>
+      <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"last SSL Error = "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">.</span><span class="n">getLastSSLError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" : "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Failed to connect! ... retrying"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readHumidity</span><span class="p">();</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readTemperature</span><span class="p">();</span> <span class="c1">// uncomment this line for centigrade</span>
+  <span class="c1">// t = dht.readTemperature(true); // uncomment this line for Fahrenheit</span>
+
+  <span class="c1">// Check if any reads failed and exit early (to try again).</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isnan</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">||</span> <span class="n">isnan</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Failed to read from DHT sensor!"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Set RGB LED Colour based on temp</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">ALARM_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">WARN_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">ALARM_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">WARN_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">ALARM_COLD</span><span class="p">)</span> <span class="o">?</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="n">WARN_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">255</span> <span class="o">:</span> <span class="p">((</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">ALARM_HOT</span><span class="p">)</span> <span class="o">?</span> <span class="mi">150</span> <span class="o">:</span> <span class="mi">0</span><span class="p">))</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">pixel</span><span class="p">.</span><span class="n">setPixelColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+    <span class="n">pixel</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+
+    <span class="c1">// Send data to Watson IoT Platform</span>
+    <span class="n">status</span><span class="p">[</span><span class="s">"temp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">status</span><span class="p">[</span><span class="s">"humidity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+    <span class="n">serializeJson</span><span class="p">(</span><span class="n">jsonDoc</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mqtt</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">MQTT_TOPIC</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MQTT Publish failed"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// Pause - but keep polling MQTT for incoming messages</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="CERT1.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                IoT Security
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../part3/index.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Intro
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

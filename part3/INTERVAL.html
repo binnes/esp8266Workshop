@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part3/INTERVAL.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Reporting interval - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#control-your-device-reporting-interval-via-a-node-red-dashboard-form">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Reporting interval
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Reporting interval
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="INTERVAL.html">
+      Reporting interval
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+<nav aria-label="Introduction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-import-the-node-red-dashboard-reporting-interval-form-flow">
+    Step 1 - Import the Node-RED Dashboard Reporting Interval Form Flow
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-node-red-dashboard-form-node">
+    Step 2 - Node-RED Dashboard Form node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-description-of-the-set-esp8266-interval-flow">
+    Step 3 - Description of the Set ESP8266 Interval flow
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-send-mqtt-commands-using-the-mqtt-out-node">
+    Step 4 - Send MQTT Commands using the MQTT Out Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-reprogram-the-esp8266-to-subscribe-to-mqtt-commands">
+    Step 5 - Reprogram the ESP8266 to subscribe to MQTT Commands
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-node-red-dashboard-reporting-interval-form">
+    Step 6 - Node-RED Dashboard Reporting Interval Form
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-arduino-serial-monitor">
+    Step 7 - Arduino Serial Monitor
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lab-objectives">
+    Lab Objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+    Introduction
+  </a>
+<nav aria-label="Introduction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-import-the-node-red-dashboard-reporting-interval-form-flow">
+    Step 1 - Import the Node-RED Dashboard Reporting Interval Form Flow
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-node-red-dashboard-form-node">
+    Step 2 - Node-RED Dashboard Form node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-description-of-the-set-esp8266-interval-flow">
+    Step 3 - Description of the Set ESP8266 Interval flow
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-send-mqtt-commands-using-the-mqtt-out-node">
+    Step 4 - Send MQTT Commands using the MQTT Out Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-reprogram-the-esp8266-to-subscribe-to-mqtt-commands">
+    Step 5 - Reprogram the ESP8266 to subscribe to MQTT Commands
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-node-red-dashboard-reporting-interval-form">
+    Step 6 - Node-RED Dashboard Reporting Interval Form
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-arduino-serial-monitor">
+    Step 7 - Arduino Serial Monitor
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part3/INTERVAL.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="control-your-device-reporting-interval-via-a-node-red-dashboard-form">Control your Device reporting interval via a Node-RED Dashboard Form<a class="headerlink" href="#control-your-device-reporting-interval-via-a-node-red-dashboard-form" title="Permanent link">¶</a></h1>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this lab you will modify the ESP8266 Arduino program to receive MQTT commands from the IBM Cloud and build a Node-RED Dashboard Form to dynamically change the reporting interval of the ESP8266 DHT environmental sensor data.  You will learn:</p>
+<ul>
+<li>How to build a Node-RED Dashboard Form</li>
+<li>How to send MQTT commands from the IBM Cloud to your ESP8266</li>
+<li>How to receive MQTT commands within your ESP8266 Arduino program / sketch.</li>
+<li>How to work with JSON data on the ESP8266</li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>Remote management and control of IoT Devices is critical to managing the flow of sensor data to the Cloud. The IoT Device might only need to check in occasionally during quiet periods of inactivity. Waking up the device and requesting that it report sensor data more frequently during active time periods is better for power management, bandwidth consumption and cloud storage.</p>
+<p>This section will build a Node-RED Dashboard Form where you can enter a new reporting interval.  A MQTT command will be published from the IBM Cloud to the ESP8266 device. The ESP8266 will receive the interval update and adjust how often it transmits the DHT environmental sensor data.</p>
+<h3 id="step-1-import-the-node-red-dashboard-reporting-interval-form-flow">Step 1 - Import the Node-RED Dashboard Reporting Interval Form Flow<a class="headerlink" href="#step-1-import-the-node-red-dashboard-reporting-interval-form-flow" title="Permanent link">¶</a></h3>
+<ul>
+<li>Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the flow to your Clipboard. Recall from a previous section, click on the Node-RED Menu, then Import, then Clipboard. Paste the text of the flow into the Import nodes dialog and press the red Import button.</li>
+</ul>
+<p>Node-RED Dashboard Reporting Interval Form Flow <a href="https://binnes.github.io/esp8266Workshop/part3/flows/NRD-ReportingInterval-Form.json" target="_blank">Get the Code:</a></p>
+<ul>
+<li>Turn to the <em>Set ESP8266 Interval</em> flow tab.</li>
+<li>Fix the configuration of the <strong>mqtt in</strong> node</li>
+<li>Click the <strong>Deploy</strong> button on the top of menu bar to deploy the Node-RED flow.</li>
+</ul>
+<p><img alt="Node-RED Dashboard Form flow screenshot" src="screenshots/NRD-ReportingIntervalForm-flow.png"/></p>
+<h3 id="step-2-node-red-dashboard-form-node">Step 2 - Node-RED Dashboard Form node<a class="headerlink" href="#step-2-node-red-dashboard-form-node" title="Permanent link">¶</a></h3>
+<ul>
+<li>The Node-RED Dashboard <strong>Form</strong> node can be customized to query user input fields - text, numbers, email addresses, passwords, checkboxes and switches.  Sophisticated forms can be constructed in one Node-RED Dashboard Form node.</li>
+<li>After entering the form data, the user can press <strong>Submit</strong> or <strong>Cancel</strong> buttons.</li>
+<li>When the <strong>Submit</strong> button is pressed the flow constructs a <code>msg.payload</code> JSON Object with the values entered.</li>
+<li>Double-click on the Dashboard Form node (1). An <strong>Edit form node</strong> sidebar will open.</li>
+<li>This form only has one element (2). It asks in a field labelled <em>Reporting Interval</em> for a numeric value. This value will be stored in a variable named <em>Seconds</em></li>
+<li>You might experiment by adding additional elements (3) that could prompt for Text, Numbers, validated email addresses, Passwords (which will be masked when input as * ), Checkmarks or Switches.</li>
+</ul>
+<p><img alt="Node-RED Dashboard Form flow node" src="screenshots/NRD-ReportingIntervalForm-formnode.png"/></p>
+<ul>
+<li>Press the Cancel button when you have finished experimenting with the form node.</li>
+</ul>
+<h3 id="step-3-description-of-the-set-esp8266-interval-flow">Step 3 - Description of the Set ESP8266 Interval flow<a class="headerlink" href="#step-3-description-of-the-set-esp8266-interval-flow" title="Permanent link">¶</a></h3>
+<ul>
+<li>The <em>Set ESP8266 Interval</em> flow contains just 5 nodes.</li>
+<li>The Dashboard <strong>Form</strong> node queries the user for a new interval value.</li>
+<li>The result is passed in a <code>msg.payload.Seconds</code> JSON Object to a <strong>Switch</strong> node which tests if the number entered is equal to or greater than Zero.</li>
+<li>The <code>msg.payload</code> is reformatted in a <strong>Change</strong> node using the JSONata Expression editor into a JSON Object <code>{"Interval":msg.payload.Seconds}</code></li>
+<li>The resulting JSON Object is passed to an <strong>mqtt out</strong> node.</li>
+<li>The topic configured in the <strong>mqtt out</strong> node specifies the device to receive the command.</li>
+</ul>
+<h3 id="step-4-send-mqtt-commands-using-the-mqtt-out-node">Step 4 - Send MQTT Commands using the <strong>MQTT Out</strong> Node<a class="headerlink" href="#step-4-send-mqtt-commands-using-the-mqtt-out-node" title="Permanent link">¶</a></h3>
+<ul>
+<li>Double-click on the IBM IoT node (4). An <strong>Edit mqtt out node</strong> sidebar will open.</li>
+<li>The <strong>mqtt out</strong> node is configured to send a <strong>Device Command</strong> (5) to your ESP8266 Device Id by using the appropriate topic.  The target device is identified as part of the topic</li>
+<li>The <strong>Command Type</strong> will be named <em>interval</em> and is also set in the topic</li>
+<li>Press the red Done button.</li>
+</ul>
+<p><img alt="Node-RED Dashboard Form flow node" src="screenshots/NRD-ReportingIntervalForm-mqttnode.png"/></p>
+<h3 id="step-5-reprogram-the-esp8266-to-subscribe-to-mqtt-commands">Step 5 - Reprogram the ESP8266 to subscribe to MQTT Commands<a class="headerlink" href="#step-5-reprogram-the-esp8266-to-subscribe-to-mqtt-commands" title="Permanent link">¶</a></h3>
+<ul>
+<li>Open the “Get the Code” github URL listed below, mark or Ctrl-A to select all of the text, and copy the text for the replacement ESP8266 program.</li>
+</ul>
+<p>IoT Workshop Arduino Program : <a href="https://raw.githubusercontent.com/binnes/esp8266Workshop/master/IoTWorkshop.ino/IoTWorkshop.ino.ino">Get the Code</a></p>
+<ul>
+<li>Return to the Arduino IDE</li>
+<li>Record your Watson IoT connection details from the top of your version of the existing IoTWorkshop.ino you created in Part 2.</li>
+<li>Replace the source code with the above.</li>
+<li>This version registers a callback and subscribes to MQTT Device Commands.</li>
+<li>The program loops but polls for MQTT incoming Commands.</li>
+<li>If a Interval command is sent, it updates how long it should sleep before sending the next DHT environmental sensor data.</li>
+<li>Merge in your Watson IoT connection details.</li>
+<li>Compile and Flash this updated program to the ESP8266</li>
+</ul>
+<h3 id="step-6-node-red-dashboard-reporting-interval-form">Step 6 - Node-RED Dashboard Reporting Interval Form<a class="headerlink" href="#step-6-node-red-dashboard-reporting-interval-form" title="Permanent link">¶</a></h3>
+<ul>
+<li>Turn to the Node-RED Dashboard browser tab, click on the menu tab in the upper left corner, and select the ESP8266 Interval tab.</li>
+<li>On the ESP8266 Interval dashboard, click on the form and enter a new value.</li>
+<li>Click on the <strong>SUBMIT</strong> button.</li>
+<li>The button will trigger the flow to send the new value to the ESP8266 over MQTT.</li>
+</ul>
+<p><img alt="Reporting interval form" src="screenshots/NRD-ReportingIntervalForm.png"/></p>
+<h3 id="step-7-arduino-serial-monitor">Step 7 - Arduino Serial Monitor<a class="headerlink" href="#step-7-arduino-serial-monitor" title="Permanent link">¶</a></h3>
+<ul>
+<li>Launch the Serial Monitor from the Arduino IDE - <em>Tools -&gt; Serial Monitor</em></li>
+<li>Watch the Reporting Interval loop</li>
+<li>Change the reporting frequency in the Node-RED Dashboard Form.</li>
+<li>In this screenshot the Reporting Interval was changed from 10 to 5 to 2 and the frequency that the environmental data was sent increased.</li>
+</ul>
+<p><img alt="Arduino Serial Monitor" src="screenshots/ArduinoSerialMonitor.png"/></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="HISTORY.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Historical Data
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="LED.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Remote LED control
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

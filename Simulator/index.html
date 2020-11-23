@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/Simulator/index.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Simulator - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#the-watson-iot-platform-device-simulator">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Simulator
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part4/SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Simulator
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+      Simulator
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+    Learning objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estimated-time">
+    Estimated time
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#steps">
+    Steps
+  </a>
+<nav aria-label="Steps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-enable-the-device-simulator">
+    1. Enable the Device Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-adding-simulated-devices">
+    3. Adding simulated Devices
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-monitoring-simulated-devices">
+    4. Monitoring simulated devices
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#saving-simulation-configuration">
+    Saving simulation configuration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#limitations-of-the-device-simulator">
+    Limitations of the Device Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+    Summary
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+    Learning objectives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estimated-time">
+    Estimated time
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#steps">
+    Steps
+  </a>
+<nav aria-label="Steps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-enable-the-device-simulator">
+    1. Enable the Device Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-adding-simulated-devices">
+    3. Adding simulated Devices
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-monitoring-simulated-devices">
+    4. Monitoring simulated devices
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#saving-simulation-configuration">
+    Saving simulation configuration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#limitations-of-the-device-simulator">
+    Limitations of the Device Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+    Summary
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/Simulator/README.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="the-watson-iot-platform-device-simulator">The Watson IoT Platform Device Simulator<a class="headerlink" href="#the-watson-iot-platform-device-simulator" title="Permanent link">¶</a></h1>
+<p>The IBM Watson Internet of Things Platform contains a device simulator that can be used to post data without a real device being connected.  The simulator can be used to create data for multiple devices and device types, it can also post data for a real, registered device.</p>
+<p>The simulator is useful for testing when a real device is not available or for testing conditions which are difficult to replicate using a real device, such as fault conditions.</p>
+<h2 id="learning-objectives">Learning objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">¶</a></h2>
+<p>After completing this guide you will be able to:</p>
+<ul>
+<li>Enable the device simulator in your instance of the Watson IoT Platform</li>
+<li>Create simulated devices and be able to start and stop the devices</li>
+<li>Generate the required data from the device simulators</li>
+</ul>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>Before working through this guide you should have a basic knowledge of the Watson Internet of Things platform and understand the relationship between devices and device types.  You also need to have an instance of the Watson IoT Platform deployed on the IBM Cloud.</p>
+<p>You can find out about the Watson IoT Platform <a href="https://console.bluemix.net/docs/services/IoT/iotplatform_overview.html#about_iotplatform">here</a> and learn how to deploy an instance of the platform by following the guide <a href="https://developer.ibm.com/technologies/iot/tutorials/how-to-create-an-internet-of-things-platform-starter-application/">here</a>.</p>
+<h2 id="estimated-time">Estimated time<a class="headerlink" href="#estimated-time" title="Permanent link">¶</a></h2>
+<p>You can complete this task in no more than 20 minutes.</p>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">¶</a></h2>
+<p>Once you have your Internet of Things instance running, launch the Watson IoT Platform console.  To launch the console, select the service from your IBM Cloud dashboard then select the <strong>Launch</strong> button on the Watson IoT Platform service page.  Once the IoT console is open, complete the steps below:</p>
+<h3 id="1-enable-the-device-simulator">1. Enable the Device Simulator<a class="headerlink" href="#1-enable-the-device-simulator" title="Permanent link">¶</a></h3>
+<p>By default, the device simulator is not enabled on the platform.  To enable it:</p>
+<ol>
+<li>Switch to the settings section of the Watson IoT Platform console.</li>
+<li>Navigate to the <strong>Experimental Features</strong> settings area.</li>
+<li>Enable the Device Simulator.</li>
+</ol>
+<p><img alt="Enable device simulator screenshot" src="images/enableSimulator.png"/></p>
+<p>You should see the device simulator panel appear at the bottom of the IoT console.</p>
+<p><img alt="Running simulator screenshot" src="images/runningSimulator.png"/></p>
+<p>You can open the simulator by clicking on the panel and then close the simulator by using the twisty at the top of the simulator window</p>
+<p><img alt="Close simulator screenshot" src="images/closeSimulator.png"/></p>
+<h4>2. Configuring a Device Simulator</h4>
+<p>Creating a simulator is a 2 part process:</p>
+<ol>
+<li>Create a simulation by selecting or create a device type and then model the data that should be posted when the simulation is running.</li>
+<li>Create one or more device simulator instances for that simulation.</li>
+</ol>
+<p>To add your first simulation press the <strong>Add First Simulation</strong> button.  </p>
+<p><img alt="First Simulation" src="images/firstSimulation.png"/></p>
+<p>Clicking into the <strong>Select or create a device type...</strong> field will show any existing device types.  You can choose one of the existing device types or you can enter a device type name here to create a new device type.</p>
+<p><img alt="selectDeviceType" src="images/selectDeviceType.png"/></p>
+<p>Once the device type has been selected or created you are presented with the panel to configure the data for the simulation.  </p>
+<p><img alt="Configure events" src="images/eventConfig.png"/></p>
+<p>There are 3 areas, as shown in the image above:</p>
+<h4>1. Events</h4>
+<p>The simulator provides the ability to define multiple different events that a simulated device can publish.  E.g. if you have a device that sends temperature data every 30 seconds and air quality data every 10 minutes, then you could set up 2 events.  1 for the temperature and 1 for the air quality.</p>
+<p>By default a single event is created when a new simulation is created, but additional events can be created using the <strong>+ New Event</strong> button**</p>
+<p>Each event has its own schedule and payload content, but all events run when the simulation is running.  It is not possible to enable and disable individual events.  If you want that functionality then you need to create multiple simulations.</p>
+<p>As you add more events the list of events grows.  You can expand and collapse the individual events using the twisty.</p>
+<p><img alt="Multiple events" src="images/multipleEvents.png"/></p>
+<h4>2. Event Type Name</h4>
+<p>When data is sent from a device to the platform it is sent as a device event message with an event type as one of the fields in the message.  Here you can define the event type that will be sent with the payload for this event</p>
+<h4>3. Event Content and timing</h4>
+<p>When you expand the section for an event you can specify how often a message is sent and what content is sent as the payload.</p>
+<p>The schedule allows you to select a certain number of messages to be sent each minute or each hour.  The messages are sent at regular intervals, so 2 messages per minute will result in a messages being sent every 30 seconds.</p>
+<p>The payload section allows you to define the message format that will be sent.  You can define a static message, where every message will have exactly the same content:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"sampleObject"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"xcord"</span><span class="p">:</span> <span class="mf">32.514</span><span class="p">,</span>
+    <span class="nt">"ycord"</span><span class="p">:</span> <span class="mf">151.521</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>or use one of the 2 options for adding variation to the data sent</p>
+<ul>
+<li>range(0,100), will generate a random number between the 2 parameters</li>
+<li>$counter, will be contain the total number of devices added in the simulator for this type.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"randomNumber"</span><span class="p">:</span> <span class="err">range(</span><span class="mi">0</span><span class="p">,</span> <span class="err">100),</span>
+  <span class="nt">"total"</span> <span class="p">:</span> <span class="err">$counter</span><span class="p">,</span>
+  <span class="nt">"sampleObject"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"xcord"</span><span class="p">:</span> <span class="mf">32.514</span><span class="p">,</span>
+    <span class="nt">"ycord"</span><span class="p">:</span> <span class="mf">151.521</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When you have defined all the events, with the correct schedule and data content, press <strong>save</strong> to save the simulation.</p>
+<h3 id="3-adding-simulated-devices">3. Adding simulated Devices<a class="headerlink" href="#3-adding-simulated-devices" title="Permanent link">¶</a></h3>
+<p>Once you have the simulation defined you can create simulated devices for the simulation.  A device can be set to simulate an existing, configured, real device or register a new device on the platform.</p>
+<p><img alt="Create Simulated Device" src="images/createSimulatedDevice.png"/></p>
+<p>To add a device press the <strong>Create Simulated Device</strong> button or if you want to simulate an existing device press the <strong>Use Registered Device</strong> button (this will only be enabled if there is an available registered device of the correct deviceType to simulate).  Once the device is added then the simulated device will immediately start sending data according to the simulation settings.</p>
+<p>You can add as many devices as you desire (up to the displayed limit)</p>
+<p><img alt="Multiple Simulated Device" src="images/multipleDevices.png"/></p>
+<p>You can control the simulation at the top level using the Device type controls or you can manage each device by expanding the device menu.</p>
+<p><img alt="Control Simulated Device" src="images/controlDevices.png"/></p>
+<p>Here you can start and stop individual devices, configure individual devices or delete a simulated device.  You are able to customise each device so they all differ from the simulation configuration.  However, if you modify the simulation configuration then you can choose to reset all devices back to the simulation configuration.</p>
+<h3 id="4-monitoring-simulated-devices">4. Monitoring simulated devices<a class="headerlink" href="#4-monitoring-simulated-devices" title="Permanent link">¶</a></h3>
+<p>You can see the state of simulated devices the same way you can monitor real devices using the devices section of the IoT console.</p>
+<p><img alt="Monitor Simulated Device" src="images/monitorDevices.png"/></p>
+<p>You can see when a simulator is active as it shows as a connected device, then expanding the device you can select the <strong>Recent Events</strong> section to see the individual events being received.</p>
+<h2 id="saving-simulation-configuration">Saving simulation configuration<a class="headerlink" href="#saving-simulation-configuration" title="Permanent link">¶</a></h2>
+<p>The platform allows you to export your simulation configuration to the clipboard or download it as a JSON file.  You can then import a simulator configuration from the clipboard or file.  This allows you tp share a simulator configuration, so others can replication your simulator setup.</p>
+<p><img alt="Import Export Simulator Configuration" src="images/importExportSimulation.png"/></p>
+<p>When importing a device configuration the deviceType and devices are not automatically created, so you need to create them in advance or use the troubleshooting option to have the devices and deviceTypes created:</p>
+<p>To open up the troubleshooting section click in the event info section at the bottom of the simulator panel:</p>
+<p><img alt="Simulator Events summary" src="images/failingEvents.png"/></p>
+<p>This will then show a log of events and offer to troubleshoot failing events:</p>
+<p><img alt="Event Log" src="images/eventLog.png"/></p>
+<p>Select the <strong>Troubleshoot</strong> button next to one of the failing events and you will have the option to diagnose the issue.  Press the <strong>Run Diagnostics</strong> button to get the simulator to determine the cause of the error:</p>
+<p><img alt="Diagnose issue" src="images/runDiagnostics.png"/></p>
+<p>The result of the diagnostics will be shown and if there are missing deviceTypes and devices the platform will offer to create the missing configuration:</p>
+<p><img alt="Diagnose fix" src="images/diagnosticSolution.png"/></p>
+<p>You can repeat this for all the devices imported to the simulator.</p>
+<p>To clear the simulator event log, you can go into the settings panel and disable then enable the simulator.  The configuration will not be lost, but the simulator will be restarted, clearing the event log.</p>
+<h2 id="limitations-of-the-device-simulator">Limitations of the Device Simulator<a class="headerlink" href="#limitations-of-the-device-simulator" title="Permanent link">¶</a></h2>
+<p>The Simulator is still an experimental feature on the IoT Platform, so there are a few limitations.</p>
+<ul>
+<li>There is a limit to the number of concurrent simulated devices which can be run.  This is shown at the top of the simulation panel</li>
+<li>You cannot have multiple simulations running concurrently for the same device.</li>
+<li>The simulator will not work when user certificates have been added to the IoT platform configuration.  If you have certificates configured or even just uploaded then the simulator will fail to connect.  If you want to remove certificates, goto the settings section of your Watson IoT Platform console and follow the following steps:</li>
+<li>Goto the <strong>Connection Security</strong> section then select <strong>Open Connection Security Policy</strong>.  Ensure no rules are configured to use certificates.  <strong>TLS with Token Authentication</strong> or <strong>TLS Optional</strong> should be selected for all rules.</li>
+<li>Goto the <strong>Messaging Server Certificates</strong> section of the platform settings and ensure the Default Certificate is selected as the active certificate.  You can then select any imported certificates and then delete them.</li>
+<li>Goto the <strong>CA Certificates</strong> section of the platform settings and delete any imported certificates.</li>
+</ul>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h2>
+<p>This guide has shown you how to enable the device simulator and setup simulators to create device data.  The device simulator is a great tool to be able to test error or failure conditions that are difficult to create using live data from a real device.</p>
+<p>Remember to turn off simulators when not needed to ensure you do not use up free limits on the IBM Cloud or incur additional expense if on a paid plan.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../RESOURCES.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Resources
+              </div>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

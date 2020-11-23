@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud." name="description"/>
+<link href="https://binnes.github.io/esp8266Workshop/part4/TRAINING.html" rel="canonical"/>
+<meta content="Brian Innes" name="author"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.6" name="generator"/>
+<title>Create Training Data - ESP8266 IoT Workshop</title>
+<link href="../assets/stylesheets/main.6910b76c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../css/extra.css" rel="stylesheet"/>
+<link href="../css/pdf-print.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-172132667-1","binnes.github.io/esp8266Workshop"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#lab-objectives">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="ESP8266 IoT Workshop" class="md-header-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            ESP8266 IoT Workshop
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Create Training Data
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP8266 IoT Workshop" class="md-nav__button md-logo" href="https://binnes.github.io/esp8266Workshop/" title="ESP8266 IoT Workshop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    ESP8266 IoT Workshop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/binnes/esp8266Workshop/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    binnes/esp8266Workshop
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+      Home
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" id="nav-2" type="checkbox"/>
+<label class="md-nav__link" for="nav-2">
+      Part 1
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 1" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-2">
+<span class="md-nav__icon md-icon"></span>
+        Part 1
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/PREREQ.html">
+      Setup for the Workshop
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/FIRSTAPP.html">
+      Intro to ESP8266
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/WIFI.html">
+      ESP8266 WiFi
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/LED.html">
+      LED Light
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/DHT.html">
+      Sensor
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part1/IOTCLOUD.html">
+      IBM Cloud
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Part 2
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 2" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon"></span>
+        Part 2
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/DEVICE.html">
+      Device setup on Cloud
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/APP.html">
+      Creating the ESP8266 Application
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/MQTT.html">
+      Intro to MQTT
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT1.html">
+      IoT Security
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part2/CERT2.html">
+      Client Certificates
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Part 3
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 3" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon"></span>
+        Part 3
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/NODERED.html">
+      Node-RED
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DHTDATA.html">
+      Sensor Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/DASHBOARD.html">
+      Dashboards
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/CLOUDANT.html">
+      Database
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/HISTORY.html">
+      Historical Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/INTERVAL.html">
+      Reporting interval
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../part3/LED.html">
+      Remote LED control
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-5" id="nav-5" type="checkbox"/>
+<label class="md-nav__link" for="nav-5">
+      Part 4
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Part 4" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-5">
+<span class="md-nav__icon md-icon"></span>
+        Part 4
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+      Intro
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="STUDIO.html">
+      Watson Studio
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="TRAINING.html">
+      Create Training Data
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="JUPYTER.html">
+      Jupyter Notebooks
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="MODEL.html">
+      Run model on device
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="SUMMARY.html">
+      Workshop Summary
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" id="nav-6" type="checkbox"/>
+<label class="md-nav__link" for="nav-6">
+      Additional
+      <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Additional" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-6">
+<span class="md-nav__icon md-icon"></span>
+        Additional
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AGENDA.html">
+      Agenda
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../RESOURCES.html">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Simulator/index.html">
+      Simulator
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/binnes/esp8266Workshop/edit/master/docs/part4/TRAINING.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h2 id="lab-objectives">Lab Objectives<a class="headerlink" href="#lab-objectives" title="Permanent link">¶</a></h2>
+<p>In this section we will create the training data needed to train a model.  You will learn:</p>
+<ul>
+<li>How to format data into an appropriate format for training</li>
+<li>How to capture the data required to create the data model</li>
+<li>How to reset the database if invalid data has been captured</li>
+</ul>
+<h1 id="create-training-data">Create training data<a class="headerlink" href="#create-training-data" title="Permanent link">¶</a></h1>
+<p>To train the model we need to identify 2 different situations:</p>
+<ul>
+<li>the DHT sensor is not being held</li>
+<li>the DHT sensor is being held in a closed hand</li>
+</ul>
+<p>It is important to ensure the training data is of good quality, so we are going to create a new database to hold the training database and carefully manage what data is added to the training database.</p>
+<p>The database we need to create needs to have the following contents:</p>
+<ul>
+<li>index.  This is a unique index for each record.  We can use a timestamp for this field</li>
+<li>class.  This is an indication of which training class this data point represents.  0 for not held and 1 for held</li>
+<li>temperature.  The temperature value</li>
+<li>humidity.  The humidity value</li>
+</ul>
+<p>To get the data into the database we will create a Node-RED flow, but will only connect up the database when we want data to be recorded.</p>
+<h2 id="node-red-flow-to-create-the-training-data">Node-RED flow to create the training data<a class="headerlink" href="#node-red-flow-to-create-the-training-data" title="Permanent link">¶</a></h2>
+<p>To create the flow, open up the Node-RED editor running on the IBM Cloud (as used in part 3 of this workshop).</p>
+<ol>
+<li>Create a new tab in the editor then add the following nodes:</li>
+<li><strong>mqtt in</strong> node from the input section of the palette</li>
+<li><strong>change</strong> node from the function section of the palette</li>
+<li><strong>debug</strong> node from the output section of the palette</li>
+<li><strong>cloudant out</strong> node from the storage section of the palette</li>
+<li>Connect the <strong>mqtt in</strong> node to the <strong>change</strong> node and then the <strong>change</strong> node to the <strong>debug</strong> node.  DO NOT connect the <strong>cloudant out</strong> node yet.</li>
+<li>Configure the <strong>mqtt in</strong> node to use the previously defined server configuration and set the topic to listen to all JSON data from all devices <code>iot-2/type/+/id/+/evt/+/fmt/json</code> as shown: <img alt="nodered ibmiot node config" src="screenshots/nr-mqtt-config.png"/></li>
+<li>Configure the <strong>change</strong> node to have 2 set rules.  The first rule reformats the data received from the IoT platform, to flatten it and add a timestamp.  The second rule adds the class property and initially sets it to class 0:</li>
+<li>set msg.payload to JSONata expression <code>msg.payload.{"time" : $millis(),"temp" : d.temp, "humidity" : d.humidity}</code></li>
+<li>set msg.payload.class to number 0<br/>
+   as shown : <img alt="nodered change node config" src="screenshots/nr-change-config.png"/></li>
+<li>Configure the <strong>cloudant out</strong> node to use the cloud service and set the database name to training and ensure the operation is set to insert and to only store msg.payload object as shown: <img alt="nodered cloudant out node config" src="screenshots/nr-cloudant-config.png"/></li>
+</ol>
+<p>You should have a flow that looks like this: <img alt="nodered flow" src="screenshots/nr-flow.png"/></p>
+<p>If your flow is not working then you can import the sample flow, which is also available in the <a href="flows">flows</a> folder in part4 of the repo :</p>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"332d48ae.1555b"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"change"</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="s2">"46c77ae0.25061c"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"rules"</span><span class="p">:[{</span><span class="nt">"t"</span><span class="p">:</span><span class="s2">"set"</span><span class="p">,</span><span class="nt">"p"</span><span class="p">:</span><span class="s2">"payload"</span><span class="p">,</span><span class="nt">"pt"</span><span class="p">:</span><span class="s2">"msg"</span><span class="p">,</span><span class="nt">"to"</span><span class="p">:</span><span class="s2">"msg.payload.{\"time\" : $millis(), \"temp\" : d.temp, \"humidity\" : d.humidity} "</span><span class="p">,</span><span class="nt">"tot"</span><span class="p">:</span><span class="s2">"jsonata"</span><span class="p">},{</span><span class="nt">"t"</span><span class="p">:</span><span class="s2">"set"</span><span class="p">,</span><span class="nt">"p"</span><span class="p">:</span><span class="s2">"payload.class"</span><span class="p">,</span><span class="nt">"pt"</span><span class="p">:</span><span class="s2">"msg"</span><span class="p">,</span><span class="nt">"to"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="nt">"tot"</span><span class="p">:</span><span class="s2">"num"</span><span class="p">}],</span><span class="nt">"action"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"property"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"from"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"to"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"reg"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">1040</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span><span class="nt">"wires"</span><span class="p">:[[</span><span class="s2">"c5369a33.c87e08"</span><span class="p">]]},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"c5369a33.c87e08"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"debug"</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="s2">"46c77ae0.25061c"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"active"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"tosidebar"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"console"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"tostatus"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"complete"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">1210</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span><span class="nt">"wires"</span><span class="p">:[]},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"95115355.458a9"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"cloudant out"</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="s2">"46c77ae0.25061c"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"cloudant"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"database"</span><span class="p">:</span><span class="s2">"training"</span><span class="p">,</span><span class="nt">"service"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"payonly"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"operation"</span><span class="p">:</span><span class="s2">"insert"</span><span class="p">,</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">1220</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span><span class="nt">"wires"</span><span class="p">:[]},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"b1eeaccd.78ca6"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"mqtt in"</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="s2">"46c77ae0.25061c"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"topic"</span><span class="p">:</span><span class="s2">"iot-2/type/+/id/+/evt/+/fmt/json"</span><span class="p">,</span><span class="nt">"qos"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="nt">"datatype"</span><span class="p">:</span><span class="s2">"json"</span><span class="p">,</span><span class="nt">"broker"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">790</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">260</span><span class="p">,</span><span class="nt">"wires"</span><span class="p">:[[</span><span class="s2">"332d48ae.1555b"</span><span class="p">]]}]</span>
+</code></pre></div>
+<p>This flow creates the following output, which we will write to the database:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">"time"</span><span class="p">:</span><span class="mi">1546969694969</span><span class="p">,</span>
+    <span class="nt">"temp"</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span>
+    <span class="nt">"humidity"</span><span class="p">:</span><span class="mi">51</span><span class="p">,</span>
+    <span class="nt">"class"</span><span class="p">:</span><span class="mi">0</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="creating-the-training-data">Creating the training data<a class="headerlink" href="#creating-the-training-data" title="Permanent link">¶</a></h2>
+<p>To create the training data you may want to use the interval dashboard to set the interval to something like 5 seconds, to reduce the time needed to gather the required data.  We are aiming to have a similar number of data points for each class in the training data.</p>
+<ol>
+<li>Ensure the ESP8266 is working and you can see the debug output as shown above.</li>
+<li>As we want to record class 0 data, leave the DHT sensor alone and wait 30 seconds to ensure the data is stable.  Then connect up the <strong>cloudant out</strong> node and deploy the flow: <img alt="flow collecting data" src="screenshots/nr-flow-collecting.png"/></li>
+<li>Wait until about 20-30 records have been written then delete the connection to the <strong>cloudant out</strong> node and deploy the flow to stop any more records being written: <img alt="nodered flow" src="screenshots/nr-flow-not-collecting.png"/></li>
+<li>Edit the <strong>change</strong> node configuration to set the class to 1 : <img alt="change class 1" src="screenshots/nr-change-class-1.png"/></li>
+<li>Hold the DHT sensor in your hand, ensuring you don't dislodge any of the connecting cables.  Wait a while to let the readings settle down</li>
+<li>Connect the <strong>change</strong> node to the <strong>cloudant out</strong> node and deploy the flow.  Ensure you remain holding onto the DHT sensor</li>
+<li>Wait until about 20-30 records have been written <em>(try to get the same number of database records as you created for class 0)</em> then delete the connection to the <strong>cloudant out</strong> node and deploy to stop recording any more data.  You can release the DHT sensor now</li>
+</ol>
+<h2 id="reset-the-training-database">Reset the training database<a class="headerlink" href="#reset-the-training-database" title="Permanent link">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only complete the following section if you have invalid data in your training database, as it will clear out all the captured training data</p>
+</div>
+<p>It is important that you have clean training data, so if you need to restart recording the training database you can easily delete the database from cloudant:</p>
+<ol>
+<li>Ensure the connection between the <strong>change</strong> node and the <strong>cloudant out</strong> node has been deleted, so no data is being written to the database</li>
+<li>From the Application overview page in the IBM Cloud console select the cloudant database from the connections section: <img alt="cloudant connection" src="screenshots/connections-cloudant.png"/></li>
+<li>Select the alias link : <img alt="cloudant alias" src="screenshots/cloudant-alias.png"/></li>
+<li>Launch the console : <img alt="launch console" src="screenshots/cloudant-launch.png"/></li>
+<li>In the databases section select the bin icon next to the training database : <img alt="cloudant delete" src="screenshots/cloudant-delete.png"/></li>
+<li>Enter the database name in the text box then press the delete button to delete the database : <img alt="confirm delete" src="screenshots/cloudant-confirm-delete.png"/></li>
+</ol>
+<p>You can now start creating the training data again - the database is automatically created when the Node-RED flow is next deployed</p>
+<p>Once you have your training data recorded you can move to the <a href="JUPYTER.html">next section</a></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="STUDIO.html" rel="prev">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Watson Studio
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="JUPYTER.html" rel="next">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Jupyter Notebooks
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+ ... <a class="link--pdf-download" download href="../pdf/esp8266Workshop.pdf" title="PDF">download PDF</a></div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+<script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

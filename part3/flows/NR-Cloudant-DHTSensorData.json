@@ -1,0 +1,71 @@
+[
+    {
+        "id": "f57f32df.2e86d",
+        "type": "tab",
+        "label": "Store Sensor Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3f0be2ca.a1cc0e",
+        "type": "function",
+        "z": "f57f32df.2e86d",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n        time:     new Date().getTime(),\n        temp:     msg.payload.d.temp,\n        humidity: msg.payload.d.humidity\n    } ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "a3c1e72f.69eea",
+                "cd51a4a4.837468"
+            ]
+        ]
+    },
+    {
+        "id": "a3c1e72f.69eea",
+        "type": "debug",
+        "z": "f57f32df.2e86d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 670,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cd51a4a4.837468",
+        "type": "cloudant out",
+        "z": "f57f32df.2e86d",
+        "name": "",
+        "cloudant": "",
+        "database": "historicaldata1",
+        "service": "bi-esp8266Bootcamp-cloudantNoSQLDB",
+        "payonly": true,
+        "operation": "insert",
+        "x": 700,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "826667e0.94458",
+        "type": "mqtt in",
+        "z": "f57f32df.2e86d",
+        "name": "",
+        "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "3f0be2ca.a1cc0e"
+            ]
+        ]
+    }
+]

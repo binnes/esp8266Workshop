@@ -13,7 +13,6 @@ RUN apk add --no-cache \
     cairo-dev \
     pango-dev \
     gdk-pixbuf-dev \
-    ttf-ubuntu-font-family \
     msttcorefonts-installer \
     fontconfig && \
     update-ms-fonts && \

@@ -1,5 +1,7 @@
 # Real World IoT with the ESP8266
 
+** NOTE - THIS WORKSHOP IS NO LONGER BEING MAINTAINTED - IT IS HERE FOR REFERENCE ONLY **
+
 ## Welcome to the ESP8266 IoT Workshop
 
 IoT workshop based on ESP8266, a DHT11/22 and NeoPixel RGB LED with data analysis on the IBM Cloud.
